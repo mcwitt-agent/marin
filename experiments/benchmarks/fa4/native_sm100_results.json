@@ -1,0 +1,1725 @@
+{
+  "measured_source_sha": "b95ec4a0688e854be416ae2f792ccf986ca39fb6",
+  "measured_native_source_sha256": "98648df15706ba40bd82a890bf15f9050d76f6b6e078f1138c3840414f760d13",
+  "baseline_marin_main": "a428f1d25d53ee825de801f15674a3a439420df4",
+  "xla_commit": "708c3a4ec79c7581ffe28c4bb2be2b6dbf870519",
+  "flash_attn_version": "4.0.0b16",
+  "checkpoint_step": 108195,
+  "scored_relative_steps_inclusive": [
+    8,
+    27
+  ],
+  "hardware": "64 GB200 GPUs; 16 nodes, one NVLink rack; same rack and checkpoint in every pair",
+  "statistics": {
+    "all_scored_steps": {
+      "pairs": 4,
+      "control_run_means": [
+        15.548271682439372,
+        15.477622663974762,
+        15.530489674443379,
+        15.443490418465808
+      ],
+      "treatment_run_means": [
+        15.091321268631145,
+        15.253441410697997,
+        15.053476929105818,
+        15.030605444824323
+      ],
+      "control_seconds": 15.49996860983083,
+      "treatment_seconds": 15.10721126331482,
+      "pair_savings_seconds": [
+        0.45695041380822765,
+        0.22418125327676464,
+        0.4770127453375608,
+        0.4128849736414857
+      ],
+      "mean_saving_seconds": 0.3927573465160097,
+      "saving_sd_across_pairs": 0.11553173114556119,
+      "pair_level_t95_interval": [
+        0.20892058105239875,
+        0.5765941119796206
+      ],
+      "throughput_gain_percent": 2.599800450727474,
+      "throughput_paired_fieller95_percent": [
+        1.3696931458902162,
+        3.8539702110042207
+      ]
+    },
+    "ordinary_steps": {
+      "pairs": 4,
+      "control_run_means": [
+        15.553212326899585,
+        15.481855849218038,
+        15.538115677268555,
+        15.43782967934385
+      ],
+      "treatment_run_means": [
+        15.101116882068002,
+        15.292133909857107,
+        15.066093197351115,
+        15.040126363643342
+      ],
+      "control_seconds": 15.502753383182506,
+      "treatment_seconds": 15.124867588229892,
+      "pair_savings_seconds": [
+        0.45209544483158304,
+        0.18972193936093085,
+        0.47202247991743995,
+        0.39770331570050743
+      ],
+      "mean_saving_seconds": 0.3778857949526153,
+      "saving_sd_across_pairs": 0.12931506521031882,
+      "pair_level_t95_interval": [
+        0.17211666920456486,
+        0.5836549207006658
+      ],
+      "throughput_gain_percent": 2.498440351614617,
+      "throughput_paired_fieller95_percent": [
+        1.125613345733223,
+        3.901840091347375
+      ]
+    },
+    "caveat": "Four predeclared matched run pairs, scored relative steps8-27 without slow-sample removal; pair-level t and paired Fieller intervals assume independent approximately normal run-pair means. Candidate selected before these acceptance pairs; failed or checkpoint-mismatched pairs are recorded and replaced."
+  },
+  "pairs": [
+    {
+      "pair_index": 1,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "all_scored_steps": {
+        "control_seconds": 15.548271682439372,
+        "n_steps": 20,
+        "treatment_seconds": 15.091321268631145
+      },
+      "ordinary_steps": {
+        "control_seconds": 15.553212326899585,
+        "n_steps": 18,
+        "treatment_seconds": 15.101116882068002
+      },
+      "raw_scored_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.469814234413207,
+            "train/loss": 1.2872792482376099
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.408125983551145,
+            "train/loss": 1.284576177597046
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.41799131128937,
+            "train/loss": 1.2023357152938843
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.422166435979307,
+            "train/loss": 1.2472617626190186
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.595863910391927,
+            "train/loss": 1.2967463731765747
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.383332489058375,
+            "train/loss": 1.2775613069534302
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.43599706236273,
+            "train/loss": 1.2520442008972168
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 15.496859691105783,
+            "train/loss": 1.2396290302276611
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.450098686851561,
+            "train/loss": 1.257653832435608
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.5532516380772,
+            "train/loss": 1.3208518028259277
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.43688047863543,
+            "train/loss": 1.258917212486267
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 15.359354638494551,
+            "train/loss": 1.243137240409851
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.529483464546502,
+            "train/loss": 1.248106837272644
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.433307561092079,
+            "train/loss": 1.2645231485366821
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.436162937432528,
+            "train/loss": 1.2583893537521362
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.478358711116016,
+            "train/loss": 1.300547480583191
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.452694589272141,
+            "train/loss": 1.296985149383545
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 15.51075207348913,
+            "train/loss": 1.2694408893585205
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.391349288634956,
+            "train/loss": 1.262933373451233
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 17.303588462993503,
+            "train/loss": 1.2852113246917725
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 14.933022389188409,
+            "train/loss": 1.2873066663742065
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.934653371572495,
+            "train/loss": 1.2845708131790161
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.90223100874573,
+            "train/loss": 1.2025084495544434
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.941519672051072,
+            "train/loss": 1.2473678588867188
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 14.941358678974211,
+            "train/loss": 1.2967544794082642
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.884696134366095,
+            "train/loss": 1.2775672674179077
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.972436194308102,
+            "train/loss": 1.252195954322815
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 14.964636012911797,
+            "train/loss": 1.239586353302002
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.288132286630571,
+            "train/loss": 1.2576786279678345
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 16.209877057000995,
+            "train/loss": 1.3210433721542358
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.87349973898381,
+            "train/loss": 1.258935809135437
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.906319900415838,
+            "train/loss": 1.24323308467865
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 14.894128805026412,
+            "train/loss": 1.2483325004577637
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.918649723753333,
+            "train/loss": 1.2646433115005493
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 14.861069029197097,
+            "train/loss": 1.2586420774459839
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 14.877446981146932,
+            "train/loss": 1.3007874488830566
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 14.910290154628456,
+            "train/loss": 1.2971926927566528
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 15.041685482487082,
+            "train/loss": 1.2696869373321533
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.64485887158662,
+            "train/loss": 1.2632240056991577
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 15.925913879647851,
+            "train/loss": 1.285361886024475
+          }
+        ]
+      },
+      "raw_sensitivity_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.469814234413207,
+            "train/loss": 1.2872792482376099
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.408125983551145,
+            "train/loss": 1.284576177597046
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.41799131128937,
+            "train/loss": 1.2023357152938843
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.422166435979307,
+            "train/loss": 1.2472617626190186
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.595863910391927,
+            "train/loss": 1.2967463731765747
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.383332489058375,
+            "train/loss": 1.2775613069534302
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.43599706236273,
+            "train/loss": 1.2520442008972168
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.450098686851561,
+            "train/loss": 1.257653832435608
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.5532516380772,
+            "train/loss": 1.3208518028259277
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.43688047863543,
+            "train/loss": 1.258917212486267
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 15.359354638494551,
+            "train/loss": 1.243137240409851
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.529483464546502,
+            "train/loss": 1.248106837272644
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.433307561092079,
+            "train/loss": 1.2645231485366821
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.436162937432528,
+            "train/loss": 1.2583893537521362
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.478358711116016,
+            "train/loss": 1.300547480583191
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.452694589272141,
+            "train/loss": 1.296985149383545
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.391349288634956,
+            "train/loss": 1.262933373451233
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 17.303588462993503,
+            "train/loss": 1.2852113246917725
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 14.933022389188409,
+            "train/loss": 1.2873066663742065
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.934653371572495,
+            "train/loss": 1.2845708131790161
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.90223100874573,
+            "train/loss": 1.2025084495544434
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.941519672051072,
+            "train/loss": 1.2473678588867188
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 14.941358678974211,
+            "train/loss": 1.2967544794082642
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.884696134366095,
+            "train/loss": 1.2775672674179077
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.972436194308102,
+            "train/loss": 1.252195954322815
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.288132286630571,
+            "train/loss": 1.2576786279678345
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 16.209877057000995,
+            "train/loss": 1.3210433721542358
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.87349973898381,
+            "train/loss": 1.258935809135437
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.906319900415838,
+            "train/loss": 1.24323308467865
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 14.894128805026412,
+            "train/loss": 1.2483325004577637
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.918649723753333,
+            "train/loss": 1.2646433115005493
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 14.861069029197097,
+            "train/loss": 1.2586420774459839
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 14.877446981146932,
+            "train/loss": 1.3007874488830566
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 14.910290154628456,
+            "train/loss": 1.2971926927566528
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.64485887158662,
+            "train/loss": 1.2632240056991577
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 15.925913879647851,
+            "train/loss": 1.285361886024475
+          }
+        ]
+      }
+    },
+    {
+      "pair_index": 2,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "all_scored_steps": {
+        "control_seconds": 15.477622663974762,
+        "n_steps": 20,
+        "treatment_seconds": 15.253441410697997
+      },
+      "ordinary_steps": {
+        "control_seconds": 15.481855849218038,
+        "n_steps": 18,
+        "treatment_seconds": 15.292133909857107
+      },
+      "raw_scored_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.49320388957858,
+            "train/loss": 1.287259578704834
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.449484250508249,
+            "train/loss": 1.284523606300354
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.408788246102631,
+            "train/loss": 1.2023301124572754
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.438635337166488,
+            "train/loss": 1.247225046157837
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.484401140362024,
+            "train/loss": 1.2967000007629395
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.381387391127646,
+            "train/loss": 1.2775022983551025
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.402701428160071,
+            "train/loss": 1.252012014389038
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 15.458837162703276,
+            "train/loss": 1.2396119832992554
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.404967152513564,
+            "train/loss": 1.2574591636657715
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.630518051795661,
+            "train/loss": 1.3208013772964478
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.391373169608414,
+            "train/loss": 1.2588226795196533
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 15.337118505500257,
+            "train/loss": 1.2429090738296509
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.399804967455566,
+            "train/loss": 1.248071551322937
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.379007426090539,
+            "train/loss": 1.2643725872039795
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.359240548685193,
+            "train/loss": 1.258353590965271
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.437662448734045,
+            "train/loss": 1.3004893064498901
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.428878724575043,
+            "train/loss": 1.296906590461731
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 15.42021083086729,
+            "train/loss": 1.2694281339645386
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.386676844209433,
+            "train/loss": 1.2629789113998413
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 16.45955576375127,
+            "train/loss": 1.2852058410644531
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.110374259762466,
+            "train/loss": 1.287348747253418
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.956483580172062,
+            "train/loss": 1.2846684455871582
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.883466019295156,
+            "train/loss": 1.202410101890564
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.928850336931646,
+            "train/loss": 1.2473292350769043
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 14.937254458665848,
+            "train/loss": 1.2967838048934937
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.928521892055869,
+            "train/loss": 1.2777161598205566
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.931307925842702,
+            "train/loss": 1.2520989179611206
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 14.936756204813719,
+            "train/loss": 1.2397348880767822
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 16.29736591503024,
+            "train/loss": 1.2578134536743164
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 14.968060572631657,
+            "train/loss": 1.3209943771362305
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.884919448755682,
+            "train/loss": 1.2590231895446777
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.8410634547472,
+            "train/loss": 1.2431806325912476
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 14.870813989080489,
+            "train/loss": 1.2482203245162964
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.846605885773897,
+            "train/loss": 1.2646769285202026
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.488509399816394,
+            "train/loss": 1.2587417364120483
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 14.879226750694215,
+            "train/loss": 1.300799012184143
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.804149659350514,
+            "train/loss": 1.2973237037658691
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 14.873661631718278,
+            "train/loss": 1.2698652744293213
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 17.188322466798127,
+            "train/loss": 1.2631369829177856
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 16.51311436202377,
+            "train/loss": 1.2854416370391846
+          }
+        ]
+      },
+      "raw_sensitivity_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.49320388957858,
+            "train/loss": 1.287259578704834
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.449484250508249,
+            "train/loss": 1.284523606300354
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.408788246102631,
+            "train/loss": 1.2023301124572754
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.438635337166488,
+            "train/loss": 1.247225046157837
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.484401140362024,
+            "train/loss": 1.2967000007629395
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.381387391127646,
+            "train/loss": 1.2775022983551025
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.402701428160071,
+            "train/loss": 1.252012014389038
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.404967152513564,
+            "train/loss": 1.2574591636657715
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.630518051795661,
+            "train/loss": 1.3208013772964478
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.391373169608414,
+            "train/loss": 1.2588226795196533
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 15.337118505500257,
+            "train/loss": 1.2429090738296509
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.399804967455566,
+            "train/loss": 1.248071551322937
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.379007426090539,
+            "train/loss": 1.2643725872039795
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.359240548685193,
+            "train/loss": 1.258353590965271
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.437662448734045,
+            "train/loss": 1.3004893064498901
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.428878724575043,
+            "train/loss": 1.296906590461731
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.386676844209433,
+            "train/loss": 1.2629789113998413
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 16.45955576375127,
+            "train/loss": 1.2852058410644531
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.110374259762466,
+            "train/loss": 1.287348747253418
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.956483580172062,
+            "train/loss": 1.2846684455871582
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.883466019295156,
+            "train/loss": 1.202410101890564
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.928850336931646,
+            "train/loss": 1.2473292350769043
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 14.937254458665848,
+            "train/loss": 1.2967838048934937
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.928521892055869,
+            "train/loss": 1.2777161598205566
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.931307925842702,
+            "train/loss": 1.2520989179611206
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 16.29736591503024,
+            "train/loss": 1.2578134536743164
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 14.968060572631657,
+            "train/loss": 1.3209943771362305
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.884919448755682,
+            "train/loss": 1.2590231895446777
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.8410634547472,
+            "train/loss": 1.2431806325912476
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 14.870813989080489,
+            "train/loss": 1.2482203245162964
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.846605885773897,
+            "train/loss": 1.2646769285202026
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.488509399816394,
+            "train/loss": 1.2587417364120483
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 14.879226750694215,
+            "train/loss": 1.300799012184143
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.804149659350514,
+            "train/loss": 1.2973237037658691
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 17.188322466798127,
+            "train/loss": 1.2631369829177856
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 16.51311436202377,
+            "train/loss": 1.2854416370391846
+          }
+        ]
+      }
+    },
+    {
+      "pair_index": 3,
+      "arm_order": [
+        "control",
+        "treatment"
+      ],
+      "all_scored_steps": {
+        "control_seconds": 15.530489674443379,
+        "n_steps": 20,
+        "treatment_seconds": 15.053476929105818
+      },
+      "ordinary_steps": {
+        "control_seconds": 15.538115677268555,
+        "n_steps": 18,
+        "treatment_seconds": 15.066093197351115
+      },
+      "raw_scored_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 16.501721441745758,
+            "train/loss": 1.2872930765151978
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.332468500360847,
+            "train/loss": 1.2845370769500732
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.617473198100924,
+            "train/loss": 1.202344298362732
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.400827003642917,
+            "train/loss": 1.2473150491714478
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.505679582245648,
+            "train/loss": 1.296776533126831
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.37145578302443,
+            "train/loss": 1.2775198221206665
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.361258576624095,
+            "train/loss": 1.2520577907562256
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 15.449688958004117,
+            "train/loss": 1.2395247220993042
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.397390011698008,
+            "train/loss": 1.2575657367706299
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.532816500402987,
+            "train/loss": 1.32095205783844
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.419035197235644,
+            "train/loss": 1.2588859796524048
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 16.474022798240185,
+            "train/loss": 1.2430853843688965
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.458990721032023,
+            "train/loss": 1.248232126235962
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.379263206385076,
+            "train/loss": 1.2644612789154053
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.387708920054138,
+            "train/loss": 1.2584514617919922
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.487050224095583,
+            "train/loss": 1.3005454540252686
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.4078229367733,
+            "train/loss": 1.296992301940918
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 15.474022340029478,
+            "train/loss": 1.2697278261184692
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.369635613635182,
+            "train/loss": 1.2628997564315796
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 15.28146197553724,
+            "train/loss": 1.2852742671966553
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 14.998787104152143,
+            "train/loss": 1.2873127460479736
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.959371075034142,
+            "train/loss": 1.2845573425292969
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.871482719667256,
+            "train/loss": 1.2023308277130127
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.919793797656894,
+            "train/loss": 1.2473278045654297
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 14.987600863911211,
+            "train/loss": 1.296786904335022
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.816246451810002,
+            "train/loss": 1.2776737213134766
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.863120941445231,
+            "train/loss": 1.251979112625122
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 14.89749289304018,
+            "train/loss": 1.23961341381073
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 14.978030635043979,
+            "train/loss": 1.257569432258606
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 16.46624182537198,
+            "train/loss": 1.320891261100769
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.921448271721601,
+            "train/loss": 1.2589154243469238
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.831435257568955,
+            "train/loss": 1.2430638074874878
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 14.842859080992639,
+            "train/loss": 1.2480757236480713
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.84125609882176,
+            "train/loss": 1.2645777463912964
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 14.830007396638393,
+            "train/loss": 1.2584788799285889
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 14.897763428278267,
+            "train/loss": 1.300618052482605
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 14.884582690894604,
+            "train/loss": 1.2969871759414673
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 14.982368136756122,
+            "train/loss": 1.2696661949157715
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 16.429595948196948,
+            "train/loss": 1.263027548789978
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 14.850053965114057,
+            "train/loss": 1.2852686643600464
+          }
+        ]
+      },
+      "raw_sensitivity_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 16.501721441745758,
+            "train/loss": 1.2872930765151978
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.332468500360847,
+            "train/loss": 1.2845370769500732
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.617473198100924,
+            "train/loss": 1.202344298362732
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.400827003642917,
+            "train/loss": 1.2473150491714478
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.505679582245648,
+            "train/loss": 1.296776533126831
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.37145578302443,
+            "train/loss": 1.2775198221206665
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.361258576624095,
+            "train/loss": 1.2520577907562256
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.397390011698008,
+            "train/loss": 1.2575657367706299
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.532816500402987,
+            "train/loss": 1.32095205783844
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.419035197235644,
+            "train/loss": 1.2588859796524048
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 16.474022798240185,
+            "train/loss": 1.2430853843688965
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.458990721032023,
+            "train/loss": 1.248232126235962
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.379263206385076,
+            "train/loss": 1.2644612789154053
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.387708920054138,
+            "train/loss": 1.2584514617919922
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.487050224095583,
+            "train/loss": 1.3005454540252686
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.4078229367733,
+            "train/loss": 1.296992301940918
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.369635613635182,
+            "train/loss": 1.2628997564315796
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 15.28146197553724,
+            "train/loss": 1.2852742671966553
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 14.998787104152143,
+            "train/loss": 1.2873127460479736
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.959371075034142,
+            "train/loss": 1.2845573425292969
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.871482719667256,
+            "train/loss": 1.2023308277130127
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.919793797656894,
+            "train/loss": 1.2473278045654297
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 14.987600863911211,
+            "train/loss": 1.296786904335022
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.816246451810002,
+            "train/loss": 1.2776737213134766
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.863120941445231,
+            "train/loss": 1.251979112625122
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 14.978030635043979,
+            "train/loss": 1.257569432258606
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 16.46624182537198,
+            "train/loss": 1.320891261100769
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.921448271721601,
+            "train/loss": 1.2589154243469238
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.831435257568955,
+            "train/loss": 1.2430638074874878
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 14.842859080992639,
+            "train/loss": 1.2480757236480713
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.84125609882176,
+            "train/loss": 1.2645777463912964
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 14.830007396638393,
+            "train/loss": 1.2584788799285889
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 14.897763428278267,
+            "train/loss": 1.300618052482605
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 14.884582690894604,
+            "train/loss": 1.2969871759414673
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 16.429595948196948,
+            "train/loss": 1.263027548789978
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 14.850053965114057,
+            "train/loss": 1.2852686643600464
+          }
+        ]
+      }
+    },
+    {
+      "pair_index": 4,
+      "arm_order": [
+        "treatment",
+        "control"
+      ],
+      "all_scored_steps": {
+        "control_seconds": 15.443490418465808,
+        "n_steps": 20,
+        "treatment_seconds": 15.030605444824323
+      },
+      "ordinary_steps": {
+        "control_seconds": 15.43782967934385,
+        "n_steps": 18,
+        "treatment_seconds": 15.040126363643342
+      },
+      "raw_scored_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.45954399369657,
+            "train/loss": 1.2872817516326904
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.416802731342614,
+            "train/loss": 1.2846081256866455
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.471394366584718,
+            "train/loss": 1.2024164199829102
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.456593804061413,
+            "train/loss": 1.2473653554916382
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.562638957053423,
+            "train/loss": 1.2967379093170166
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.409695830196142,
+            "train/loss": 1.277622103691101
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.404188881628215,
+            "train/loss": 1.2520349025726318
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 15.525067328475416,
+            "train/loss": 1.2395994663238525
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.382505630142987,
+            "train/loss": 1.2574806213378906
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.593021731823683,
+            "train/loss": 1.3208783864974976
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.411429692059755,
+            "train/loss": 1.2587350606918335
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 15.387323638424277,
+            "train/loss": 1.242968201637268
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.40815113298595,
+            "train/loss": 1.2479994297027588
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.430334009230137,
+            "train/loss": 1.2646079063415527
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.42447516694665,
+            "train/loss": 1.2584214210510254
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.472757514566183,
+            "train/loss": 1.3004869222640991
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.443495592102408,
+            "train/loss": 1.2969006299972534
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 15.463806812651455,
+            "train/loss": 1.269547939300537
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.412921937182546,
+            "train/loss": 1.2630126476287842
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 15.333659618161619,
+            "train/loss": 1.2851938009262085
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 14.909099749289453,
+            "train/loss": 1.2873491048812866
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.883263261057436,
+            "train/loss": 1.2846403121948242
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.919980921782553,
+            "train/loss": 1.2024518251419067
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.954885925166309,
+            "train/loss": 1.2473784685134888
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.068290865048766,
+            "train/loss": 1.2967382669448853
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.964594095945358,
+            "train/loss": 1.2776161432266235
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.897428832016885,
+            "train/loss": 1.252081274986267
+          },
+          {
+            "step": 108210,
+            "throughput/duration": 14.96255396772176,
+            "train/loss": 1.2396050691604614
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 14.967127280309796,
+            "train/loss": 1.257662296295166
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.0456023523584,
+            "train/loss": 1.3209112882614136
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.859350975602865,
+            "train/loss": 1.2589783668518066
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.892169534228742,
+            "train/loss": 1.2430713176727295
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.835283196531236,
+            "train/loss": 1.2481294870376587
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.898897494189441,
+            "train/loss": 1.264512300491333
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 14.890583173371851,
+            "train/loss": 1.2583246231079102
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.019643125124276,
+            "train/loss": 1.3005597591400146
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 14.93573003448546,
+            "train/loss": 1.2969187498092651
+          },
+          {
+            "step": 108220,
+            "throughput/duration": 14.927280383184552,
+            "train/loss": 1.269675374031067
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.873572918586433,
+            "train/loss": 1.2630196809768677
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 14.906770810484886,
+            "train/loss": 1.2854264974594116
+          }
+        ]
+      },
+      "raw_sensitivity_steps": {
+        "control": [
+          {
+            "step": 108203,
+            "throughput/duration": 15.45954399369657,
+            "train/loss": 1.2872817516326904
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 15.416802731342614,
+            "train/loss": 1.2846081256866455
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 15.471394366584718,
+            "train/loss": 1.2024164199829102
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 15.456593804061413,
+            "train/loss": 1.2473653554916382
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.562638957053423,
+            "train/loss": 1.2967379093170166
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 15.409695830196142,
+            "train/loss": 1.277622103691101
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 15.404188881628215,
+            "train/loss": 1.2520349025726318
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 15.382505630142987,
+            "train/loss": 1.2574806213378906
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.593021731823683,
+            "train/loss": 1.3208783864974976
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 15.411429692059755,
+            "train/loss": 1.2587350606918335
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 15.387323638424277,
+            "train/loss": 1.242968201637268
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.40815113298595,
+            "train/loss": 1.2479994297027588
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 15.430334009230137,
+            "train/loss": 1.2646079063415527
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 15.42447516694665,
+            "train/loss": 1.2584214210510254
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.472757514566183,
+            "train/loss": 1.3004869222640991
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 15.443495592102408,
+            "train/loss": 1.2969006299972534
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.412921937182546,
+            "train/loss": 1.2630126476287842
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 15.333659618161619,
+            "train/loss": 1.2851938009262085
+          }
+        ],
+        "treatment": [
+          {
+            "step": 108203,
+            "throughput/duration": 14.909099749289453,
+            "train/loss": 1.2873491048812866
+          },
+          {
+            "step": 108204,
+            "throughput/duration": 14.883263261057436,
+            "train/loss": 1.2846403121948242
+          },
+          {
+            "step": 108205,
+            "throughput/duration": 14.919980921782553,
+            "train/loss": 1.2024518251419067
+          },
+          {
+            "step": 108206,
+            "throughput/duration": 14.954885925166309,
+            "train/loss": 1.2473784685134888
+          },
+          {
+            "step": 108207,
+            "throughput/duration": 15.068290865048766,
+            "train/loss": 1.2967382669448853
+          },
+          {
+            "step": 108208,
+            "throughput/duration": 14.964594095945358,
+            "train/loss": 1.2776161432266235
+          },
+          {
+            "step": 108209,
+            "throughput/duration": 14.897428832016885,
+            "train/loss": 1.252081274986267
+          },
+          {
+            "step": 108211,
+            "throughput/duration": 14.967127280309796,
+            "train/loss": 1.257662296295166
+          },
+          {
+            "step": 108212,
+            "throughput/duration": 15.0456023523584,
+            "train/loss": 1.3209112882614136
+          },
+          {
+            "step": 108213,
+            "throughput/duration": 14.859350975602865,
+            "train/loss": 1.2589783668518066
+          },
+          {
+            "step": 108214,
+            "throughput/duration": 14.892169534228742,
+            "train/loss": 1.2430713176727295
+          },
+          {
+            "step": 108215,
+            "throughput/duration": 15.835283196531236,
+            "train/loss": 1.2481294870376587
+          },
+          {
+            "step": 108216,
+            "throughput/duration": 14.898897494189441,
+            "train/loss": 1.264512300491333
+          },
+          {
+            "step": 108217,
+            "throughput/duration": 14.890583173371851,
+            "train/loss": 1.2583246231079102
+          },
+          {
+            "step": 108218,
+            "throughput/duration": 15.019643125124276,
+            "train/loss": 1.3005597591400146
+          },
+          {
+            "step": 108219,
+            "throughput/duration": 14.93573003448546,
+            "train/loss": 1.2969187498092651
+          },
+          {
+            "step": 108221,
+            "throughput/duration": 15.873572918586433,
+            "train/loss": 1.2630196809768677
+          },
+          {
+            "step": 108222,
+            "throughput/duration": 14.906770810484886,
+            "train/loss": 1.2854264974594116
+          }
+        ]
+      }
+    }
+  ],
+  "rebased_draft": "Uses FA4 b28 from current main. GPU numerical and throughput validation pending; historical estimates do not validate the rebased code.",
+  "memory_caveat": "Separate diagnostic default-allocator peak: control 103.565529 GiB, native 115.537611 GiB; excludes collective allocator.",
+  "timing_caveat": "One unsynchronized native-only physical-memory query occurred in pair 1 scored step 108205. The sample is retained. No other arm received this query."
+}
