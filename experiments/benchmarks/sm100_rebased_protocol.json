@@ -1,0 +1,50 @@
+{
+  "orders": [
+    [
+      "control",
+      "native"
+    ],
+    [
+      "native",
+      "control"
+    ],
+    [
+      "control",
+      "native"
+    ],
+    [
+      "native",
+      "control"
+    ]
+  ],
+  "steps_per_arm": 28,
+  "score_relative_steps": [
+    8,
+    27
+  ],
+  "sensitivity": "Exclude absolute steps divisible by ten",
+  "checkpoint_policy": "Resolve latest completed model and optimizer checkpoint after GPU allocation. Require identical URI and step within each pair.",
+  "rack_policy": "Require identical single NVLink rack within each pair.",
+  "priority": "production",
+  "gpu_count": 64,
+  "training_timeout_seconds": 3300,
+  "queue_included_in_training_timeout": false,
+  "control": {
+    "commit": "ce66e19733984e7f0b78deb4e53bf6251c6d68e0",
+    "source_sha256": {
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "c99ef8db78f420accdb8c2336158807c4deadf9ae6d3b6ef2bcfb50099cf1a1c",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "d99bb01e74ac5f68a3551f70f8f17ffa92f2b84fed6061bc423c0e1e25ec52f2",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "1388db945d9af9c1dd654d1b937e712fb76fd14678b0ed78a39669091d9d31d3",
+      "lib/levanter/tests/grug/test_fa4_cute_attention.py": "b2df89dc112848190b281be070cfab8870fb3dc859fc1527bacdde70155601d5"
+    }
+  },
+  "native": {
+    "commit": "6bfb7e85f77d48aa4b4ba98fcfe8b5ee977bef1e",
+    "source_sha256": {
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "cd90a3c2c229cc77d68703e9f384e1ef9f8b651f6076b18418187e7936069560",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "770e8e511795d2c1fb962094943bd46818cc4ffd67a9ba44e1fdd53e7673a25a",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "61e9c05328ea89d595a74ed328fbb10f8cb98db9349418f9ce854ee82d57e52f",
+      "lib/levanter/tests/grug/test_fa4_cute_attention.py": "4dc94a1180f13a94a5aab93cb141cfece3e77209b4bf0cb93509116e4cc8a363"
+    }
+  }
+}
