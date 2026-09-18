@@ -488,7 +488,7 @@ def _upstream_fa4_thd_backward_launcher(
             tidx, _, _ = cute.arch.thread_idx()
             bidx, _, _ = cute.arch.block_idx()
             flat = cute.make_tensor(tensor.iterator, cute.make_layout(cute.size(tensor)))
-            idx = bidx * self._num_threads + tidx
+            idx = cutlass.Int64(bidx) * self._num_threads + cutlass.Int64(tidx)
             if idx < cute.size(flat):
                 flat[idx] = cutlass.Float32(0.0)
 
