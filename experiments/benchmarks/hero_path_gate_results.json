@@ -1,0 +1,225 @@
+{
+  "study": "hero2-hero-path-gate-20260919-0933",
+  "rows": [
+    {
+      "shape": {
+        "batch": 16,
+        "sequence": 4096,
+        "query_heads": 48,
+        "kv_heads": 12,
+        "head_dim": 128,
+        "window": 2048
+      },
+      "forward": {
+        "control_ms": 3.5576027398929,
+        "treatment_ms": 3.1471131020225585,
+        "time_reduction_percent": 11.538377606564898
+      },
+      "forward_backward": {
+        "control_ms": 9.148454200476408,
+        "treatment_ms": 8.7311986181885,
+        "time_reduction_percent": 4.560940822835169
+      }
+    },
+    {
+      "shape": {
+        "batch": 16,
+        "sequence": 4096,
+        "query_heads": 48,
+        "kv_heads": 6,
+        "head_dim": 128,
+        "window": null
+      },
+      "forward": {
+        "control_ms": 3.501969501376152,
+        "treatment_ms": 3.1204694998450577,
+        "time_reduction_percent": 10.893869903240972
+      },
+      "forward_backward": {
+        "control_ms": 8.892066378612071,
+        "treatment_ms": 8.514668680727482,
+        "time_reduction_percent": 4.244206934760819
+      }
+    }
+  ],
+  "weighted": {
+    "forward": {
+      "control_ms": 3.543694430263713,
+      "treatment_ms": 3.1404522014781833,
+      "time_reduction_percent": 11.379147856027794
+    },
+    "forward_backward": {
+      "control_ms": 9.084357245010324,
+      "treatment_ms": 8.677066133823246,
+      "time_reduction_percent": 4.483433447212648
+    }
+  },
+  "criterion_passed": true,
+  "scope": "Synthetic single-GPU screen with correlated timing batches, not a training-throughput result",
+  "validation": {
+    "all_29_gpu_tests_passed_without_skips": true,
+    "protocol_and_source_hashes_matched": true,
+    "both_shapes_expected_forward_and_backward_observed": true,
+    "both_iris_jobs_succeeded": true
+  },
+  "arms": {
+    "control": {
+      "job_id": "/mwittmann/hero2-hero-path-gate-20260919-0933-control",
+      "source": "fa66424b8245471bd6b72131a6e0352465b7a081",
+      "production_source": "5d818723d9690d4d00024a3ff9906bca507df131",
+      "protocol_sha256": "0fb64f9ed2ba86f804f9eeb1bcc058d1620073873aa2718927423679d6487063",
+      "selector": "gpu_fa4_cute_wide",
+      "device": "NVIDIA GB200",
+      "packages": {
+        "jax": "0.11.1",
+        "jaxlib": "0.11.1",
+        "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+        "jax-cuda13-plugin": "0.11.1",
+        "flash-attn-4": "4.0.0b28",
+        "nvidia-cutlass-dsl": "4.6.2",
+        "quack-kernels": "0.6.4",
+        "nvidia-cublas": "13.4.1.1",
+        "nvidia-cudnn-cu13": "9.19.0.56",
+        "nvidia-nccl-cu13": "2.31.2"
+      },
+      "results": [
+        {
+          "shape": {
+            "batch": 16,
+            "sequence": 4096,
+            "query_heads": 48,
+            "kv_heads": 12,
+            "head_dim": 128,
+            "window": 2048
+          },
+          "seconds_per_call": {
+            "forward": [
+              0.0035575221059843897,
+              0.003558907704427838,
+              0.0035566548933275042,
+              0.003556558897253126,
+              0.0035583700984716414
+            ],
+            "forward_backward": [
+              0.009146285301540047,
+              0.009146250004414469,
+              0.009147690096870064,
+              0.009154147596564143,
+              0.009147898002993315
+            ]
+          }
+        },
+        {
+          "shape": {
+            "batch": 16,
+            "sequence": 4096,
+            "query_heads": 48,
+            "kv_heads": 6,
+            "head_dim": 128,
+            "window": null
+          },
+          "seconds_per_call": {
+            "forward": [
+              0.0035082037094980477,
+              0.0035029300954192875,
+              0.003500277304556221,
+              0.0034993077977560462,
+              0.003499128599651158
+            ],
+            "forward_backward": [
+              0.008902861294336617,
+              0.008892461296636612,
+              0.00889036840526387,
+              0.008886269200593233,
+              0.008888371696230024
+            ]
+          }
+        }
+      ]
+    },
+    "native": {
+      "job_id": "/mwittmann/hero2-hero-path-gate-20260919-0933-native",
+      "source": "7ec5e7314444c8f99fd347fef118199cbcb0b746",
+      "production_source": "3aa4232e98fe897d4321450321fcb2de1a08fc9f",
+      "protocol_sha256": "b6dcb303ba25a8d1c3f6c35dbb7ace7bd79544c237cd9056a211f3988f46641d",
+      "selector": "gpu_fa4_cute_wide",
+      "device": "NVIDIA GB200",
+      "packages": {
+        "jax": "0.11.1",
+        "jaxlib": "0.11.1",
+        "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+        "jax-cuda13-plugin": "0.11.1",
+        "flash-attn-4": "4.0.0b28",
+        "nvidia-cutlass-dsl": "4.6.2",
+        "quack-kernels": "0.6.4",
+        "nvidia-cublas": "13.4.1.1",
+        "nvidia-cudnn-cu13": "9.19.0.56",
+        "nvidia-nccl-cu13": "2.31.2"
+      },
+      "results": [
+        {
+          "shape": {
+            "batch": 16,
+            "sequence": 4096,
+            "query_heads": 48,
+            "kv_heads": 12,
+            "head_dim": 128,
+            "window": 2048
+          },
+          "seconds_per_call": {
+            "forward": [
+              0.0031643835012800992,
+              0.003154921100940555,
+              0.0031420091050677,
+              0.003134956303983927,
+              0.003139295498840511
+            ],
+            "forward_backward": [
+              0.008736679598223418,
+              0.008741194801405072,
+              0.00872056749649346,
+              0.008724826795514673,
+              0.00873272439930588
+            ]
+          }
+        },
+        {
+          "shape": {
+            "batch": 16,
+            "sequence": 4096,
+            "query_heads": 48,
+            "kv_heads": 6,
+            "head_dim": 128,
+            "window": null
+          },
+          "seconds_per_call": {
+            "forward": [
+              0.003130040701944381,
+              0.003127931896597147,
+              0.0031097846920602025,
+              0.0031202743062749504,
+              0.0031143159023486076
+            ],
+            "forward_backward": [
+              0.008525439794175327,
+              0.008508620702195912,
+              0.008514995104633272,
+              0.008522131107747554,
+              0.008502156694885344
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "measurement_order": [
+    "control",
+    "native"
+  ],
+  "correctness": {
+    "gpu_reference_tests_passed": 25,
+    "padding_reuse_tests_passed": 4,
+    "skipped": 0
+  },
+  "interpretation": "Exploratory synthetic attention timings through the actual hero selector. Consecutive timing batches share a single GPU and are not independent training replications. The weighted reduction is not a training-throughput estimate."
+}

@@ -1,0 +1,219 @@
+{
+  "purpose": "Four fresh predeclared matched training pairs comparing native SM100 forward with the actual wide segmented hero baseline; native SM100 backward is fixed in both arms.",
+  "main": "7b63e0d0cefcb19282fd9cc7efb3c109cbfc4801",
+  "orders": [
+    [
+      "control",
+      "native"
+    ],
+    [
+      "native",
+      "control"
+    ],
+    [
+      "control",
+      "native"
+    ],
+    [
+      "native",
+      "control"
+    ]
+  ],
+  "steps_per_arm": 28,
+  "score_relative_steps": [
+    8,
+    27
+  ],
+  "profile_relative_steps": [
+    5,
+    6
+  ],
+  "checkpoint_policy": "Select latest complete hero checkpoint once at pair setup in-region; temporarily retain until both arms are terminal; require identical restored URI and step; restore original retention metadata.",
+  "rack_policy": "Require identical NVLink rack within the pair.",
+  "checkpoint_roots": [
+    "s3://marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+    "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+    "s3://hero-checkpoints/marin/grug/hero-nopdl-step108k/2026.08.19.2/checkpoints/step-121638"
+  ],
+  "priority": "production",
+  "gpu_count": 64,
+  "training_timeout_seconds": 3300,
+  "queue_included_in_training_timeout": false,
+  "packages": {
+    "jax": "0.11.1",
+    "jaxlib": "0.11.1",
+    "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+    "jax-cuda13-plugin": "0.11.1",
+    "flash-attn-4": "4.0.0b28",
+    "nvidia-cutlass-dsl": "4.6.2",
+    "quack-kernels": "0.6.4",
+    "nvidia-cublas": "13.4.1.1",
+    "nvidia-cudnn-cu13": "9.19.0.56",
+    "nvidia-nccl-cu13": "2.31.2"
+  },
+  "training_batch_size": 1024,
+  "optimizer_schedule_batch_size": 11264,
+  "optimizer_schedule_steps": 390251,
+  "statistics": {
+    "estimand": "mean(control run-mean duration) / mean(native run-mean duration) - 1",
+    "primary": "All relative steps 8 through 27 inclusive, equal run weighting. Pair is the replicate. Paired Fieller 95% throughput interval with t critical value for 3 degrees of freedom. Also report paired-t seconds saved.",
+    "sensitivity": "Exclude absolute step numbers divisible by 10; retain all other primary samples.",
+    "decision": "Require positive lower primary throughput interval and acceptable provenance and numerical evidence before promotion. No timing-based early acceptance or extra pairs.",
+    "invalid_runs": "Retain and report failed or provenance-mismatched runs; pause and investigate. Do not replace based on duration. Any protocol amendment must precede further measurements."
+  },
+  "loss_policy": "Record all 28 finite losses per arm and compare at matched restored steps, indexed 0 through 27. Define differences as treatment minus control cross-entropy in nats; report initial difference, signed mean, maximum absolute difference, last-seven mean and every per-step difference. Same-sign differences at all 20 scored steps trigger investigation before promotion, as do nonfinite values or other unexplained sustained drift. Exact initial-loss equality is not required for changed BF16 arithmetic. The corrected hero selector passed 25 GPU reference tests and four padding/reuse tests at unchanged tolerances. Short trajectories cannot establish long-term convergence or numerical equivalence.",
+  "baseline_policy": "Native SM100 backward is fixed in both arms. Neither registration-only nor copy-engine all-gather is promoted. Default NCCL policy and ragged-all-to-all-only registration remain fixed.",
+  "control": {
+    "commit": "5d818723d9690d4d00024a3ff9906bca507df131",
+    "registration_scope": "raggedalltoall",
+    "nccl_cta_policy": "DEFAULT",
+    "source_sha256": {
+      "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+      "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+      "experiments/grug/moe_hero_ep/hero_recipe.py": "047087f209842e3cfb0d055a5043e2bdafbdd4c1f2092475f5b31569f5a49957",
+      "experiments/grug/moe_hero_ep/heuristic.py": "057d52a4072c3246bd7ce1231b7f1736e6ca7811341459868976937faf15c742",
+      "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+      "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+      "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+      "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+      "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "92a048e2bdd9094bd5b92c6b0dcf940f916c6b2564ae62f53ae32a2ea4b67dd6",
+      "lib/levanter/src/levanter/grug/attention/_core.py": "8c6c417b5c82921bec4dab5be5d8e3d408dcd8d28b1be66b20e78ee892c79bf4",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+      "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+      "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+      "lib/marin/src/marin/profiling/xplane.py": "db9ce7f0417ab3deba96e3b86e41416da70f0517004abf6efd36169cfdc50dae",
+      "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+      "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+    },
+    "intended_forward": "segmented",
+    "expected_profile_kernel_counts": {
+      "segmented_flash_attention_forward": 192,
+      "flashattentionbackwardsm100": 96
+    }
+  },
+  "native": {
+    "commit": "3aa4232e98fe897d4321450321fcb2de1a08fc9f",
+    "registration_scope": "raggedalltoall",
+    "nccl_cta_policy": "DEFAULT",
+    "source_sha256": {
+      "experiments/benchmarks/fa4/tile_sweep.py": "def617198b2aa3e589c85f6b29798c52f73bf0f8be96ab24cf38ff0942c25a29",
+      "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+      "experiments/grug/moe_hero_ep/hero_recipe.py": "047087f209842e3cfb0d055a5043e2bdafbdd4c1f2092475f5b31569f5a49957",
+      "experiments/grug/moe_hero_ep/heuristic.py": "057d52a4072c3246bd7ce1231b7f1736e6ca7811341459868976937faf15c742",
+      "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+      "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+      "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+      "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+      "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "92a048e2bdd9094bd5b92c6b0dcf940f916c6b2564ae62f53ae32a2ea4b67dd6",
+      "lib/levanter/src/levanter/grug/attention/_core.py": "8c6c417b5c82921bec4dab5be5d8e3d408dcd8d28b1be66b20e78ee892c79bf4",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "596e3b355c4fa6f50ed4c93e669a87d6fde855b188c81209acbc9d6a41ae9498",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "d640330e7f83dfd5d53ca447398837d3f950e22651f16a76eb971b440ba21ba0",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "f9ab27fa16bc1e55e3f97bddbd2d9cb25c36393e4002197ea8c799801cb09318",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "a669c64af739d1c356ed194ce6a22e52897ef7710fe072bad84d8474db026672",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+      "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+      "lib/levanter/tests/grug/test_fa4_cute_attention.py": "dba43a8f8e2df80e41df2c401b04ea6c6383487a22c7e56db345f0e343f5a5c2",
+      "lib/marin/src/marin/profiling/xplane.py": "db9ce7f0417ab3deba96e3b86e41416da70f0517004abf6efd36169cfdc50dae",
+      "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+      "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+    },
+    "intended_forward": "native",
+    "expected_profile_kernel_counts": {
+      "flashattentionforwardsm100": 192,
+      "flashattentionbackwardsm100": 96
+    }
+  },
+  "harness_source_sha256": {
+    "experiments/benchmarks/hero_profile.py": "2880787be909be729e7a839531e4374d0fa5270b7a484d45cb42b13326c5c3b5",
+    "experiments/benchmarks/hero_path_training.py": "f62287d35bba6a30d24619c2f0b562a3759e5b8dd018265b92eeee7280cccb56"
+  },
+  "correctness_gates": {
+    "control": {
+      "job_id": "/mwittmann/hero2-hero-path-gate-20260919-0933-control",
+      "source": "fa66424b8245471bd6b72131a6e0352465b7a081",
+      "protocol_sha256": "0fb64f9ed2ba86f804f9eeb1bcc058d1620073873aa2718927423679d6487063",
+      "state": "succeeded"
+    },
+    "native": {
+      "job_id": "/mwittmann/hero2-hero-path-gate-20260919-0933-native",
+      "source": "7ec5e7314444c8f99fd347fef118199cbcb0b746",
+      "protocol_sha256": "b6dcb303ba25a8d1c3f6c35dbb7ace7bd79544c237cd9056a211f3988f46641d",
+      "state": "succeeded"
+    }
+  },
+  "selection_screen": {
+    "study": "hero2-hero-path-gate-20260919-0933",
+    "rows": [
+      {
+        "shape": {
+          "batch": 16,
+          "sequence": 4096,
+          "query_heads": 48,
+          "kv_heads": 12,
+          "head_dim": 128,
+          "window": 2048
+        },
+        "forward": {
+          "control_ms": 3.5576027398929,
+          "treatment_ms": 3.1471131020225585,
+          "time_reduction_percent": 11.538377606564898
+        },
+        "forward_backward": {
+          "control_ms": 9.148454200476408,
+          "treatment_ms": 8.7311986181885,
+          "time_reduction_percent": 4.560940822835169
+        }
+      },
+      {
+        "shape": {
+          "batch": 16,
+          "sequence": 4096,
+          "query_heads": 48,
+          "kv_heads": 6,
+          "head_dim": 128,
+          "window": null
+        },
+        "forward": {
+          "control_ms": 3.501969501376152,
+          "treatment_ms": 3.1204694998450577,
+          "time_reduction_percent": 10.893869903240972
+        },
+        "forward_backward": {
+          "control_ms": 8.892066378612071,
+          "treatment_ms": 8.514668680727482,
+          "time_reduction_percent": 4.244206934760819
+        }
+      }
+    ],
+    "weighted": {
+      "forward": {
+        "control_ms": 3.543694430263713,
+        "treatment_ms": 3.1404522014781833,
+        "time_reduction_percent": 11.379147856027794
+      },
+      "forward_backward": {
+        "control_ms": 9.084357245010324,
+        "treatment_ms": 8.677066133823246,
+        "time_reduction_percent": 4.483433447212648
+      }
+    },
+    "criterion_passed": true,
+    "scope": "Synthetic single-GPU screen with correlated timing batches, not a training-throughput result",
+    "validation": {
+      "all_29_gpu_tests_passed_without_skips": true,
+      "protocol_and_source_hashes_matched": true,
+      "both_shapes_expected_forward_and_backward_observed": true,
+      "both_iris_jobs_succeeded": true
+    }
+  },
+  "excluded_study": {
+    "study": "hero2-forward-20260919-0750",
+    "reason": "Both arms selected segmented forward; none of its samples enters this study.",
+    "record": "https://github.com/mcwitt-agent/marin/blob/984ef06e57223d517aea05fb15851cb7e07dc7ff/experiments/benchmarks/native_forward_invalid_study.json"
+  },
+  "kernel_validation": "After each arm, rank 0 parses its local two-step XPlane capture in-region and broadcasts observed attention kernel counts. Require 192 forward launches of the intended implementation and 96 native SM100 backward launches, with zero launches of the other forward implementation. Any mismatch fails the job and stops submission of subsequent arms. Timing ends before this validation. Saved profiles also support final provenance and bottleneck analysis."
+}
