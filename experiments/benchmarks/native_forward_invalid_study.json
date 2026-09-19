@@ -1,0 +1,821 @@
+{
+  "schema": "hero-native-forward-invalid-study/v1",
+  "study": "hero2-forward-20260919-0750",
+  "decision": "Withdraw all native-forward throughput estimates from this study. The proposed kernel was not selected by the hero recipe.",
+  "valid_for_optimization_acceptance": false,
+  "reason": "HERO_MODEL_CONFIG selects gpu_fa4_cute_wide. Control commit 5d818723d9 implements segmented forward. Candidate 8bad7eb437 adds native SM100 forward but clears sm100_forward for the wide selector, so both arms selected segmented forward. Runtime manifests echoed the intended arm and did not establish kernel selection.",
+  "dispatch_evidence_kind": "Source and resolved training configuration; this record does not claim saved-profile validation.",
+  "earlier_screen_correction": "The earlier synthetic kernel screen used a 64x64 segmented baseline; hero uses 128x64. That screen does not establish a gain over the hero baseline.",
+  "earlier_backward_result": "This finding does not invalidate the earlier native SM100 backward result in PR #9228: its saved profiles independently verified that backward kernel.",
+  "baseline_main": "7b63e0d0cefcb19282fd9cc7efb3c109cbfc4801",
+  "hardware": {
+    "gpu": "GB200",
+    "count": 64,
+    "topology": "One NVLink rack per run; rack matched within each pair"
+  },
+  "protocol_sha256": "ce70dd4e14fbbae0217a4d98d5b79d283360f2f3f8390ea4434aa6a43c268a96",
+  "scored_relative_steps": [
+    8,
+    27
+  ],
+  "updates_per_run": 28,
+  "pairs": [
+    {
+      "pair": 1,
+      "order": [
+        "control",
+        "native"
+      ],
+      "arms": {
+        "control": {
+          "label_is_intended_arm_only": true,
+          "job_id": "/mwittmann/hero2-forward-20260919-0750-p1-control",
+          "harness_commit": "18d3310656c7aeff4e28042302bf0b1c19b68265",
+          "production_commit": "5d818723d9690d4d00024a3ff9906bca507df131",
+          "checkpoint": {
+            "benchmark_checkpoint": "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints/step-124030",
+            "checkpoint_step": 124030,
+            "stop_step": 124058
+          },
+          "rack": "DH1-137-US-EAST-08A",
+          "mean_scored_seconds": 15.407930443203076,
+          "samples": [
+            {
+              "relative_step": 0,
+              "step": 124030,
+              "seconds": 65.99022365175188,
+              "loss": 1.2448837757110596
+            },
+            {
+              "relative_step": 1,
+              "step": 124031,
+              "seconds": 15.930601649917662,
+              "loss": 1.226048707962036
+            },
+            {
+              "relative_step": 2,
+              "step": 124032,
+              "seconds": 17.36606016382575,
+              "loss": 1.2490499019622805
+            },
+            {
+              "relative_step": 3,
+              "step": 124033,
+              "seconds": 16.131604409776628,
+              "loss": 1.2192543745040894
+            },
+            {
+              "relative_step": 4,
+              "step": 124034,
+              "seconds": 17.4574437700212,
+              "loss": 1.224915862083435
+            },
+            {
+              "relative_step": 5,
+              "step": 124035,
+              "seconds": 16.044875705614686,
+              "loss": 1.1951218843460083
+            },
+            {
+              "relative_step": 6,
+              "step": 124036,
+              "seconds": 15.922860181890428,
+              "loss": 1.2654227018356323
+            },
+            {
+              "relative_step": 7,
+              "step": 124037,
+              "seconds": 14.68102143611759,
+              "loss": 1.2422592639923096
+            },
+            {
+              "relative_step": 8,
+              "step": 124038,
+              "seconds": 15.58429568912834,
+              "loss": 1.2483783960342407
+            },
+            {
+              "relative_step": 9,
+              "step": 124039,
+              "seconds": 15.612171687185764,
+              "loss": 1.2278794050216677
+            },
+            {
+              "relative_step": 10,
+              "step": 124040,
+              "seconds": 16.09262362960726,
+              "loss": 1.267919659614563
+            },
+            {
+              "relative_step": 11,
+              "step": 124041,
+              "seconds": 15.70716803520918,
+              "loss": 1.2613641023635864
+            },
+            {
+              "relative_step": 12,
+              "step": 124042,
+              "seconds": 15.457315280102192,
+              "loss": 1.2476110458374023
+            },
+            {
+              "relative_step": 13,
+              "step": 124043,
+              "seconds": 16.32248291093856,
+              "loss": 1.2941367626190186
+            },
+            {
+              "relative_step": 14,
+              "step": 124044,
+              "seconds": 15.576945546083152,
+              "loss": 1.2282921075820925
+            },
+            {
+              "relative_step": 15,
+              "step": 124045,
+              "seconds": 15.375507381744685,
+              "loss": 1.2392290830612185
+            },
+            {
+              "relative_step": 16,
+              "step": 124046,
+              "seconds": 14.747829593718052,
+              "loss": 1.2331002950668335
+            },
+            {
+              "relative_step": 17,
+              "step": 124047,
+              "seconds": 15.199517726898192,
+              "loss": 1.2557189464569092
+            },
+            {
+              "relative_step": 18,
+              "step": 124048,
+              "seconds": 14.555381892248988,
+              "loss": 1.2585642337799072
+            },
+            {
+              "relative_step": 19,
+              "step": 124049,
+              "seconds": 15.20854947064072,
+              "loss": 1.253953456878662
+            },
+            {
+              "relative_step": 20,
+              "step": 124050,
+              "seconds": 16.091630253009498,
+              "loss": 1.2185509204864502
+            },
+            {
+              "relative_step": 21,
+              "step": 124051,
+              "seconds": 15.12538848258555,
+              "loss": 1.2556908130645752
+            },
+            {
+              "relative_step": 22,
+              "step": 124052,
+              "seconds": 15.210061548277736,
+              "loss": 1.2467104196548462
+            },
+            {
+              "relative_step": 23,
+              "step": 124053,
+              "seconds": 15.182061677798629,
+              "loss": 1.2056639194488523
+            },
+            {
+              "relative_step": 24,
+              "step": 124054,
+              "seconds": 14.610237447544932,
+              "loss": 1.2478008270263672
+            },
+            {
+              "relative_step": 25,
+              "step": 124055,
+              "seconds": 14.614509478211405,
+              "loss": 1.245349407196045
+            },
+            {
+              "relative_step": 26,
+              "step": 124056,
+              "seconds": 15.257090820930898,
+              "loss": 1.2992383241653442
+            },
+            {
+              "relative_step": 27,
+              "step": 124057,
+              "seconds": 16.627840312197804,
+              "loss": 1.2110718488693235
+            }
+          ]
+        },
+        "native": {
+          "label_is_intended_arm_only": true,
+          "job_id": "/mwittmann/hero2-forward-20260919-0750-p1-native",
+          "harness_commit": "1d88b48921af67d8af76c5e792b840a56b5d8437",
+          "production_commit": "8bad7eb4374945f47f227e6e2eb25b242514df2c",
+          "checkpoint": {
+            "benchmark_checkpoint": "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints/step-124030",
+            "checkpoint_step": 124030,
+            "stop_step": 124058
+          },
+          "rack": "DH1-137-US-EAST-08A",
+          "mean_scored_seconds": 14.829898357857019,
+          "samples": [
+            {
+              "relative_step": 0,
+              "step": 124030,
+              "seconds": 95.98617858346552,
+              "loss": 1.2448837757110596
+            },
+            {
+              "relative_step": 1,
+              "step": 124031,
+              "seconds": 15.53643750026822,
+              "loss": 1.2260466814041138
+            },
+            {
+              "relative_step": 2,
+              "step": 124032,
+              "seconds": 15.03143180720508,
+              "loss": 1.2490837574005127
+            },
+            {
+              "relative_step": 3,
+              "step": 124033,
+              "seconds": 16.16691463533789,
+              "loss": 1.219289779663086
+            },
+            {
+              "relative_step": 4,
+              "step": 124034,
+              "seconds": 17.556952425278723,
+              "loss": 1.2249574661254885
+            },
+            {
+              "relative_step": 5,
+              "step": 124035,
+              "seconds": 16.68208796903491,
+              "loss": 1.195144772529602
+            },
+            {
+              "relative_step": 6,
+              "step": 124036,
+              "seconds": 15.225481871515512,
+              "loss": 1.2654211521148682
+            },
+            {
+              "relative_step": 7,
+              "step": 124037,
+              "seconds": 14.734023746103048,
+              "loss": 1.2423484325408936
+            },
+            {
+              "relative_step": 8,
+              "step": 124038,
+              "seconds": 15.765058696269987,
+              "loss": 1.2482926845550537
+            },
+            {
+              "relative_step": 9,
+              "step": 124039,
+              "seconds": 15.40122282039374,
+              "loss": 1.227934718132019
+            },
+            {
+              "relative_step": 10,
+              "step": 124040,
+              "seconds": 16.900054562836885,
+              "loss": 1.2680401802062988
+            },
+            {
+              "relative_step": 11,
+              "step": 124041,
+              "seconds": 14.821614908054473,
+              "loss": 1.2613595724105835
+            },
+            {
+              "relative_step": 12,
+              "step": 124042,
+              "seconds": 14.60564114432782,
+              "loss": 1.2476552724838257
+            },
+            {
+              "relative_step": 13,
+              "step": 124043,
+              "seconds": 14.535803927108644,
+              "loss": 1.2941914796829224
+            },
+            {
+              "relative_step": 14,
+              "step": 124044,
+              "seconds": 14.639578538015485,
+              "loss": 1.2282376289367676
+            },
+            {
+              "relative_step": 15,
+              "step": 124045,
+              "seconds": 14.578391651622953,
+              "loss": 1.2391257286071775
+            },
+            {
+              "relative_step": 16,
+              "step": 124046,
+              "seconds": 14.584323234856129,
+              "loss": 1.2331311702728271
+            },
+            {
+              "relative_step": 17,
+              "step": 124047,
+              "seconds": 14.611549813300371,
+              "loss": 1.255745768547058
+            },
+            {
+              "relative_step": 18,
+              "step": 124048,
+              "seconds": 14.58542892895639,
+              "loss": 1.2584261894226074
+            },
+            {
+              "relative_step": 19,
+              "step": 124049,
+              "seconds": 14.594603805802764,
+              "loss": 1.254024863243103
+            },
+            {
+              "relative_step": 20,
+              "step": 124050,
+              "seconds": 14.614180375821888,
+              "loss": 1.218691349029541
+            },
+            {
+              "relative_step": 21,
+              "step": 124051,
+              "seconds": 14.768853584304452,
+              "loss": 1.2556079626083374
+            },
+            {
+              "relative_step": 22,
+              "step": 124052,
+              "seconds": 14.510248660109935,
+              "loss": 1.2467267513275146
+            },
+            {
+              "relative_step": 23,
+              "step": 124053,
+              "seconds": 14.558143202215431,
+              "loss": 1.205687403678894
+            },
+            {
+              "relative_step": 24,
+              "step": 124054,
+              "seconds": 14.583285528235136,
+              "loss": 1.24784255027771
+            },
+            {
+              "relative_step": 25,
+              "step": 124055,
+              "seconds": 14.661126585677266,
+              "loss": 1.245344638824463
+            },
+            {
+              "relative_step": 26,
+              "step": 124056,
+              "seconds": 14.703734473325312,
+              "loss": 1.299117088317871
+            },
+            {
+              "relative_step": 27,
+              "step": 124057,
+              "seconds": 14.575122715905309,
+              "loss": 1.2109951972961426
+            }
+          ]
+        }
+      },
+      "loss_summary": {
+        "pair": 1,
+        "checkpoint_step": 124030,
+        "steps": 28,
+        "mean_difference": 6.198883056632695e-06,
+        "max_absolute_difference": 0.0001404285430908203,
+        "first_step_difference": 0.0,
+        "last_step_difference": -7.66515731809303e-05,
+        "last_seven_mean_difference": -2.9138156345848948e-05,
+        "scored_step_mean_difference": -2.2888183593972045e-06
+      }
+    },
+    {
+      "pair": 2,
+      "order": [
+        "native",
+        "control"
+      ],
+      "arms": {
+        "control": {
+          "label_is_intended_arm_only": true,
+          "job_id": "/mwittmann/hero2-forward-20260919-0750-p2-control",
+          "harness_commit": "18d3310656c7aeff4e28042302bf0b1c19b68265",
+          "production_commit": "5d818723d9690d4d00024a3ff9906bca507df131",
+          "checkpoint": {
+            "benchmark_checkpoint": "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints/step-124234",
+            "checkpoint_step": 124234,
+            "stop_step": 124262
+          },
+          "rack": "DH1-137-US-EAST-08A",
+          "mean_scored_seconds": 15.169862962467596,
+          "samples": [
+            {
+              "relative_step": 0,
+              "step": 124234,
+              "seconds": 78.27659413870424,
+              "loss": 1.2338932752609253
+            },
+            {
+              "relative_step": 1,
+              "step": 124235,
+              "seconds": 16.932479264214635,
+              "loss": 1.2421656847000122
+            },
+            {
+              "relative_step": 2,
+              "step": 124236,
+              "seconds": 16.832180145196617,
+              "loss": 1.245883226394653
+            },
+            {
+              "relative_step": 3,
+              "step": 124237,
+              "seconds": 16.174970700405538,
+              "loss": 1.2434653043746948
+            },
+            {
+              "relative_step": 4,
+              "step": 124238,
+              "seconds": 16.793661187402904,
+              "loss": 1.2499547004699707
+            },
+            {
+              "relative_step": 5,
+              "step": 124239,
+              "seconds": 15.253809317946434,
+              "loss": 1.23936128616333
+            },
+            {
+              "relative_step": 6,
+              "step": 124240,
+              "seconds": 16.64965188037604,
+              "loss": 1.2641160488128662
+            },
+            {
+              "relative_step": 7,
+              "step": 124241,
+              "seconds": 16.366499504074454,
+              "loss": 1.2535223960876465
+            },
+            {
+              "relative_step": 8,
+              "step": 124242,
+              "seconds": 16.908370308578014,
+              "loss": 1.2498332262039185
+            },
+            {
+              "relative_step": 9,
+              "step": 124243,
+              "seconds": 14.735194580629468,
+              "loss": 1.2246772050857544
+            },
+            {
+              "relative_step": 10,
+              "step": 124244,
+              "seconds": 15.458331120200455,
+              "loss": 1.231721043586731
+            },
+            {
+              "relative_step": 11,
+              "step": 124245,
+              "seconds": 14.589814024977386,
+              "loss": 1.2614638805389404
+            },
+            {
+              "relative_step": 12,
+              "step": 124246,
+              "seconds": 14.757988274097444,
+              "loss": 1.2539747953414917
+            },
+            {
+              "relative_step": 13,
+              "step": 124247,
+              "seconds": 14.803920587524772,
+              "loss": 1.200633883476257
+            },
+            {
+              "relative_step": 14,
+              "step": 124248,
+              "seconds": 15.487198061309757,
+              "loss": 1.2611138820648191
+            },
+            {
+              "relative_step": 15,
+              "step": 124249,
+              "seconds": 15.704448526725171,
+              "loss": 1.2495591640472412
+            },
+            {
+              "relative_step": 16,
+              "step": 124250,
+              "seconds": 16.038983072154224,
+              "loss": 1.2561625242233276
+            },
+            {
+              "relative_step": 17,
+              "step": 124251,
+              "seconds": 15.732745738700032,
+              "loss": 1.2503626346588137
+            },
+            {
+              "relative_step": 18,
+              "step": 124252,
+              "seconds": 14.636421859264374,
+              "loss": 1.2331219911575315
+            },
+            {
+              "relative_step": 19,
+              "step": 124253,
+              "seconds": 15.59830294083804,
+              "loss": 1.269101619720459
+            },
+            {
+              "relative_step": 20,
+              "step": 124254,
+              "seconds": 14.587056489661336,
+              "loss": 1.2442165613174438
+            },
+            {
+              "relative_step": 21,
+              "step": 124255,
+              "seconds": 14.546460464596748,
+              "loss": 1.2808483839035034
+            },
+            {
+              "relative_step": 22,
+              "step": 124256,
+              "seconds": 15.267975179478526,
+              "loss": 1.2549842596054075
+            },
+            {
+              "relative_step": 23,
+              "step": 124257,
+              "seconds": 14.580217740498483,
+              "loss": 1.285534143447876
+            },
+            {
+              "relative_step": 24,
+              "step": 124258,
+              "seconds": 14.610900551080704,
+              "loss": 1.23171865940094
+            },
+            {
+              "relative_step": 25,
+              "step": 124259,
+              "seconds": 14.655885023996234,
+              "loss": 1.2591513395309448
+            },
+            {
+              "relative_step": 26,
+              "step": 124260,
+              "seconds": 14.576891852542758,
+              "loss": 1.27454674243927
+            },
+            {
+              "relative_step": 27,
+              "step": 124261,
+              "seconds": 16.120152852497995,
+              "loss": 1.3153457641601562
+            }
+          ]
+        },
+        "native": {
+          "label_is_intended_arm_only": true,
+          "job_id": "/mwittmann/hero2-forward-20260919-0750-p2-native",
+          "harness_commit": "1d88b48921af67d8af76c5e792b840a56b5d8437",
+          "production_commit": "8bad7eb4374945f47f227e6e2eb25b242514df2c",
+          "checkpoint": {
+            "benchmark_checkpoint": "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints/step-124234",
+            "checkpoint_step": 124234,
+            "stop_step": 124262
+          },
+          "rack": "DH1-137-US-EAST-08A",
+          "mean_scored_seconds": 15.426759187318385,
+          "samples": [
+            {
+              "relative_step": 0,
+              "step": 124234,
+              "seconds": 77.66794145479798,
+              "loss": 1.2338932752609253
+            },
+            {
+              "relative_step": 1,
+              "step": 124235,
+              "seconds": 16.655701817944646,
+              "loss": 1.2421835660934448
+            },
+            {
+              "relative_step": 2,
+              "step": 124236,
+              "seconds": 17.550167846493423,
+              "loss": 1.2458890676498413
+            },
+            {
+              "relative_step": 3,
+              "step": 124237,
+              "seconds": 15.982088746502995,
+              "loss": 1.243497371673584
+            },
+            {
+              "relative_step": 4,
+              "step": 124238,
+              "seconds": 15.904142981395124,
+              "loss": 1.2500433921813965
+            },
+            {
+              "relative_step": 5,
+              "step": 124239,
+              "seconds": 15.484764985740185,
+              "loss": 1.2394068241119385
+            },
+            {
+              "relative_step": 6,
+              "step": 124240,
+              "seconds": 17.31552251521498,
+              "loss": 1.264266848564148
+            },
+            {
+              "relative_step": 7,
+              "step": 124241,
+              "seconds": 16.957024379633367,
+              "loss": 1.253592014312744
+            },
+            {
+              "relative_step": 8,
+              "step": 124242,
+              "seconds": 15.012500662356617,
+              "loss": 1.2497650384902954
+            },
+            {
+              "relative_step": 9,
+              "step": 124243,
+              "seconds": 15.41608206089586,
+              "loss": 1.2246475219726562
+            },
+            {
+              "relative_step": 10,
+              "step": 124244,
+              "seconds": 15.791956536471844,
+              "loss": 1.2316267490386963
+            },
+            {
+              "relative_step": 11,
+              "step": 124245,
+              "seconds": 15.41112320497632,
+              "loss": 1.2611786127090454
+            },
+            {
+              "relative_step": 12,
+              "step": 124246,
+              "seconds": 14.597715533338487,
+              "loss": 1.2537028789520264
+            },
+            {
+              "relative_step": 13,
+              "step": 124247,
+              "seconds": 15.4384090853855,
+              "loss": 1.2003788948059082
+            },
+            {
+              "relative_step": 14,
+              "step": 124248,
+              "seconds": 16.20069584157318,
+              "loss": 1.260859131813049
+            },
+            {
+              "relative_step": 15,
+              "step": 124249,
+              "seconds": 15.229501456953583,
+              "loss": 1.2490499019622805
+            },
+            {
+              "relative_step": 16,
+              "step": 124250,
+              "seconds": 15.861404213123024,
+              "loss": 1.2557445764541626
+            },
+            {
+              "relative_step": 17,
+              "step": 124251,
+              "seconds": 16.47465116623789,
+              "loss": 1.249950647354126
+            },
+            {
+              "relative_step": 18,
+              "step": 124252,
+              "seconds": 14.682761463336648,
+              "loss": 1.2328532934188845
+            },
+            {
+              "relative_step": 19,
+              "step": 124253,
+              "seconds": 15.632942126132548,
+              "loss": 1.2686138153076172
+            },
+            {
+              "relative_step": 20,
+              "step": 124254,
+              "seconds": 15.229621104896069,
+              "loss": 1.2438101768493652
+            },
+            {
+              "relative_step": 21,
+              "step": 124255,
+              "seconds": 14.57111589051783,
+              "loss": 1.2804718017578125
+            },
+            {
+              "relative_step": 22,
+              "step": 124256,
+              "seconds": 15.397970663383605,
+              "loss": 1.2546381950378418
+            },
+            {
+              "relative_step": 23,
+              "step": 124257,
+              "seconds": 14.60530157852918,
+              "loss": 1.285158395767212
+            },
+            {
+              "relative_step": 24,
+              "step": 124258,
+              "seconds": 14.538927579298615,
+              "loss": 1.2314071655273438
+            },
+            {
+              "relative_step": 25,
+              "step": 124259,
+              "seconds": 16.415242187678814,
+              "loss": 1.2587952613830566
+            },
+            {
+              "relative_step": 26,
+              "step": 124260,
+              "seconds": 15.514639498665929,
+              "loss": 1.2741341590881348
+            },
+            {
+              "relative_step": 27,
+              "step": 124261,
+              "seconds": 16.512621892616153,
+              "loss": 1.3149299621582031
+            }
+          ]
+        }
+      },
+      "loss_summary": {
+        "pair": 2,
+        "checkpoint_step": 124234,
+        "steps": 28,
+        "mean_difference": -0.00021232451711379014,
+        "max_absolute_difference": 0.0005092620849607155,
+        "first_step_difference": 0.0,
+        "last_step_difference": -0.000415802001953125,
+        "last_seven_mean_difference": -0.0003706216812133472,
+        "scored_step_mean_difference": -0.00031777620315547316
+      }
+    }
+  ],
+  "withdrawn_estimates": {
+    "pairs": [
+      {
+        "pair": 1,
+        "control_seconds": 15.407930443203076,
+        "native_seconds": 14.829898357857019,
+        "gain_percent": 3.8977481261010194
+      },
+      {
+        "pair": 2,
+        "control_seconds": 15.169862962467596,
+        "native_seconds": 15.426759187318385,
+        "gain_percent": -1.6652637260454073
+      }
+    ],
+    "aggregate_gain_percent": 1.0613725591327672,
+    "scope": "Withdrawn as optimization evidence because the proposed native-forward kernel was not selected."
+  },
+  "cleanup": {
+    "pair3_control": "Cancelled after invalidation; excluded from this record",
+    "pair3_treatment_submitted": false,
+    "pair4_submitted": false,
+    "all_checkpoint_retention_restored": true
+  },
+  "limitations": "These measurements cannot estimate a native-forward effect. Short-run loss comparisons also do not evaluate native-forward numerical behavior or long-term convergence."
+}
