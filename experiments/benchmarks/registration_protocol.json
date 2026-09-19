@@ -1,10 +1,10 @@
 {
-  "purpose": "Exploratory single-pair comparison; no acceptance confidence interval from one pair.",
+  "purpose": "Second exploratory single-pair comparison with reversed order; no acceptance confidence interval from one pair.",
   "main": "6112366851",
   "orders": [
     [
-      "control",
-      "allgather"
+      "allgather",
+      "control"
     ]
   ],
   "steps_per_arm": 28,
@@ -79,5 +79,12 @@
       "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
       "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6"
     }
-  }
+  },
+  "previous_screen": {
+    "study": "hero2-registration-20260919-0031",
+    "throughput_change_percent": 1.7050041802360028,
+    "result_commit": "b8fd37d39b1a313acf3742d5771fed73e82cceb6",
+    "decision": "Check repeatability with reversed order before claiming a throughput win."
+  },
+  "baseline_policy": "Keep main 6112366851 plus native SM100 attention and both production sources frozen for replication of this experiment."
 }
