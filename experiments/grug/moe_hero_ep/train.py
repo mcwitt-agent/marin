@@ -216,6 +216,8 @@ def _apply_hero_ep_runtime_defaults(
     xla_flags = os.environ.get("XLA_FLAGS", "").split()
     ragged = moe_implementation == RAGGED_MOE_IMPLEMENTATION
     if ragged:
+        # Registered all-gather can use copy engines without occupying compute SMs.
+        os.environ.setdefault("NCCL_CTA_POLICY", "ZERO")
         overlap_limit = RAGGED_COLLECTIVE_OVERLAP_LIMIT
     elif inline_watch_enabled:
         overlap_limit = INLINE_WATCH_COLLECTIVE_OVERLAP_LIMIT
