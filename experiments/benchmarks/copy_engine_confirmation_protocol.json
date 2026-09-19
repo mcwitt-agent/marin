@@ -1,0 +1,198 @@
+{
+  "baseline_policy": "Freeze current main plus native SM100 attention; do not promote inconclusive registration-only result into the baseline.",
+  "checkpoint_policy": "Select latest complete hero checkpoint once at pair setup in-region; temporarily retain until both arms are terminal; require identical restored URI and step; restore original retention metadata.",
+  "checkpoint_roots": [
+    "s3://marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+    "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+    "s3://hero-checkpoints/marin/grug/hero-nopdl-step108k/2026.08.19.2/checkpoints/step-121638"
+  ],
+  "control": {
+    "commit": "ecb991b18e19bb3075900d75168abcb2a6125096",
+    "nccl_cta_policy": "DEFAULT",
+    "registration_scope": "raggedalltoall",
+    "source_sha256": {
+      "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+      "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+      "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+      "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+      "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "92a048e2bdd9094bd5b92c6b0dcf940f916c6b2564ae62f53ae32a2ea4b67dd6",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+      "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+      "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+      "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+      "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+    }
+  },
+  "copyengine": {
+    "commit": "c1995cda3eaf72ef23d586e71dd11e5c7ddcf9f0",
+    "nccl_cta_policy": "ZERO",
+    "registration_scope": "raggedalltoall,allgather",
+    "source_sha256": {
+      "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+      "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+      "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+      "experiments/grug/moe_hero_ep/train.py": "5d07d54c1fabf4df2aaf0a05e01865243451e020f20ad133a13d58befbbdd251",
+      "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "11ea4572bd88d9c4d3bed0cb15025adcae198ce75ac0c5bf5caeb9f767fd42f0",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+      "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+      "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+      "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+      "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+      "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+    }
+  },
+  "correctness_gate": "/mwittmann/hero2-copy-engine-gate-20260919-0435",
+  "correctness_gate_source": "ecb991b18e19bb3075900d75168abcb2a6125096",
+  "frozen_harness_commits": {
+    "control": "3fa8c7102eea1c90e8067451da6215a2ee2e0d7e",
+    "copyengine": "46df8781cf9ac7c0c210a7f0337a331e97590227"
+  },
+  "gate_results": [
+    {
+      "check": "mixed_collectives",
+      "collective_dtypes": [
+        "bf16",
+        "f32"
+      ],
+      "collective_hlo": [
+        "  %all-gather-start = ((bf16[256,128]{1,0:S(1)}, f32[256,128]{1,0:S(1)}), (bf16[1024,128]{1,0}, f32[1024,128]{1,0})) all-gather-start(%copy.26, %copy.27), channel_id=1, replica_groups=mesh['rank'=4] {'rank'}, dimensions={0}, use_global_device_ids=true, metadata={op_name=\"jit(update)/shard_map/jvp()/all_gather\" scheduling_name=\"all-gather-start\" stack_frame_id=46}, backend_config={\"collective_backend_config\":{\"backend\":\"DEFAULT\",\"collectives_mode\":\"COLLECTIVES_MODE_INVALID\",\"communication_domain\":\"COLLECTIVE_COMMUNICATION_DOMAIN_UNSPECIFIED\",\"is_pipelined\":false,\"is_spmd_generated\":false,\"is_sync\":false,\"kernel_strategy\":\"KERNEL_STRATEGY_DEFAULT\"},\"device_type\":\"DEVICE_TYPE_INVALID\",\"force_earliest_schedule\":false,\"operation_queue_id\":\"0\",\"reification_cost\":[]}"
+      ],
+      "devices": 4,
+      "iterations": 10,
+      "memory_plan": {
+        "alias_size_in_bytes": 196608,
+        "argument_size_in_bytes": 196608,
+        "output_size_in_bytes": 1376344,
+        "temp_size_in_bytes": 1319536
+      },
+      "nccl_cta_policy": "DEFAULT",
+      "pjrt_version": "0.11.1+marin.708c3a4ec79c",
+      "scope": "raggedalltoall",
+      "xla_flags": "--xla_dump_to=/iris/outputs/raggedalltoall-DEFAULT/compiler --xla_dump_hlo_as_text=true --xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall"
+    },
+    {
+      "check": "mixed_collectives",
+      "collective_dtypes": [
+        "bf16",
+        "f32"
+      ],
+      "collective_hlo": [
+        "  %all-gather-start = ((bf16[256,128]{1,0:S(1)}, f32[256,128]{1,0:S(1)}), (bf16[1024,128]{1,0:S(1)}, f32[1024,128]{1,0:S(1)})) all-gather-start(%copy.26, %copy.27), channel_id=1, replica_groups=mesh['rank'=4] {'rank'}, dimensions={0}, use_global_device_ids=true, metadata={op_name=\"jit(update)/shard_map/jvp()/all_gather\" scheduling_name=\"all-gather-start\" stack_frame_id=46}, backend_config={\"collective_backend_config\":{\"backend\":\"DEFAULT\",\"collectives_mode\":\"COLLECTIVES_MODE_INVALID\",\"communication_domain\":\"COLLECTIVE_COMMUNICATION_DOMAIN_UNSPECIFIED\",\"is_pipelined\":false,\"is_spmd_generated\":false,\"is_sync\":false,\"kernel_strategy\":\"KERNEL_STRATEGY_DEFAULT\"},\"device_type\":\"DEVICE_TYPE_INVALID\",\"force_earliest_schedule\":false,\"operation_queue_id\":\"0\",\"reification_cost\":[]}"
+      ],
+      "devices": 4,
+      "iterations": 10,
+      "memory_plan": {
+        "alias_size_in_bytes": 196608,
+        "argument_size_in_bytes": 196608,
+        "output_size_in_bytes": 1376344,
+        "temp_size_in_bytes": 1581680
+      },
+      "nccl_cta_policy": "DEFAULT",
+      "pjrt_version": "0.11.1+marin.708c3a4ec79c",
+      "scope": "raggedalltoall,allgather",
+      "xla_flags": "--xla_dump_to=/iris/outputs/raggedalltoall-allgather-DEFAULT/compiler --xla_dump_hlo_as_text=true --xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall,allgather"
+    },
+    {
+      "check": "mixed_collectives",
+      "collective_dtypes": [
+        "bf16",
+        "f32"
+      ],
+      "collective_hlo": [
+        "  %all-gather-start = ((bf16[256,128]{1,0:S(1)}, f32[256,128]{1,0:S(1)}), (bf16[1024,128]{1,0:S(1)}, f32[1024,128]{1,0:S(1)})) all-gather-start(%copy.26, %copy.27), channel_id=1, replica_groups=mesh['rank'=4] {'rank'}, dimensions={0}, use_global_device_ids=true, metadata={op_name=\"jit(update)/shard_map/jvp()/all_gather\" scheduling_name=\"all-gather-start\" stack_frame_id=46}, backend_config={\"collective_backend_config\":{\"backend\":\"DEFAULT\",\"collectives_mode\":\"COLLECTIVES_MODE_INVALID\",\"communication_domain\":\"COLLECTIVE_COMMUNICATION_DOMAIN_UNSPECIFIED\",\"is_pipelined\":false,\"is_spmd_generated\":false,\"is_sync\":false,\"kernel_strategy\":\"KERNEL_STRATEGY_DEFAULT\"},\"device_type\":\"DEVICE_TYPE_INVALID\",\"force_earliest_schedule\":false,\"operation_queue_id\":\"0\",\"reification_cost\":[]}"
+      ],
+      "devices": 4,
+      "iterations": 10,
+      "memory_plan": {
+        "alias_size_in_bytes": 196608,
+        "argument_size_in_bytes": 196608,
+        "output_size_in_bytes": 1376344,
+        "temp_size_in_bytes": 1581680
+      },
+      "nccl_cta_policy": "ZERO",
+      "pjrt_version": "0.11.1+marin.708c3a4ec79c",
+      "scope": "raggedalltoall,allgather",
+      "xla_flags": "--xla_dump_to=/iris/outputs/raggedalltoall-allgather-ZERO/compiler --xla_dump_hlo_as_text=true --xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall,allgather"
+    }
+  ],
+  "gpu_count": 64,
+  "hypothesis": "Copy-engine all-gather may reduce competition for SMs; host-offload copies may instead contend for copy engines.",
+  "loss_checks": {
+    "checks": [
+      "finite loss at every matched step",
+      "identical first loss from the same restored checkpoint",
+      "report candidate-minus-control mean, maximum absolute, final, and last-seven differences per pair"
+    ],
+    "limitation": "Short-run numerical consistency only; no claim of unchanged long-term convergence.",
+    "per_arm_updates": 28
+  },
+  "main": "7b63e0d0ce",
+  "optimizer_schedule_batch_size": 11264,
+  "orders": [
+    [
+      "copyengine",
+      "control"
+    ],
+    [
+      "control",
+      "copyengine"
+    ],
+    [
+      "copyengine",
+      "control"
+    ],
+    [
+      "control",
+      "copyengine"
+    ]
+  ],
+  "pair_count": 4,
+  "priority": "production",
+  "profile_relative_steps": [
+    5,
+    6
+  ],
+  "purpose": "Four fresh matched pairs to estimate the incremental throughput effect of registered all-gather with NCCL ZERO policy over current main plus native SM100 attention.",
+  "queue_included_in_training_timeout": false,
+  "rack_policy": "Require identical NVLink rack within the pair.",
+  "runtime_packages": [
+    "jax",
+    "jaxlib",
+    "jax-cuda13-pjrt",
+    "jax-cuda13-plugin",
+    "flash-attn-4",
+    "nvidia-cutlass-dsl",
+    "quack-kernels",
+    "nvidia-cublas",
+    "nvidia-cudnn-cu13",
+    "nvidia-nccl-cu13"
+  ],
+  "score_relative_steps": [
+    8,
+    27
+  ],
+  "selection_screen": {
+    "excluded_from_confirmatory_estimate": true,
+    "study": "hero2-copy-engine-20260919-0444",
+    "throughput_change_percent": 4.617838595409163
+  },
+  "statistics": {
+    "decision": "Require positive lower throughput confidence bound, validated provenance, numerical gate, finite matched loss trajectories, and no unexplained correctness issue. Otherwise retain the existing baseline.",
+    "primary": "100 * (mean of four control run means / mean of four candidate run means - 1)",
+    "replicate": "one matched run pair, never individual steps",
+    "seconds_saved": "paired Student-t interval across four pair differences",
+    "sensitivity": "Exclude absolute steps divisible by ten; primary includes all scored steps.",
+    "stopping": "Run all four valid pairs. No extra pairs or early acceptance based on intermediate timing results. Stop for correctness failure, operational failure requiring investigation, or user instruction. Record exclusions and any deviation.",
+    "uncertainty": "two-sided 95% paired Fieller interval with Student-t critical value and 3 degrees of freedom"
+  },
+  "steps_per_arm": 28,
+  "training_batch_size": 1024,
+  "training_timeout_seconds": 3300
+}
