@@ -29,8 +29,13 @@ from levanter.grug.attention._fa4_cute_kernels import (
     segmented_flash_attention_backward_sm90_launcher,
     segmented_flash_attention_backward_sm90_preprocess_launcher,
     segmented_flash_attention_forward_launcher,
+    segmented_flash_attention_forward_sm100_launcher,
 )
-from levanter.grug.attention._fa4_cute_config import Flash4CuteKernelConfig, Flash4CuteSm100BackwardConfig
+from levanter.grug.attention._fa4_cute_config import (
+    Flash4CuteKernelConfig,
+    Flash4CuteSm100BackwardConfig,
+    Flash4CuteSm100ForwardConfig,
+)
 
 
 @dataclass(frozen=True)
@@ -41,7 +46,7 @@ class _CutlassCuteModules:
 
 
 @dataclass(frozen=True)
-class _BackwardBlockSparseMetadata:
+class _AttentionBlockSparseMetadata:
     partial_block_cnt: jax.Array
     partial_block_idx: jax.Array
     full_block_cnt: jax.Array
@@ -62,7 +67,7 @@ def _import_cutlass_cute() -> _CutlassCuteModules:
 
 def _optional_dependency_error() -> RuntimeError:
     return RuntimeError(
-        "gpu_fa4_cute_attention requires nvidia-cutlass-dsl with JAX support, and backward requires "
+        "gpu_fa4_cute_attention requires nvidia-cutlass-dsl with JAX support, and native attention requires "
         "flash-attn-4. Install the CUDA 13 CUTLASS DSL extra, for example "
         "`nvidia-cutlass-dsl[cu13]>=4.4`, plus `flash-attn-4`."
     )
@@ -116,6 +121,23 @@ def segmented_flash_attention_forward(
     except Exception as exc:
         raise _optional_dependency_error() from exc
 
+    if (
+        q.dtype == jnp.bfloat16
+        and q.shape[-1] == v.shape[-1] == 128
+        and q.shape[2] // k.shape[2] in (4, 8)
+        and kernel_config.sm100_forward is not None
+    ):
+        return _segmented_flash_attention_forward_sm100(
+            modules,
+            q,
+            k,
+            v,
+            lower_bounds,
+            valid,
+            softmax_scale=softmax_scale,
+            config=kernel_config.sm100_forward,
+        )
+
     forward_tile = kernel_config.forward_tile
     num_threads = kernel_config.num_threads
     launcher = segmented_flash_attention_forward_launcher(
@@ -139,6 +161,68 @@ def segmented_flash_attention_forward(
         softmax_scale=softmax_scale,
     )
     return call(q, k, v, lower_bounds, valid.astype(jnp.int32))
+
+
+def _segmented_flash_attention_forward_sm100(
+    modules: _CutlassCuteModules,
+    q: jax.Array,
+    k: jax.Array,
+    v: jax.Array,
+    lower_bounds: jax.Array,
+    valid: jax.Array,
+    *,
+    softmax_scale: float,
+    config: Flash4CuteSm100ForwardConfig,
+) -> tuple[jax.Array, jax.Array]:
+    partial, full = _packed_segment_block_classification(
+        lower_bounds, valid, tile_m=config.tile[0] * config.query_stages, tile_n=config.tile[1]
+    )
+    metadata = _pack_attention_sparse_blocks(partial.swapaxes(1, 2), full.swapaxes(1, 2))
+    launcher = segmented_flash_attention_forward_sm100_launcher(
+        modules,
+        head_dim=q.shape[-1],
+        head_dim_v=v.shape[-1],
+        qhead_per_kvhead=q.shape[2] // k.shape[2],
+        config=config,
+    )
+    tensor_spec = modules.cjax.TensorSpec
+    qkv_spec = tensor_spec(mode=(0, 1, 2, 3), divisibility=(1, 1, 1, 8), static=True)
+    metadata_spec = tensor_spec(mode=(0, 1), static=True)
+    counts_spec = tensor_spec(mode=(0, 1, 2), static=True)
+    indices_spec = tensor_spec(mode=(0, 1, 2, 3), static=True)
+    lse_spec = tensor_spec(mode=(0, 1, 2), static=True)
+    call = cutlass_call(
+        launcher,
+        output_shape_dtype=(
+            jax.ShapeDtypeStruct(q.shape, q.dtype),
+            jax.ShapeDtypeStruct((q.shape[0], q.shape[2], q.shape[1]), jnp.float32),
+        ),
+        input_spec=(
+            qkv_spec,
+            qkv_spec,
+            qkv_spec,
+            metadata_spec,
+            metadata_spec,
+            counts_spec,
+            indices_spec,
+            counts_spec,
+            indices_spec,
+        ),
+        output_spec=(qkv_spec, lse_spec),
+        use_static_tensors=True,
+        softmax_scale=softmax_scale,
+    )
+    return call(
+        q,
+        k,
+        v,
+        lower_bounds,
+        valid.astype(jnp.int32),
+        metadata.partial_block_cnt,
+        metadata.partial_block_idx,
+        metadata.full_block_cnt,
+        metadata.full_block_idx,
+    )
 
 
 def segmented_flash_attention_backward(
@@ -633,8 +717,20 @@ def _packed_segment_backward_block_sparse_indices_with_full(
     *,
     tile_m: int,
     tile_n: int,
-) -> _BackwardBlockSparseMetadata:
+) -> _AttentionBlockSparseMetadata:
     """Build partial and full upstream-style backward Q-block sparse metadata."""
+    partial, full = _packed_segment_block_classification(lower_bounds, valid, tile_m=tile_m, tile_n=tile_n)
+    return _pack_attention_sparse_blocks(partial, full)
+
+
+def _packed_segment_block_classification(
+    lower_bounds: jax.Array,
+    valid: jax.Array,
+    *,
+    tile_m: int,
+    tile_n: int,
+) -> tuple[jax.Array, jax.Array]:
+    """Return partial/full block masks with shape [batch, key block, query block]."""
     if tile_m <= 0 or tile_n <= 0:
         raise ValueError(f"tile_m and tile_n must be positive, got {tile_m=} {tile_n=}")
     if lower_bounds.ndim != 2 or valid.ndim != 2:
@@ -678,17 +774,21 @@ def _packed_segment_backward_block_sparse_indices_with_full(
         & (n_starts[None, :, None] >= tile_lower_bounds[:, None, :])
     )
     is_partial = has_contributor & ~is_full
+    return is_partial, is_full
 
-    block_indices = jnp.arange(num_m_blocks, dtype=jnp.int32)
-    partial_indices = jnp.where(is_partial, block_indices[None, None, :], num_m_blocks)
-    full_indices = jnp.where(is_full, block_indices[None, None, :], num_m_blocks)
+
+def _pack_attention_sparse_blocks(is_partial: jax.Array, is_full: jax.Array) -> _AttentionBlockSparseMetadata:
+    num_blocks = is_partial.shape[-1]
+    block_indices = jnp.arange(num_blocks, dtype=jnp.int32)
+    partial_indices = jnp.where(is_partial, block_indices[None, None, :], num_blocks)
+    full_indices = jnp.where(is_full, block_indices[None, None, :], num_blocks)
     sorted_partial_indices = jnp.sort(partial_indices, axis=-1)
     sorted_full_indices = jnp.sort(full_indices, axis=-1)
     mask_block_cnt = jnp.sum(is_partial.astype(jnp.int32), axis=-1)[:, None, :]
     full_block_cnt = jnp.sum(is_full.astype(jnp.int32), axis=-1)[:, None, :]
-    mask_block_idx = jnp.where(sorted_partial_indices < num_m_blocks, sorted_partial_indices, 0)[:, None, :, :]
-    full_block_idx = jnp.where(sorted_full_indices < num_m_blocks, sorted_full_indices, 0)[:, None, :, :]
-    return _BackwardBlockSparseMetadata(
+    mask_block_idx = jnp.where(sorted_partial_indices < num_blocks, sorted_partial_indices, 0)[:, None, :, :]
+    full_block_idx = jnp.where(sorted_full_indices < num_blocks, sorted_full_indices, 0)[:, None, :, :]
+    return _AttentionBlockSparseMetadata(
         partial_block_cnt=mask_block_cnt,
         partial_block_idx=mask_block_idx,
         full_block_cnt=full_block_cnt,

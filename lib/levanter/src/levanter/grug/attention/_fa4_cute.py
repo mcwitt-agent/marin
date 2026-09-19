@@ -285,9 +285,7 @@ def _segmented_kernel_config(head_dim: int) -> Flash4CuteKernelConfig:
     arch = gpu_compute_capability()
     kernel_config = flash4_cute_kernel_config(head_dim, arch=arch)
 
-    # The segmented forward uses 64x64 tiles for these Grug shapes. Supported
-    # BF16 GQA backward uses the separately configured native SM100 schedule;
-    # the 64x64 backward tile remains the segmented-port fallback.
+    # Shapes outside native SM100 dispatch use the tuned 64x64 segmented tiles.
     if arch // 10 == 10 and head_dim == 128:
         return replace(kernel_config, forward_tile=(64, 64), backward_tile=(64, 64), num_threads=128)
     return kernel_config
@@ -298,7 +296,7 @@ def _wide_segmented_kernel_config(head_dim: int) -> Flash4CuteKernelConfig:
     if arch // 10 != 10 or head_dim != 128:
         raise ValueError(f"gpu_fa4_cute_wide requires sm100 and head_dim=128, got sm{arch} and head_dim={head_dim}.")
     kernel_config = flash4_cute_kernel_config(head_dim, arch=arch)
-    return replace(kernel_config, forward_tile=(128, 64), backward_tile=(64, 64), num_threads=128)
+    return replace(kernel_config, forward_tile=(128, 64), backward_tile=(64, 64), num_threads=128, sm100_forward=None)
 
 
 def _gpu_fa4_cute_attention(

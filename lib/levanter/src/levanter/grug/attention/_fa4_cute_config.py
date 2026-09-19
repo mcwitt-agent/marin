@@ -6,6 +6,14 @@ from enum import StrEnum
 
 
 @dataclass(frozen=True)
+class Flash4CuteSm100ForwardConfig:
+    """Native Blackwell forward tile and query pipeline."""
+
+    tile: tuple[int, int]
+    query_stages: int
+
+
+@dataclass(frozen=True)
 class Flash4CuteSm100BackwardConfig:
     """Validated native Blackwell backward schedule."""
 
@@ -48,6 +56,7 @@ class Flash4CuteKernelConfig:
     backward_arch: int | None = None
     sm90_backward: Flash4CuteSm90BackwardConfig | None = None
     sm100_backward: Flash4CuteSm100BackwardConfig | None = None
+    sm100_forward: Flash4CuteSm100ForwardConfig | None = None
 
 
 def flash4_cute_kernel_config(
@@ -74,6 +83,11 @@ def flash4_cute_kernel_config(
             num_threads=128,
             backward_arch=arch,
             sm100_backward=native,
+            sm100_forward=(
+                Flash4CuteSm100ForwardConfig(tile=(128, 128), query_stages=2)
+                if arch == 100 and head_dim == 128
+                else None
+            ),
         )
     if arch_family == 12:
         return Flash4CuteKernelConfig(

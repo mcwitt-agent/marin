@@ -65,6 +65,45 @@ def test_packed_segment_backward_block_sparse_indices_are_q_direction():
     )
 
 
+@pytest.mark.parametrize("query_tile", [128, 256])
+@pytest.mark.parametrize(("sequence_length", "window"), [(257, None), (257, 31), (2305, 2048)])
+def test_packed_segment_forward_sparse_blocks_match_token_mask(query_tile, sequence_length, window):
+    positions = np.arange(sequence_length)
+    ids = np.stack([np.searchsorted([31, 129, 193, 2049], positions), np.zeros(sequence_length, dtype=int)])
+    ids[0, :19] = -1
+    ids[0, -17:] = -1
+    ids[1, :] = -1
+    bounds, valid = fa4_cute._packed_segment_causal_lower_bounds(
+        jnp.asarray(ids, dtype=jnp.int32), batch_size=2, seq_len=sequence_length, sliding_window=window
+    )
+    partial, full = fa4_cute_backend._packed_segment_block_classification(bounds, valid, tile_m=query_tile, tile_n=128)
+    metadata = fa4_cute_backend._pack_attention_sparse_blocks(partial.swapaxes(1, 2), full.swapaxes(1, 2))
+    for batch in range(2):
+        for qblock in range((sequence_length + query_tile - 1) // query_tile):
+            queries = np.arange(qblock * query_tile, (qblock + 1) * query_tile)
+            query_ids = np.where(queries < sequence_length, ids[batch, np.minimum(queries, sequence_length - 1)], -1)
+            expected_partial, expected_full = [], []
+            for kblock in range((sequence_length + 127) // 128):
+                keys = np.arange(kblock * 128, min((kblock + 1) * 128, sequence_length))
+                token_mask = (
+                    (query_ids[:, None] >= 0)
+                    & (query_ids[:, None] == ids[batch, keys][None, :])
+                    & (keys[None, :] <= queries[:, None])
+                )
+                if window is not None:
+                    token_mask &= keys[None, :] > queries[:, None] - window
+                if token_mask.all():
+                    expected_full.append(kblock)
+                elif token_mask.any():
+                    expected_partial.append(kblock)
+            partial_count = int(metadata.partial_block_cnt[batch, 0, qblock])
+            full_count = int(metadata.full_block_cnt[batch, 0, qblock])
+            np.testing.assert_array_equal(
+                metadata.partial_block_idx[batch, 0, qblock, :partial_count], expected_partial
+            )
+            np.testing.assert_array_equal(metadata.full_block_idx[batch, 0, qblock, :full_count], expected_full)
+
+
 def test_packed_segment_backward_block_sparse_indices_split_full_blocks():
     segment_ids = jnp.zeros((1, 8), dtype=jnp.int32)
     lower_bounds, valid = fa4_cute._packed_segment_causal_lower_bounds(
@@ -420,6 +459,58 @@ def test_real_gpu_fa4_cute_sm100_gradients_with_changing_packed_segments(kv_head
             error = f"{name}: max absolute error {difference.max()}, mean {difference.mean()}"
             np.testing.assert_allclose(got, want, atol=7e-2, rtol=7e-2, err_msg=error)
             np.testing.assert_array_equal(got[ids < 0], 0, err_msg=name)
+
+
+@pytest.mark.parametrize("query_stages", [1, 2])
+@pytest.mark.parametrize("window", [None, 31])
+@pytest.mark.timeout(300)
+def test_real_gpu_fa4_cute_sm100_forward_lse_with_empty_rows(query_stages, window):
+    if jax.default_backend() != "gpu" or fa4_cute.gpu_compute_capability() != 100:
+        pytest.skip("Native SM100 forward correctness requires an SM100 GPU.")
+    pytest.importorskip("cutlass.cute")
+    pytest.importorskip("flash_attn.cute.flash_fwd_sm100")
+    config = flash4_cute_kernel_config(128, arch=100)
+    assert config.sm100_forward is not None
+    config = dataclasses.replace(
+        config, sm100_forward=dataclasses.replace(config.sm100_forward, query_stages=query_stages)
+    )
+    keys = jax.random.split(jax.random.key(61), 3)
+    q, k, v = (
+        jax.random.normal(key, shape, dtype=jnp.bfloat16)
+        for key, shape in zip(keys, ((2, 257, 8, 128), (2, 257, 2, 128), (2, 257, 2, 128)), strict=True)
+    )
+    actual = jax.jit(
+        lambda lower, active: fa4_cute_backend.segmented_flash_attention_forward(
+            q, k, v, lower, active, softmax_scale=128**-0.5, kernel_config=config
+        )
+    )
+    for iteration in range(3):
+        positions = np.arange(257)
+        ids = np.stack([np.searchsorted([31 + iteration, 129 + iteration, 193], positions), np.zeros(257, dtype=int)])
+        ids[0, :19] = -1
+        ids[0, -17:] = -1
+        if iteration == 2:
+            ids[1, :] = -1
+        bounds, valid = fa4_cute._packed_segment_causal_lower_bounds(
+            jnp.asarray(ids, dtype=jnp.int32), batch_size=2, seq_len=257, sliding_window=window
+        )
+        output, lse = actual(bounds, valid)
+        token_mask = (
+            (ids[:, :, None] >= 0)
+            & (ids[:, :, None] == ids[:, None, :])
+            & (positions[None, None, :] <= positions[None, :, None])
+        )
+        if window is not None:
+            token_mask &= positions[None, None, :] > positions[None, :, None] - window
+        scores = jnp.einsum("bqhd,bkhd->bhqk", q.astype(jnp.float32), jnp.repeat(k, 4, axis=2).astype(jnp.float32))
+        scores = jnp.where(token_mask[:, None], scores * 128**-0.5, -jnp.inf)
+        expected_lse = jax.scipy.special.logsumexp(scores, axis=-1)
+        active_rows = np.broadcast_to(ids[:, None, :] >= 0, lse.shape)
+        np.testing.assert_allclose(
+            np.asarray(lse)[active_rows], np.asarray(expected_lse)[active_rows], atol=1e-4, rtol=1e-4
+        )
+        np.testing.assert_array_equal(np.asarray(lse)[~active_rows], -np.inf)
+        np.testing.assert_array_equal(np.asarray(output)[ids < 0], 0)
 
 
 @pytest.mark.parametrize("native_backward", [True, False])

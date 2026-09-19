@@ -275,7 +275,7 @@ def main() -> None:
     segment_ids = _segment_ids(args.batch, args.seq_len, args.documents)
 
     arch = gpu_compute_capability()
-    base = flash4_cute_kernel_config(args.head_dim, arch=arch)
+    base = dataclasses.replace(flash4_cute_kernel_config(args.head_dim, arch=arch), sm100_forward=None)
     if args.sweep == "backward":
         base = dataclasses.replace(base, sm100_backward=None)
     print(f"arch=sm{arch} base_forward_tile={base.forward_tile} base_backward_tile={base.backward_tile}")
