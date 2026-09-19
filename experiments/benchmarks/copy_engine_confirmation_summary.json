@@ -1,0 +1,173 @@
+{
+  "baseline": "main 7b63e0d0ce plus native SM100 attention backward, default NCCL policy, and ragged-all-to-all-only buffer registration",
+  "checkpoint_policy": "Latest completed hero checkpoint selected and temporarily retained once per pair; both arms restored the same checkpoint; all original retention metadata restored",
+  "decision": "Reject the copy-engine candidate: the primary throughput confidence interval is entirely negative.",
+  "hardware": "One NVLink rack of 64 GB200 GPUs per run; identical rack within every pair",
+  "loss": {
+    "difference": "treatment minus control cross-entropy in nats",
+    "initial_loss_exactly_equal_all_pairs": true,
+    "max_absolute_difference": 0.000555872917175293,
+    "pairs": [
+      {
+        "checkpoint_step": 123623,
+        "first_step_difference": 0.0,
+        "last_seven_mean_difference": 0.00032556056976327873,
+        "last_step_difference": 0.00041365623474121094,
+        "max_absolute_difference": 0.00043141841888427734,
+        "mean_difference": 9.64232853481065e-05,
+        "pair": 1,
+        "scored_step_mean_difference": 0.00016365647315985665,
+        "steps": 28
+      },
+      {
+        "checkpoint_step": 123623,
+        "first_step_difference": 0.0,
+        "last_seven_mean_difference": 0.0004263264792306717,
+        "last_step_difference": 0.00021708011627197266,
+        "max_absolute_difference": 0.000555872917175293,
+        "mean_difference": 0.0002403983048030784,
+        "pair": 2,
+        "scored_step_mean_difference": 0.0003162682056427668,
+        "steps": 28
+      },
+      {
+        "checkpoint_step": 123827,
+        "first_step_difference": 0.0,
+        "last_seven_mean_difference": -0.000158820833478782,
+        "last_step_difference": -0.00017023086547851562,
+        "max_absolute_difference": 0.00019788742065429688,
+        "mean_difference": -5.662441253669247e-05,
+        "pair": 3,
+        "scored_step_mean_difference": -7.697343826300607e-05,
+        "steps": 28
+      },
+      {
+        "checkpoint_step": 123827,
+        "first_step_difference": 0.0,
+        "last_seven_mean_difference": -0.00011427061898364574,
+        "last_step_difference": -0.00011336803436279297,
+        "max_absolute_difference": 0.00021469593048095703,
+        "mean_difference": -5.031909261433392e-05,
+        "pair": 4,
+        "scored_step_mean_difference": -7.078647613527611e-05,
+        "steps": 28
+      }
+    ],
+    "scope": "28 matched updates per pair; these short runs do not establish long-term convergence or a numerical equivalence margin"
+  },
+  "pair_orders": [
+    [
+      "copyengine",
+      "control"
+    ],
+    [
+      "control",
+      "copyengine"
+    ],
+    [
+      "copyengine",
+      "control"
+    ],
+    [
+      "control",
+      "copyengine"
+    ]
+  ],
+  "protocol": "https://github.com/mcwitt-agent/marin/blob/b6b210fe2265f9736d2564cb094dffe07bdbb8fc/experiments/benchmarks/copy_engine_confirmation_protocol.json",
+  "protocol_sha256": "82deb559535b55b68b69fc6e6c95de61f350e1e5658c01b0bec0be6bc7e490cd",
+  "schema": "hero-copy-engine-confirmation-summary/v1",
+  "score_relative_steps": [
+    8,
+    27
+  ],
+  "study": "hero2-copy-confirm-20260919-0523",
+  "throughput": {
+    "all_scored_steps": {
+      "control_run_means": [
+        15.37194199450314,
+        15.396667877491563,
+        15.458018029481174,
+        15.4223548008129
+      ],
+      "control_seconds": 15.412245675572194,
+      "mean_saving_seconds": -0.19310015048831675,
+      "pair_level_t95_interval": [
+        -0.3089822641266137,
+        -0.07721803685001977
+      ],
+      "pair_savings_seconds": [
+        -0.27860259530134535,
+        -0.16709709465503764,
+        -0.21882062731310548,
+        -0.10788028468377853
+      ],
+      "pairs": 4,
+      "saving_sd_across_pairs": 0.07282580915561833,
+      "throughput_gain_percent": -1.2373974447002944,
+      "throughput_paired_fieller95_percent": [
+        -1.9678998216490773,
+        -0.49787966496260827
+      ],
+      "treatment_run_means": [
+        15.650544589804486,
+        15.5637649721466,
+        15.67683865679428,
+        15.53023508549668
+      ],
+      "treatment_seconds": 15.60534582606051
+    },
+    "caveat": "Four predeclared matched run pairs in T/C, C/T, T/C, C/T order; all four pairs included, with no replacements or timing-based exclusions. Primary scoring uses every relative step 8\u201327. Pair-level t and paired Fieller intervals assume independent approximately normal run-pair means. The exploratory selection pair is excluded.",
+    "ordinary_steps": {
+      "control_run_means": [
+        15.406655608107233,
+        15.35121254209015,
+        15.468777926328283,
+        15.313539430499077
+      ],
+      "control_seconds": 15.385046376756186,
+      "mean_saving_seconds": -0.24508267859669575,
+      "pair_level_t95_interval": [
+        -0.341974341863434,
+        -0.14819101532995752
+      ],
+      "pair_savings_seconds": [
+        -0.3104060751696416,
+        -0.16642295476049185,
+        -0.23472398074550682,
+        -0.26877770371114273
+      ],
+      "pairs": 4,
+      "saving_sd_across_pairs": 0.06089131062847614,
+      "throughput_gain_percent": -1.5680144273201746,
+      "throughput_paired_fieller95_percent": [
+        -2.172800822815346,
+        -0.9547995069225768
+      ],
+      "treatment_run_means": [
+        15.717061683276874,
+        15.517635496850643,
+        15.70350190707379,
+        15.58231713421022
+      ],
+      "treatment_seconds": 15.630129055352882
+    },
+    "positive_lower_throughput_bound": false,
+    "scope": "Short restored one-rack training comparisons; loss checks do not establish unchanged long-term convergence.",
+    "selection_screen_excluded": "hero2-copy-engine-20260919-0444",
+    "study": "hero2-copy-confirm-20260919-0523"
+  },
+  "training_updates_per_run": 28,
+  "treatment": "Register all-gather buffers and select NCCL_CTA_POLICY=ZERO",
+  "validation": {
+    "all_28_losses_finite_each_run": true,
+    "all_64_rank_runtime_manifests_matched_each_arm": true,
+    "all_checkpoint_retention_metadata_restored": true,
+    "all_four_pairs_included": true,
+    "checkpoint_and_rack_matched_each_pair": true,
+    "completed_runs": 8,
+    "exploratory_selection_pair_excluded": true,
+    "failed_runs": 0,
+    "preemptions": 0,
+    "timing_based_exclusions": 0
+  }
+}
