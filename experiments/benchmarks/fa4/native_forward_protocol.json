@@ -1,0 +1,75 @@
+{
+  "production_source": "8bad7eb4374945f47f227e6e2eb25b242514df2c",
+  "baseline_main": "7b63e0d0cefcb19282fd9cc7efb3c109cbfc4801",
+  "native_backward_baseline": "5d818723d9690d4d00024a3ff9906bca507df131",
+  "production_source_sha256": {
+    "experiments/benchmarks/fa4/tile_sweep.py": "def617198b2aa3e589c85f6b29798c52f73bf0f8be96ab24cf38ff0942c25a29",
+    "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "52ddf1334aa80fe0f7edc39f1d6c7e6e5153fd5db1a0550a8879ca80c8bfc4e6",
+    "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "d640330e7f83dfd5d53ca447398837d3f950e22651f16a76eb971b440ba21ba0",
+    "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "f9ab27fa16bc1e55e3f97bddbd2d9cb25c36393e4002197ea8c799801cb09318",
+    "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "a669c64af739d1c356ed194ce6a22e52897ef7710fe072bad84d8474db026672",
+    "lib/levanter/tests/grug/test_fa4_cute_attention.py": "e1c702dbc47166f3d23d74bca0dd605338c166c44e954d84afb7e9fb135c8f52",
+    "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+    "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+    "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+    "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+    "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+  },
+  "harness_source_sha256": {
+    "experiments/benchmarks/fa4/native_forward_gate.py": "e669e7d0c8bb401e825e6984018ea69c22f74299dfb49398381da94fc3e91178",
+    "experiments/benchmarks/fa4/native_forward_timing.py": "cd840a0ff266d85c0f9cd83507941d5973e4839bd28af7cb70bd4b44004b7c04"
+  },
+  "packages": {
+    "jax": "0.11.1",
+    "jaxlib": "0.11.1",
+    "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+    "jax-cuda13-plugin": "0.11.1",
+    "flash-attn-4": "4.0.0b28",
+    "nvidia-cutlass-dsl": "4.6.2",
+    "quack-kernels": "0.6.4",
+    "nvidia-cublas": "13.4.1.1",
+    "nvidia-cudnn-cu13": "9.19.0.56",
+    "nvidia-nccl-cu13": "2.31.2"
+  },
+  "gpu_process_timeout": 3300,
+  "priority": "production",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "JAX_ENABLE_COMPILATION_CACHE": "false",
+    "JAX_ENABLE_PGLE": "false",
+    "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+    "WANDB_MODE": "disabled",
+    "NCCL_CTA_POLICY": "DEFAULT",
+    "XLA_FLAGS": "--xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall --xla_gpu_nccl_termination_timeout_seconds=600"
+  },
+  "timing_order": [
+    "control",
+    "native"
+  ],
+  "shapes": [
+    {
+      "batch": 16,
+      "sequence": 4096,
+      "query_heads": 48,
+      "kv_heads": 12,
+      "head_dim": 128,
+      "window": 2048
+    },
+    {
+      "batch": 16,
+      "sequence": 4096,
+      "query_heads": 48,
+      "kv_heads": 6,
+      "head_dim": 128,
+      "window": null
+    }
+  ],
+  "seed": 20260919,
+  "documents_per_sequence": 5,
+  "timing_batches": 5,
+  "steps_per_batch": 10,
+  "warmup_steps": 5,
+  "correctness": "Run all existing real_gpu attention tests plus the long padded-grid race regression, including the new LSE checks. Any failure stops timing.",
+  "interpretation": "Exploratory single-GPU screen with fixed order. Timing batches are correlated, not independent replications. No full-training throughput claim or checkpoint restoration is made by this synthetic kernel gate.",
+  "followup": "Require GPU correctness and a positive kernel screen before a new matched full-training study restored from latest hero checkpoints. Incorporate any newly confirmed optimization into that baseline."
+}
