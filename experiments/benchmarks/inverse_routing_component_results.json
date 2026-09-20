@@ -1,0 +1,1417 @@
+{
+  "scope": "Completed component measurements only. No restored-training result or acceptance decision.",
+  "production_code_publication": "The production candidate is not included. Its commit and source hashes identify the locally tested revision.",
+  "studies": {
+    "inverse_indices": {
+      "study": "hero2-inverse-permutation-20260920-1113",
+      "protocol": {
+        "ready_for_execution": true,
+        "readiness_reason": "All four routed-mask pairs and manual reviews are complete, all checkpoint pins released, and the final baseline decision retains control 9562c077. The source is committed, CPU checks passed, and the owner rechecks current main and the live queue before submission.",
+        "baseline": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+        "main": "1f9c387b6c452895ff58573c2b6117c5500303db",
+        "source_sha256": {
+          "lib/levanter/src/levanter/grug/_moe/common.py": "20fa26a25de4ff934caf695a8d81e5e15c3a8634af5616ad777f6a247f665d89",
+          "lib/levanter/src/levanter/grug/_moe/ep_common.py": "d1ebfd879bbdd6fb3b18996cd0cd91cf4513fcfb8a0afda244b318854140fa03",
+          "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "c4f8cc767dc4e7a9ecbad66e4295d06206bda06992c3ca83c12a7d910c1a9638",
+          "lib/levanter/tests/grug/test_grugformer_moe.py": "69c9a61f83ea5c09efe47c744d3e62f7c82be330349ab062d187ba93923f6820",
+          "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+          "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+        },
+        "packages": {
+          "jax": "0.11.1",
+          "jaxlib": "0.11.1",
+          "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+          "jax-cuda13-plugin": "0.11.1",
+          "flash-attn-4": "4.0.0b28",
+          "nvidia-cutlass-dsl": "4.6.2",
+          "quack-kernels": "0.6.4",
+          "nvidia-cublas": "13.4.1.1",
+          "nvidia-cudnn-cu13": "9.19.0.56",
+          "nvidia-nccl-cu13": "2.31.2"
+        },
+        "seed": 0,
+        "experts": 384,
+        "cases": [
+          {
+            "assignments": 524288,
+            "pattern": "uniform_expert_ids"
+          },
+          {
+            "assignments": 524288,
+            "pattern": "one_expert"
+          },
+          {
+            "assignments": 524288,
+            "pattern": "skewed"
+          }
+        ],
+        "order": [
+          "control",
+          "candidate",
+          "candidate",
+          "control",
+          "control",
+          "candidate",
+          "candidate",
+          "control",
+          "control",
+          "candidate",
+          "candidate",
+          "control"
+        ],
+        "calls_per_batch": 100,
+        "warmup_calls": 10,
+        "gpu_process_timeout": 1800,
+        "gpu_count": 1,
+        "reference_tests": [
+          "lib/levanter/tests/grug/test_grugformer_moe.py::test_inverse_permutation_restores_original_positions",
+          "lib/levanter/tests/grug/test_grugformer_moe.py::test_dispatch_gradient_sums_each_tokens_assignments",
+          "lib/levanter/tests/grug/test_grugformer_moe.py::test_prepare_moe_dispatch_indices_match_materialized_dispatch"
+        ],
+        "expected_reference_cases": 11,
+        "probe": "/tmp/hero_inverse_permutation_screen.py",
+        "probe_sha256": "fdb2b1202cb649bfb1281d952364e3fd025a6402d6f403f1dc9cf638c5193db3",
+        "raw_hlo_policy": "Save compiled HLO only in the regional task-output archive; return bounded derived summaries.",
+        "gate": "/tmp/hero_inverse_permutation_gate.py",
+        "gate_sha256": "3e8cf8e3dc6c17e21d92ce90e39c0bc732c7bce4c41522012b2781b433905b73",
+        "gate_timeout_scope": "One 1800-second deadline covers device validation, reference tests and component screen subprocesses.",
+        "gate_execution_command": [
+          "python",
+          "-c",
+          "<gate source>",
+          "<frozen protocol JSON>",
+          "<probe source>"
+        ],
+        "source": "c2b3a4e8db9d64c7eda2ad36519c06a90f636598",
+        "environment": {
+          "XLA_FLAGS": "--xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall --xla_gpu_nccl_termination_timeout_seconds=600 --xla_gpu_per_fusion_autotune_cache_dir=/tmp/hero-inverse-permutation-autotune",
+          "JAX_ENABLE_X64": "false",
+          "JAX_ENABLE_COMPILATION_CACHE": "false",
+          "JAX_ENABLE_PGLE": "false",
+          "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+          "WANDB_MODE": "disabled",
+          "NCCL_CTA_POLICY": "DEFAULT"
+        },
+        "compiler_flag_provenance": {
+          "source": "/tmp/hero2-mask-paired-20260920-0621/pair-3/result.json",
+          "arm": "control",
+          "change": "Only the per-process fusion-cache directory changes to a job-local path. Persistent JAX compilation caching and PGLE remain disabled. This is a synthetic index-only screen, not an allocator or training measurement."
+        },
+        "baseline_review": {
+          "path": "/tmp/hero2-mask-paired-20260920-0621/final-baseline-review.json",
+          "sha256": "bf1f52dc412ea88a6112a92f49b3eb4186d80d1c76f755528798dec210b5dd05"
+        }
+      },
+      "measurement_source": "\"\"\"Screen inverse-permutation kernels on one GPU before restored training.\"\"\"\n\nimport hashlib\nimport importlib.metadata\nimport json\nimport os\nimport re\nimport signal\nimport sys\nfrom functools import partial\nfrom pathlib import Path\nfrom timeit import Timer\n\nimport jax\nimport jax.numpy as jnp\nimport numpy as np\n\nfrom levanter.cutlass_kernel_cache import gpu_compute_capability\nfrom levanter.grug._moe.common import _invert_permutation\n\n\ndef execute(executable, indices):\n    return executable(indices).block_until_ready()\n\n\ndef main():\n    protocol = json.loads(sys.argv[1])\n    assert protocol['ready_for_execution']\n    signal.signal(signal.SIGALRM, signal.SIG_DFL)\n    signal.alarm(protocol['gpu_process_timeout'])\n    for name, digest in protocol['source_sha256'].items():\n        assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name\n    versions = {name: importlib.metadata.version(name) for name in protocol['packages']}\n    assert versions == protocol['packages']\n    assert jax.default_backend() == 'gpu' and gpu_compute_capability() == 100\n    assert jax.device_count() == jax.local_device_count() == 1\n    assert jax.config.jax_enable_x64 is False\n    output = Path(os.environ['IRIS_OUTPUT_DIR'])\n    output.mkdir(parents=True, exist_ok=True)\n    functions = {'control': jax.jit(jnp.argsort), 'candidate': jax.jit(_invert_permutation)}\n    generator = np.random.default_rng(protocol['seed'])\n    records = []\n    for case in protocol['cases']:\n        size = case['assignments']\n        keys = generator.integers(0, protocol['experts'], size=size, dtype=np.int32)\n        if case['pattern'] == 'one_expert':\n            keys.fill(0)\n        elif case['pattern'] == 'skewed':\n            keys[generator.random(size) < 0.8] = 0\n        else:\n            assert case['pattern'] == 'uniform_expert_ids'\n        host_indices = np.argsort(keys, stable=True).astype(np.int32)\n        indices = jnp.asarray(host_indices)\n        expected = np.argsort(host_indices).astype(np.int32)\n        executables = {arm: function.lower(indices).compile() for arm, function in functions.items()}\n        lowering = {}\n        for arm, executable in executables.items():\n            actual = np.asarray(execute(executable, indices))\n            np.testing.assert_array_equal(actual, expected)\n            assert actual.dtype == expected.dtype\n            hlo = executable.as_text()\n            (output / f'{case[\"pattern\"]}-{arm}.hlo.txt').write_text(hlo)\n            lowering[arm] = {\n                'custom_call_targets': sorted(set(re.findall(r'custom_call_target=\"([^\"]+)\"', hlo))),\n                'memory_analysis': str(executable.memory_analysis()),\n            }\n        samples = []\n        for batch, arm in enumerate(protocol['order']):\n            call = partial(execute, executables[arm], indices)\n            for _ in range(protocol['warmup_calls']):\n                call()\n            seconds = Timer(call).timeit(number=protocol['calls_per_batch']) / protocol['calls_per_batch']\n            samples.append({'batch': batch, 'arm': arm, 'seconds_per_call': seconds})\n        record = {'case': case, 'exact_indices': True, 'samples': samples, 'lowering': lowering}\n        records.append(record)\n        print('HERO_INVERSE_PERMUTATION_CASE ' + json.dumps(record), flush=True)\n    result = {\n        'protocol_sha256': hashlib.sha256(sys.argv[1].encode()).hexdigest(),\n        'source_sha256': protocol['source_sha256'],\n        'packages': versions,\n        'device': jax.devices()[0].device_kind,\n        'xla_flags': os.environ.get('XLA_FLAGS', ''),\n        'cases': records,\n        'scope': 'Synthetic index-only component screen. Host dispatch and synchronization are included. No restored-training throughput result or between-run uncertainty estimate.',\n    }\n    (output / 'inverse-permutation-screen-result.json').write_text(json.dumps(result, indent=2) + '\\n')\n    print('HERO_INVERSE_PERMUTATION_SUCCESS ' + json.dumps(result), flush=True)\n\n\nif __name__ == '__main__':\n    main()\n",
+      "result": {
+        "protocol_sha256": "42db7e3a784cf8e2e7c6a0d4e0817d2781ed53ea03ae8915f507d8bd3f557188",
+        "source_sha256": {
+          "lib/levanter/src/levanter/grug/_moe/common.py": "20fa26a25de4ff934caf695a8d81e5e15c3a8634af5616ad777f6a247f665d89",
+          "lib/levanter/src/levanter/grug/_moe/ep_common.py": "d1ebfd879bbdd6fb3b18996cd0cd91cf4513fcfb8a0afda244b318854140fa03",
+          "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "c4f8cc767dc4e7a9ecbad66e4295d06206bda06992c3ca83c12a7d910c1a9638",
+          "lib/levanter/tests/grug/test_grugformer_moe.py": "69c9a61f83ea5c09efe47c744d3e62f7c82be330349ab062d187ba93923f6820",
+          "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+          "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+        },
+        "packages": {
+          "flash-attn-4": "4.0.0b28",
+          "jax": "0.11.1",
+          "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+          "jax-cuda13-plugin": "0.11.1",
+          "jaxlib": "0.11.1",
+          "nvidia-cublas": "13.4.1.1",
+          "nvidia-cudnn-cu13": "9.19.0.56",
+          "nvidia-cutlass-dsl": "4.6.2",
+          "nvidia-nccl-cu13": "2.31.2",
+          "quack-kernels": "0.6.4"
+        },
+        "device": "NVIDIA GB200",
+        "xla_flags": "--xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall --xla_gpu_nccl_termination_timeout_seconds=600 --xla_gpu_per_fusion_autotune_cache_dir=/tmp/hero-inverse-permutation-autotune",
+        "cases": [
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "uniform_expert_ids"
+            },
+            "exact_indices": true,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.00020630723796784877
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012016418389976024
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012401985935866833
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0002050611563026905
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.00020522307604551316
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012245954014360904
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012753923423588275
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.00021563492715358733
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.00021101828664541245
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012620674446225166
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.00013247426599264145
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.00021113923750817776
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=8480512, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=524304, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "one_expert"
+            },
+            "exact_indices": true,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.00020810340531170367
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012156803160905837
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012497315183281898
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.000207577645778656
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.00020290051586925982
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012196257710456849
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.00012960674241185188
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.00020827363245189189
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.00020365987904369832
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0001322041731327772
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.00013071553781628608
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0002091776393353939
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=8480512, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=524304, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "skewed"
+            },
+            "exact_indices": true,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.00020996836014091968
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.0001315523497760296
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.00013139170594513415
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0002086227759718895
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.00020397827960550786
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.0001289709098637104
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0001374697871506214
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0002081385999917984
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.00020564324222505093
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0001273088250309229
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.00013399330899119377
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.00020809540525078773
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=8480512, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=524304, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          }
+        ],
+        "scope": "Synthetic index-only component screen. Host dispatch and synchronization are included. No restored-training throughput result or between-run uncertainty estimate.",
+        "tasks": [
+          {
+            "key": "/mwittmann/hero2-inverse-permutation-20260920-1113/inverse-permutation-gate/0:0",
+            "start_ms": 1789903174916,
+            "end_ms": 1789903330659,
+            "node": "s9rrxs64"
+          }
+        ],
+        "reference_tests": {
+          "passed": 11,
+          "junit_sha256": "d6dee00b1ae60bc9081e293d622415aa1e418a9f37448ea7f27c4f7e9f3f63a3"
+        }
+      },
+      "summary": {
+        "source": "c2b3a4e8db9d64c7eda2ad36519c06a90f636598",
+        "job_id": "/mwittmann/hero2-inverse-permutation-20260920-1113",
+        "reference_tests_passed": 11,
+        "cases": [
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "uniform_expert_ids"
+            },
+            "mean_microseconds": {
+              "control": 209.06398693720502,
+              "candidate": 125.47730468213557
+            },
+            "saved_microseconds": 83.58668225506943,
+            "duration_reduction_percent": 39.98138726789696,
+            "batch_range_microseconds": {
+              "control": [
+                205.0611563026905,
+                215.63492715358734
+              ],
+              "candidate": [
+                120.16418389976025,
+                132.47426599264145
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=8480512, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=524304, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "one_expert"
+            },
+            "mean_microseconds": {
+              "control": 206.6154529651006,
+              "candidate": 126.83836898456016
+            },
+            "saved_microseconds": 79.77708398054044,
+            "duration_reduction_percent": 38.61138304791538,
+            "batch_range_microseconds": {
+              "control": [
+                202.90051586925983,
+                209.1776393353939
+              ],
+              "candidate": [
+                121.56803160905838,
+                132.2041731327772
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=8480512, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=524304, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "skewed"
+            },
+            "mean_microseconds": {
+              "control": 207.40777719765902,
+              "candidate": 131.78114779293537
+            },
+            "saved_microseconds": 75.62662940472364,
+            "duration_reduction_percent": 36.46277416716717,
+            "batch_range_microseconds": {
+              "control": [
+                203.97827960550785,
+                209.96836014091969
+              ],
+              "candidate": [
+                127.30882503092289,
+                137.4697871506214
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=8480512, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=2097152, output_size_in_bytes=2097152, alias_size_in_bytes=0, temp_size_in_bytes=524304, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          }
+        ],
+        "scope": "Synthetic index-only component screen. Host dispatch and synchronization are included. No restored-training throughput result or between-run uncertainty estimate.",
+        "decision": "GPU correctness and component evidence only; training throughput and convergence remain unmeasured."
+      }
+    },
+    "routing_paths": {
+      "study": "hero2-inverse-permutation-path-20260920-1134",
+      "protocol": {
+        "ready_for_execution": true,
+        "readiness_reason": "All four routed-mask pairs and manual reviews are complete, all checkpoint pins released, and the final baseline decision retains control 9562c077. The source is committed, CPU checks passed, and the owner rechecks current main and the live queue before submission.",
+        "baseline": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+        "main": "1f9c387b6c452895ff58573c2b6117c5500303db",
+        "source_sha256": {
+          "lib/levanter/src/levanter/grug/_moe/common.py": "20fa26a25de4ff934caf695a8d81e5e15c3a8634af5616ad777f6a247f665d89",
+          "lib/levanter/src/levanter/grug/_moe/ep_common.py": "d1ebfd879bbdd6fb3b18996cd0cd91cf4513fcfb8a0afda244b318854140fa03",
+          "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "c4f8cc767dc4e7a9ecbad66e4295d06206bda06992c3ca83c12a7d910c1a9638",
+          "lib/levanter/tests/grug/test_grugformer_moe.py": "69c9a61f83ea5c09efe47c744d3e62f7c82be330349ab062d187ba93923f6820",
+          "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+          "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f",
+          "lib/levanter/src/levanter/grug/_moe/sonic.py": "108dec26876094379f96042581ce0f615fc3ccb2f1e7ad558fa8a78bbb9335ed"
+        },
+        "packages": {
+          "jax": "0.11.1",
+          "jaxlib": "0.11.1",
+          "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+          "jax-cuda13-plugin": "0.11.1",
+          "flash-attn-4": "4.0.0b28",
+          "nvidia-cutlass-dsl": "4.6.2",
+          "quack-kernels": "0.6.4",
+          "nvidia-cublas": "13.4.1.1",
+          "nvidia-cudnn-cu13": "9.19.0.56",
+          "nvidia-nccl-cu13": "2.31.2"
+        },
+        "seed": 0,
+        "experts": 384,
+        "cases": [
+          {
+            "assignments": 524288,
+            "pattern": "uniform_expert_ids"
+          },
+          {
+            "assignments": 524288,
+            "pattern": "one_expert"
+          },
+          {
+            "assignments": 524288,
+            "pattern": "skewed"
+          }
+        ],
+        "order": [
+          "control",
+          "candidate",
+          "candidate",
+          "control",
+          "control",
+          "candidate",
+          "candidate",
+          "control",
+          "control",
+          "candidate",
+          "candidate",
+          "control"
+        ],
+        "calls_per_batch": 50,
+        "warmup_calls": 10,
+        "gpu_process_timeout": 1800,
+        "gpu_count": 1,
+        "reference_tests": [
+          "lib/levanter/tests/grug/test_grugformer_moe.py::test_inverse_permutation_restores_original_positions",
+          "lib/levanter/tests/grug/test_grugformer_moe.py::test_dispatch_gradient_sums_each_tokens_assignments",
+          "lib/levanter/tests/grug/test_grugformer_moe.py::test_prepare_moe_dispatch_indices_match_materialized_dispatch"
+        ],
+        "expected_reference_cases": 11,
+        "probe": "/tmp/hero_inverse_routing_path_screen.py",
+        "probe_sha256": "5beba1d90bb9f3980ca27e130defef4362380d4c3d0c7ca3946cdeca7b4eb034",
+        "raw_hlo_policy": "Save compiled HLO only in the regional task-output archive; return bounded derived summaries.",
+        "gate": "/tmp/hero_inverse_permutation_gate.py",
+        "gate_sha256": "3e8cf8e3dc6c17e21d92ce90e39c0bc732c7bce4c41522012b2781b433905b73",
+        "gate_timeout_scope": "One 1800-second deadline covers device validation, reference tests and component screen subprocesses.",
+        "gate_execution_command": [
+          "python",
+          "-c",
+          "<gate source>",
+          "<frozen protocol JSON>",
+          "<probe source>"
+        ],
+        "source": "c2b3a4e8db9d64c7eda2ad36519c06a90f636598",
+        "environment": {
+          "XLA_FLAGS": "--xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall --xla_gpu_nccl_termination_timeout_seconds=600 --xla_gpu_per_fusion_autotune_cache_dir=/tmp/hero-inverse-routing-path-autotune",
+          "JAX_ENABLE_X64": "false",
+          "JAX_ENABLE_COMPILATION_CACHE": "false",
+          "JAX_ENABLE_PGLE": "false",
+          "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
+          "WANDB_MODE": "disabled",
+          "NCCL_CTA_POLICY": "DEFAULT"
+        },
+        "compiler_flag_provenance": {
+          "source": "/tmp/hero2-mask-paired-20260920-0621/pair-3/result.json",
+          "arm": "control",
+          "change": "Only the per-process fusion-cache directory changes to a job-local path. Persistent JAX compilation caching and PGLE remain disabled. This is a synthetic index-only screen, not an allocator or training measurement."
+        },
+        "baseline_review": {
+          "path": "/tmp/hero2-mask-paired-20260920-0621/final-baseline-review.json",
+          "sha256": "bf1f52dc412ea88a6112a92f49b3eb4186d80d1c76f755528798dec210b5dd05"
+        },
+        "shape": {
+          "tokens": 65536,
+          "hidden": 3072,
+          "topk": 8
+        },
+        "phases": [
+          "combine",
+          "dispatch_gradient"
+        ],
+        "purpose": "Measure the full token combine and dispatch gradient paths after isolated inverse-index correctness and timing passed.",
+        "control_equivalence": {
+          "baseline": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+          "functions": [
+            "_unpermute_from_global_expert",
+            "_gather_dispatch_rows_bwd"
+          ],
+          "validation": "AST-identical to baseline functions when the inverse helper call is replaced by jnp.argsort; control clones their globals with exactly this substitution."
+        }
+      },
+      "measurement_source": "\"\"\"Compare full token-combine and dispatch-gradient paths at the hero local shape.\"\"\"\nimport hashlib\nimport importlib.metadata\nimport json\nimport os\nimport re\nimport signal\nimport sys\nimport types\nfrom functools import partial\nfrom pathlib import Path\nfrom timeit import Timer\n\nimport jax\nimport jax.numpy as jnp\nimport numpy as np\n\nfrom levanter.cutlass_kernel_cache import gpu_compute_capability\nfrom levanter.grug._moe.ep_ragged_all_to_all import _gather_dispatch_rows_bwd, _unpermute_from_global_expert\nfrom levanter.grug._moe.sonic import sonic_gather_sum_available\n\n\ndef sort_control(function):\n    namespace = dict(function.__globals__, _invert_permutation=jnp.argsort)\n    return types.FunctionType(function.__code__, namespace, function.__name__, function.__defaults__, function.__closure__)\n\n\ndef execute(executable, *args):\n    return jax.block_until_ready(executable(*args))\n\n\ndef dispatch_gradient(function, data, indices, weights, *, topk):\n    del weights\n    return function(topk, indices, data)[0]\n\n\ndef combine(function, data, indices, weights, *, topk, tokens):\n    return function(data, indices, weights, tokens_per_shard=tokens, topk=topk)\n\n\ndef main():\n    protocol = json.loads(sys.argv[1])\n    assert protocol['ready_for_execution']\n    signal.signal(signal.SIGALRM, signal.SIG_DFL)\n    signal.alarm(protocol['gpu_process_timeout'])\n    for name, digest in protocol['source_sha256'].items():\n        assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name\n    versions = {name: importlib.metadata.version(name) for name in protocol['packages']}\n    assert versions == protocol['packages']\n    assert jax.default_backend() == 'gpu' and gpu_compute_capability() == 100\n    assert jax.device_count() == jax.local_device_count() == 1\n    assert jax.config.jax_enable_x64 is False and sonic_gather_sum_available()\n    output = Path(os.environ['IRIS_OUTPUT_DIR'])\n    output.mkdir(parents=True, exist_ok=True)\n    shape = protocol['shape']; topk = shape['topk']; tokens = shape['tokens']\n    size = tokens * topk\n    data = jax.random.normal(jax.random.key(protocol['seed']), (size, shape['hidden']), dtype=jnp.bfloat16)\n    weights = jax.nn.softmax(jax.random.normal(jax.random.key(protocol['seed'] + 1), (tokens, topk)), axis=-1)\n    jax.block_until_ready((data, weights))\n    functions = {\n        'combine': {'control': partial(combine, sort_control(_unpermute_from_global_expert), topk=topk, tokens=tokens),\n                    'candidate': partial(combine, _unpermute_from_global_expert, topk=topk, tokens=tokens)},\n        'dispatch_gradient': {'control': partial(dispatch_gradient, sort_control(_gather_dispatch_rows_bwd), topk=topk),\n                              'candidate': partial(dispatch_gradient, _gather_dispatch_rows_bwd, topk=topk)},\n    }\n    generator = np.random.default_rng(protocol['seed'])\n    records = []\n    for case in protocol['cases']:\n        assert case['assignments'] == size\n        keys = generator.integers(0, protocol['experts'], size=size, dtype=np.int32)\n        if case['pattern'] == 'one_expert':\n            keys.fill(0)\n        elif case['pattern'] == 'skewed':\n            keys[generator.random(size) < 0.8] = 0\n        else:\n            assert case['pattern'] == 'uniform_expert_ids'\n        indices = jnp.asarray(np.argsort(keys, stable=True).astype(np.int32))\n        for phase in protocol['phases']:\n            executables = {arm: jax.jit(function).lower(data, indices, weights).compile()\n                           for arm, function in functions[phase].items()}\n            outputs = {arm: execute(executable, data, indices, weights) for arm, executable in executables.items()}\n            assert outputs['control'].dtype == outputs['candidate'].dtype\n            assert outputs['control'].shape == outputs['candidate'].shape == (tokens, shape['hidden'])\n            assert bool(jnp.all(jnp.isfinite(outputs['control'])))\n            assert bool(jnp.all(jnp.isfinite(outputs['candidate'])))\n            maximum_difference = float(jnp.max(jnp.abs(outputs['control'].astype(jnp.float32) - outputs['candidate'].astype(jnp.float32))))\n            assert maximum_difference == 0\n            del outputs\n            lowering = {}\n            for arm, executable in executables.items():\n                hlo = executable.as_text()\n                (output / f'{case[\"pattern\"]}-{phase}-{arm}.hlo.txt').write_text(hlo)\n                lowering[arm] = {'custom_call_targets': sorted(set(re.findall(r'custom_call_target=\"([^\"]+)\"', hlo))),\n                                 'memory_analysis': str(executable.memory_analysis())}\n            samples = []\n            for batch, arm in enumerate(protocol['order']):\n                call = partial(execute, executables[arm], data, indices, weights)\n                for _ in range(protocol['warmup_calls']):\n                    call()\n                seconds = Timer(call).timeit(number=protocol['calls_per_batch']) / protocol['calls_per_batch']\n                samples.append({'batch': batch, 'arm': arm, 'seconds_per_call': seconds})\n            record = {'case': case, 'phase': phase, 'maximum_absolute_difference': maximum_difference,\n                      'samples': samples, 'lowering': lowering}\n            records.append(record)\n            print('HERO_INVERSE_ROUTING_PATH_CASE ' + json.dumps(record), flush=True)\n    result = {'protocol_sha256': hashlib.sha256(sys.argv[1].encode()).hexdigest(),\n              'source_sha256': protocol['source_sha256'], 'packages': versions, 'device': jax.devices()[0].device_kind,\n              'xla_flags': os.environ.get('XLA_FLAGS', ''), 'shape': shape, 'case_count': len(records),\n              'scope': 'One-GB200 token-combine and dispatch-gradient screen. Host dispatch and synchronization included. No collectives, expert MLP, restored-training throughput or convergence measurement.'}\n    (output / 'inverse-routing-path-result.json').write_text(json.dumps({**result, 'cases': records}, indent=2) + '\\n')\n    print('HERO_INVERSE_ROUTING_PATH_SUCCESS ' + json.dumps(result), flush=True)\n\n\nif __name__ == '__main__':\n    main()\n",
+      "result": {
+        "protocol_sha256": "f956ae9909f1f34ad9a35bafb5b2470edce03ed580d348456a77e91ea68937a9",
+        "source_sha256": {
+          "lib/levanter/src/levanter/grug/_moe/common.py": "20fa26a25de4ff934caf695a8d81e5e15c3a8634af5616ad777f6a247f665d89",
+          "lib/levanter/src/levanter/grug/_moe/ep_common.py": "d1ebfd879bbdd6fb3b18996cd0cd91cf4513fcfb8a0afda244b318854140fa03",
+          "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "c4f8cc767dc4e7a9ecbad66e4295d06206bda06992c3ca83c12a7d910c1a9638",
+          "lib/levanter/src/levanter/grug/_moe/sonic.py": "108dec26876094379f96042581ce0f615fc3ccb2f1e7ad558fa8a78bbb9335ed",
+          "lib/levanter/tests/grug/test_grugformer_moe.py": "69c9a61f83ea5c09efe47c744d3e62f7c82be330349ab062d187ba93923f6820",
+          "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+          "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+        },
+        "packages": {
+          "flash-attn-4": "4.0.0b28",
+          "jax": "0.11.1",
+          "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+          "jax-cuda13-plugin": "0.11.1",
+          "jaxlib": "0.11.1",
+          "nvidia-cublas": "13.4.1.1",
+          "nvidia-cudnn-cu13": "9.19.0.56",
+          "nvidia-cutlass-dsl": "4.6.2",
+          "nvidia-nccl-cu13": "2.31.2",
+          "quack-kernels": "0.6.4"
+        },
+        "device": "NVIDIA GB200",
+        "xla_flags": "--xla_gpu_enable_latency_hiding_scheduler=true --xla_gpu_memory_limit_slop_factor=85 --xla_gpu_enable_command_buffer= --xla_gpu_experimental_parallel_collective_overlap_limit=1 --xla_gpu_experimental_ragged_all_to_all_use_device_kernel=true --xla_enable_nccl_symmetric_buffers_for_collectives=raggedalltoall --xla_gpu_nccl_termination_timeout_seconds=600 --xla_gpu_per_fusion_autotune_cache_dir=/tmp/hero-inverse-routing-path-autotune",
+        "shape": {
+          "hidden": 3072,
+          "tokens": 65536,
+          "topk": 8
+        },
+        "case_count": 6,
+        "scope": "One-GB200 token-combine and dispatch-gradient screen. Host dispatch and synchronization included. No collectives, expert MLP, restored-training throughput or convergence measurement.",
+        "tasks": [
+          {
+            "key": "/mwittmann/hero2-inverse-permutation-path-20260920-1134/inverse-permutation-gate/0:0",
+            "start_ms": 1789904062258,
+            "end_ms": 1789904223126,
+            "node": "s9rrxs64"
+          }
+        ],
+        "reference_tests": {
+          "passed": 11,
+          "junit_sha256": "493eebb72bf120b2ba5596af33eeab74036436f487e0cca9aeb821743b792f60"
+        },
+        "cases": [
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "uniform_expert_ids"
+            },
+            "phase": "combine",
+            "maximum_absolute_difference": 0.0,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.0007727784290909767
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007091393508017063
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007120372913777828
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0007816731370985508
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.0007826152257621288
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.000711106713861227
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007089889608323574
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0007760008238255978
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.0007759387418627739
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007092276774346829
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007063112035393715
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0007741985656321049
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=6553860, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=2359568, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "uniform_expert_ids"
+            },
+            "phase": "dispatch_gradient",
+            "maximum_absolute_difference": 0.0,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.0007744046486914158
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007089595310389996
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007069198414683342
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.000771179050207138
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.0007703099399805069
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007056980766355992
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007044219225645066
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0007704257965087891
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.0007727707363665104
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007038299180567265
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.0007031176052987576
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0007703636959195137
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=8651012, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=4456720, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "one_expert"
+            },
+            "phase": "combine",
+            "maximum_absolute_difference": 0.0,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.0007579892873764039
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.00069291727617383
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006943822279572487
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0007579438388347626
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.0007571291364729404
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006922241672873497
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006948494352400303
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0007573806494474411
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.0007534337788820267
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006919367983937263
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006912769749760628
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0007554613053798676
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=6553860, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=2359568, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "one_expert"
+            },
+            "phase": "dispatch_gradient",
+            "maximum_absolute_difference": 0.0,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.0007584520243108273
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006944993697106838
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006936507113277912
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0007561934553086758
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.0007564859464764595
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006928231939673424
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006933691166341305
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0007560263946652413
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.0007547560334205627
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006928846426308155
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006925991922616958
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0007561774551868439
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=8651012, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=4456720, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "skewed"
+            },
+            "phase": "combine",
+            "maximum_absolute_difference": 0.0,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.000757361426949501
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006923841685056686
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.000691557265818119
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0007546798512339592
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.0007541108876466751
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006920506991446018
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006910977512598038
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0007534849643707275
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.0007545934617519379
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006919457763433456
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006916353665292263
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0007543572783470153
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=6553860, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=2359568, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "skewed"
+            },
+            "phase": "dispatch_gradient",
+            "maximum_absolute_difference": 0.0,
+            "samples": [
+              {
+                "batch": 0,
+                "arm": "control",
+                "seconds_per_call": 0.0007593672163784504
+              },
+              {
+                "batch": 1,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006957121565937996
+              },
+              {
+                "batch": 2,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006948008015751839
+              },
+              {
+                "batch": 3,
+                "arm": "control",
+                "seconds_per_call": 0.0007590875215828419
+              },
+              {
+                "batch": 4,
+                "arm": "control",
+                "seconds_per_call": 0.0007576027326285839
+              },
+              {
+                "batch": 5,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006938439793884755
+              },
+              {
+                "batch": 6,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006937729567289353
+              },
+              {
+                "batch": 7,
+                "arm": "control",
+                "seconds_per_call": 0.0007578055933117867
+              },
+              {
+                "batch": 8,
+                "arm": "control",
+                "seconds_per_call": 0.0007570619322359562
+              },
+              {
+                "batch": 9,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006935739330947399
+              },
+              {
+                "batch": 10,
+                "arm": "candidate",
+                "seconds_per_call": 0.0006930779106914997
+              },
+              {
+                "batch": 11,
+                "arm": "control",
+                "seconds_per_call": 0.0007555675134062767
+              }
+            ],
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=8651012, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=4456720, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          }
+        ]
+      },
+      "summary": {
+        "source": "c2b3a4e8db9d64c7eda2ad36519c06a90f636598",
+        "job_id": "/mwittmann/hero2-inverse-permutation-path-20260920-1134",
+        "reference_tests_passed": 11,
+        "cases": [
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "uniform_expert_ids"
+            },
+            "phase": "combine",
+            "mean_microseconds": {
+              "control": 777.2008205453554,
+              "candidate": 709.4685329745213
+            },
+            "saved_microseconds": 67.73228757083415,
+            "duration_reduction_percent": 8.714901706267753,
+            "batch_range_microseconds": {
+              "control": [
+                772.7784290909767,
+                782.6152257621288
+              ],
+              "candidate": [
+                706.3112035393715,
+                712.0372913777828
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=6553860, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=2359568, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "uniform_expert_ids"
+            },
+            "phase": "dispatch_gradient",
+            "mean_microseconds": {
+              "control": 771.5756446123123,
+              "candidate": 705.4911491771539
+            },
+            "saved_microseconds": 66.08449543515839,
+            "duration_reduction_percent": 8.564875770328829,
+            "batch_range_microseconds": {
+              "control": [
+                770.3099399805069,
+                774.4046486914158
+              ],
+              "candidate": [
+                703.1176052987576,
+                708.9595310389996
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=8651012, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=4456720, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "one_expert"
+            },
+            "phase": "combine",
+            "mean_microseconds": {
+              "control": 756.5563327322403,
+              "candidate": 692.9311466713747
+            },
+            "saved_microseconds": 63.6251860608657,
+            "duration_reduction_percent": 8.409841185399724,
+            "batch_range_microseconds": {
+              "control": [
+                753.4337788820267,
+                757.9892873764038
+              ],
+              "candidate": [
+                691.2769749760628,
+                694.8494352400303
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=6553860, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=2359568, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "one_expert"
+            },
+            "phase": "dispatch_gradient",
+            "mean_microseconds": {
+              "control": 756.3485515614351,
+              "candidate": 693.3043710887432
+            },
+            "saved_microseconds": 63.044180472691856,
+            "duration_reduction_percent": 8.335334329991252,
+            "batch_range_microseconds": {
+              "control": [
+                754.7560334205627,
+                758.4520243108273
+              ],
+              "candidate": [
+                692.5991922616959,
+                694.4993697106838
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=8651012, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=4456720, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "skewed"
+            },
+            "phase": "combine",
+            "mean_microseconds": {
+              "control": 754.7646450499694,
+              "candidate": 691.7785046001275
+            },
+            "saved_microseconds": 62.98614044984187,
+            "duration_reduction_percent": 8.345136575080547,
+            "batch_range_microseconds": {
+              "control": [
+                753.4849643707275,
+                757.361426949501
+              ],
+              "candidate": [
+                691.0977512598038,
+                692.3841685056686
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=6553860, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3225419776, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=2359568, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          },
+          {
+            "case": {
+              "assignments": 524288,
+              "pattern": "skewed"
+            },
+            "phase": "dispatch_gradient",
+            "mean_microseconds": {
+              "control": 757.7487515906492,
+              "candidate": 694.1302896787723
+            },
+            "saved_microseconds": 63.6184619118769,
+            "duration_reduction_percent": 8.395719792125089,
+            "batch_range_microseconds": {
+              "control": [
+                755.5675134062767,
+                759.3672163784504
+              ],
+              "candidate": [
+                693.0779106914997,
+                695.7121565937996
+              ]
+            },
+            "lowering": {
+              "control": {
+                "custom_call_targets": [
+                  "triton_kernel_call",
+                  "xla.gpu.ext.cub_sort_pairs"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=8651012, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              },
+              "candidate": {
+                "custom_call_targets": [
+                  "triton_kernel_call"
+                ],
+                "memory_analysis": "CompiledMemoryStats(generated_code_size_in_bytes=0, argument_size_in_bytes=3223322624, output_size_in_bytes=402653184, alias_size_in_bytes=0, temp_size_in_bytes=4456720, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)"
+              }
+            }
+          }
+        ],
+        "scope": "One-GB200 token-combine and dispatch-gradient screen. Host dispatch and synchronization included. No collectives, expert MLP, restored-training throughput or convergence measurement.",
+        "decision": "GPU correctness and component evidence only; training throughput and convergence remain unmeasured."
+      }
+    }
+  }
+}
