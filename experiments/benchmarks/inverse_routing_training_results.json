@@ -337,8 +337,13 @@
   },
   "full_record": {
     "file": "inverse_routing_training_record.json.gz",
-    "sha256": "408270ef670def7b4f350d8fa357473c7fe085e66c3fc4f7f7a817577ab3d56a",
-    "uncompressed_sha256": "c3f4119be960a301ccf3252f120b21317aab0986a5b4e336aa18f4c2af5fd706"
+    "sha256": "8acaa8baa694cdb67aab00d898fea016e22776b65d301986a065f14b212ca570",
+    "uncompressed_sha256": "390b7112ab974afc75c7fdb8773b222df009394012d21958dd3fa3fa1e67dc43"
   },
-  "publication_scope": "Derived benchmark/profile data and collection/benchmark source only. Production candidate implementation, source overlays, raw profiles, checkpoint contents and credentials are excluded. Candidate code remains local, so these artifacts are not a self-contained training rerun."
+  "publication_scope": "Derived benchmark/profile data and collection/benchmark source only. Production candidate implementation, source overlays, raw profiles, checkpoint contents and credentials are excluded. Candidate code remains local, so these artifacts are not a self-contained training rerun.",
+  "metric_definition": {
+    "loss": "Token-weighted global mean of next-token cross-entropy plus 1e-4 times squared logsumexp of output logits; router z-loss is logged separately and excluded.",
+    "step_duration": "Starts before TRAIN_STEP_STARTED and the compiled training call; ends after reading state.step, blocking on train/loss, emitting TRAIN_STEP_FINISHED, and checking finite loss. No explicit all-state readiness barrier.",
+    "optimizer": "MuonH, AdamH, and Adam parameter groups; scheduled learning rates and fixed epsilon configured from production batch size and total update count; restored optimizer counters preserve schedule position."
+  }
 }

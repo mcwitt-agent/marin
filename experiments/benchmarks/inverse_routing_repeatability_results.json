@@ -1,0 +1,746 @@
+{
+  "study": "hero2-repeatability-20260920-1317",
+  "study_kind": "same-code accepted-baseline numerical repeatability",
+  "status": "manually reviewed; no optimization promotion",
+  "protocol": {
+    "checkpoint_policy": "Select latest complete hero checkpoint once at pair setup in-region; temporarily retain until both arms are terminal; require identical restored URI and step; restore original retention metadata.",
+    "rack_policy": "A pair holds one 16-host, 64-GB200 allocation through both arms. Require identical task/attempt, hostname, local GPU UUIDs, local device assignment and NVLink rack for both arms; no retries or migration.",
+    "checkpoint_roots": [
+      "s3://marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+      "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+      "s3://hero-checkpoints/marin/grug/hero-nopdl-step108k/2026.08.19.2/checkpoints/step-121638"
+    ],
+    "priority": "production",
+    "gpu_count": 64,
+    "training_timeout_seconds": 3300,
+    "queue_included_in_training_timeout": false,
+    "packages": {
+      "jax": "0.11.1",
+      "jaxlib": "0.11.1",
+      "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+      "jax-cuda13-plugin": "0.11.1",
+      "flash-attn-4": "4.0.0b28",
+      "nvidia-cutlass-dsl": "4.6.2",
+      "quack-kernels": "0.6.4",
+      "nvidia-cublas": "13.4.1.1",
+      "nvidia-cudnn-cu13": "9.19.0.56",
+      "nvidia-nccl-cu13": "2.31.2"
+    },
+    "training_batch_size": 1024,
+    "optimizer_schedule_batch_size": 11264,
+    "optimizer_schedule_steps": 390251,
+    "purpose": "Measure same-code numerical repeatability after restoring the accepted hero baseline twice, in fresh processes on the same physical GPUs with matched input fingerprints.",
+    "main": "1f9c387b6c452895ff58573c2b6117c5500303db",
+    "orders": [
+      [
+        "control",
+        "candidate"
+      ]
+    ],
+    "steps_per_arm": 64,
+    "score_relative_steps": [
+      8,
+      63
+    ],
+    "profile_relative_steps": [
+      5,
+      6
+    ],
+    "statistics": {
+      "primary": "One exploratory same-code pair. Differences are baseline run B (candidate label) minus baseline run A (control label). Report the full loss-difference trajectory, signed mean and maximum absolute difference over all 64 relative updates 0\u201363, final difference at update 63, and mean of the last seven updates 57\u201363. No convergence claim or between-run confidence interval.",
+      "timing": "Retain step-time and instrumented iteration-time summaries over relative updates 8\u201363 as diagnostics only. This pair does not estimate an optimization gain.",
+      "decision": "Stop after one pair irrespective of the result. Require identical inputs and production source/configuration. If losses differ, establish that same-code run variation exists without asserting it fully explains the previous treatment difference. If losses match exactly, investigate the inverse-routing treatment further. Neither result alone permits promotion; any later throughput confirmation requires a separately frozen protocol.",
+      "invalid_runs": "Preserve failed or provenance-mismatched runs; investigate without automatic resubmission."
+    },
+    "loss_policy": "Compare all 64 finite losses and all 4096 paired per-rank input fingerprints. Compare descriptively with the earlier inverse-routing pair (maximum absolute difference 0.0010095834732055664 nats); that earlier pair used checkpoint 129680, while this study selects latest at setup, so this is not a controlled cross-study numerical-equivalence test.",
+    "baseline_policy": "Retain accepted native SM100 backward, segmented forward and ragged-all-to-all-only symmetric registration. Exclude routed masking, native forward and copy-engine candidates.",
+    "kernel_validation": "Both arms must retain segmented forward and native SM100 backward, no tail-clear kernels, and the baseline inverse-permutation sorts. Compare dense matmul kernel names/counts across both GPU-0 profiles.",
+    "memory_policy": "Record all rank-0 JAX allocator counters and both GPU-0 compiler plans. Same source does not imply matching compiler output; investigate any difference.",
+    "timeout_scope": "Aggregate 55-minute GPU-process deadline covers both arms, source preparation and validation; queue time is excluded. No simultaneous experiment job trees.",
+    "control": {
+      "commit": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+      "source_sha256": {
+        "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+        "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+        "experiments/grug/moe_hero_ep/hero_recipe.py": "047087f209842e3cfb0d055a5043e2bdafbdd4c1f2092475f5b31569f5a49957",
+        "experiments/grug/moe_hero_ep/heuristic.py": "057d52a4072c3246bd7ce1231b7f1736e6ca7811341459868976937faf15c742",
+        "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+        "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+        "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+        "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+        "lib/levanter/src/levanter/grug/_moe/common.py": "17499bc8712f00d475e98b67942adbc753713b5e274489b6467471c7ab3a7b4a",
+        "lib/levanter/src/levanter/grug/_moe/ep_common.py": "c9d6511f1cd5d69be168a701dc92742ccc26f09d69bbb144fc53d1c9ea934bbd",
+        "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "92a048e2bdd9094bd5b92c6b0dcf940f916c6b2564ae62f53ae32a2ea4b67dd6",
+        "lib/levanter/src/levanter/grug/_moe/quack_moe_cute.py": "26bb877c235138bf2db92fba001138d01459490bac8456d95d48cd6ce56b360a",
+        "lib/levanter/src/levanter/grug/_moe/sonic.py": "108dec26876094379f96042581ce0f615fc3ccb2f1e7ad558fa8a78bbb9335ed",
+        "lib/levanter/src/levanter/grug/_moe/sonic_cute.py": "46a1417e980bd2786aadfee8a2ba34d1f796114f75b546ca21efdb69286bc902",
+        "lib/levanter/src/levanter/grug/attention/_core.py": "8c6c417b5c82921bec4dab5be5d8e3d408dcd8d28b1be66b20e78ee892c79bf4",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+        "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+        "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+        "lib/levanter/tests/grug/test_grugformer_moe.py": "d6be66a5ea20e4cb351fe56b100379bfa58597837595da2720eafd97a0627353",
+        "lib/levanter/tests/kernels/test_quack_expert_mlp.py": "a6d704eb7fa8df129d819d0859a7b6d6625d00dc57db0ba145f2e4405f2e704d",
+        "lib/levanter/tests/kernels/test_quack_grouped_wgrad.py": "9a58ece24c1be3846256d450b10a01ad0a3dc310ca04a69a152583b9cea9f3d3",
+        "lib/marin/src/marin/profiling/xplane.py": "db9ce7f0417ab3deba96e3b86e41416da70f0517004abf6efd36169cfdc50dae",
+        "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+        "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+      },
+      "registration_scope": "raggedalltoall",
+      "nccl_cta_policy": "DEFAULT",
+      "intended_forward": "segmented",
+      "expected_profile_kernel_counts": {
+        "segmented_flash_attention_forward": 192,
+        "flashattentionbackwardsm100": 96
+      }
+    },
+    "candidate": {
+      "commit": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+      "source_sha256": {
+        "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+        "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+        "experiments/grug/moe_hero_ep/hero_recipe.py": "047087f209842e3cfb0d055a5043e2bdafbdd4c1f2092475f5b31569f5a49957",
+        "experiments/grug/moe_hero_ep/heuristic.py": "057d52a4072c3246bd7ce1231b7f1736e6ca7811341459868976937faf15c742",
+        "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+        "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+        "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+        "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+        "lib/levanter/src/levanter/grug/_moe/common.py": "17499bc8712f00d475e98b67942adbc753713b5e274489b6467471c7ab3a7b4a",
+        "lib/levanter/src/levanter/grug/_moe/ep_common.py": "c9d6511f1cd5d69be168a701dc92742ccc26f09d69bbb144fc53d1c9ea934bbd",
+        "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "92a048e2bdd9094bd5b92c6b0dcf940f916c6b2564ae62f53ae32a2ea4b67dd6",
+        "lib/levanter/src/levanter/grug/_moe/quack_moe_cute.py": "26bb877c235138bf2db92fba001138d01459490bac8456d95d48cd6ce56b360a",
+        "lib/levanter/src/levanter/grug/_moe/sonic.py": "108dec26876094379f96042581ce0f615fc3ccb2f1e7ad558fa8a78bbb9335ed",
+        "lib/levanter/src/levanter/grug/_moe/sonic_cute.py": "46a1417e980bd2786aadfee8a2ba34d1f796114f75b546ca21efdb69286bc902",
+        "lib/levanter/src/levanter/grug/attention/_core.py": "8c6c417b5c82921bec4dab5be5d8e3d408dcd8d28b1be66b20e78ee892c79bf4",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+        "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+        "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+        "lib/levanter/tests/grug/test_grugformer_moe.py": "d6be66a5ea20e4cb351fe56b100379bfa58597837595da2720eafd97a0627353",
+        "lib/levanter/tests/kernels/test_quack_expert_mlp.py": "a6d704eb7fa8df129d819d0859a7b6d6625d00dc57db0ba145f2e4405f2e704d",
+        "lib/levanter/tests/kernels/test_quack_grouped_wgrad.py": "9a58ece24c1be3846256d450b10a01ad0a3dc310ca04a69a152583b9cea9f3d3",
+        "lib/marin/src/marin/profiling/xplane.py": "db9ce7f0417ab3deba96e3b86e41416da70f0517004abf6efd36169cfdc50dae",
+        "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+        "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+      },
+      "registration_scope": "raggedalltoall",
+      "nccl_cta_policy": "DEFAULT",
+      "intended_forward": "segmented",
+      "expected_profile_kernel_counts": {
+        "segmented_flash_attention_forward": 192,
+        "flashattentionbackwardsm100": 96
+      }
+    },
+    "input_fingerprints": {
+      "scope": "Every rank, every restored update: SHA-256 of each locally addressable input shard, shape, dtype, shard index, pytree structure, and non-array leaf values. Raw input values are not returned.",
+      "timing": "Fingerprinting runs in batch iteration before the scored step timer and synchronizes input readiness in both arms. Its CPU transfer and hashing time is excluded from scored throughput; total job runtime includes it.",
+      "validation": "Require all 64 relative updates on all 64 ranks in each arm and identical paired digests for every rank/update. A mismatch invalidates matched-input claims and stops further submission."
+    },
+    "harness_source_sha256": {
+      "experiments/benchmarks/hero_pair_arm.py": "8415be1097124ef35853ec6539e925d2ca8bbc87400281643eabe830291b13e0",
+      "experiments/benchmarks/hero_pair_process.py": "67e08eb87c3b690ca79c4d29cefed3c9c9dd1c4ef3d936a9ef295291e532f4a3",
+      "experiments/benchmarks/hero_pair_training.py": "29e0f223b6b5ae25f1afc7974b66ccc44f8c2185ff6f5984425a56e4e6d22194",
+      "experiments/benchmarks/hero_path_training.py": "f85a6251c21f3648cc2a1fb67db962cc36bf075abfea8731f342606d9ca01095",
+      "experiments/benchmarks/hero_profile.py": "2880787be909be729e7a839531e4374d0fa5270b7a484d45cb42b13326c5c3b5"
+    },
+    "comparison": "Both protocol arm names refer to identical accepted-baseline production source: control is baseline run A; candidate is baseline run B. There is no optimization treatment in this study.",
+    "baseline_evidence": {
+      "study": "hero2-inverse-paired-20260920-1158",
+      "control_commit": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+      "validated_result": "https://github.com/mcwitt-agent/marin/blob/9574881a364721fb658ac5384e0b318067d76d1a/experiments/benchmarks/inverse_routing_training_results.md"
+    }
+  },
+  "harness_commit": "0f096743be17b6b193b86d994e8933bcce793283",
+  "training_job": "/mwittmann/hero2-repeatability-20260920-1317-p1",
+  "analysis_job": "/mwittmann/hero2-repeatability-20260920-1317-p1-analysis",
+  "checkpoint_retention": {
+    "1": {
+      "checkpoint": "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints/step-129885",
+      "step": 129885,
+      "original_is_temporary": true,
+      "status": "released",
+      "journal": "s3://hero-checkpoints/tmp/ttl=30d/hero2-benchmark-pins/hero2-repeatability-20260920-1317/pair-1.json"
+    }
+  },
+  "review": {
+    "study": "hero2-repeatability-20260920-1317",
+    "observed_utc": "2026-09-20T14:09:45.507713+00:00",
+    "status": "same-code repeatability manually reviewed",
+    "arms": "control = accepted-baseline run A; candidate = identical-source baseline run B",
+    "loss": {
+      "mean_difference": 0.0004342403262853414,
+      "max_absolute_difference": 0.0009570121765136719,
+      "first_step_difference": 0.0,
+      "last_step_difference": 0.00018966197967529297,
+      "last_seven_mean_difference": 0.000211920057024338,
+      "same_sign_scored_steps": false
+    },
+    "updates_with_different_loss": 63,
+    "first_different_update": 1,
+    "input_fingerprints": {
+      "ranks": 64,
+      "steps_per_rank": 64,
+      "digests_per_arm": 4096,
+      "matched_digests": 4096,
+      "mismatches": [],
+      "identical_inputs": true
+    },
+    "baseline_commit": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+    "checkpoint_step": 129885,
+    "earlier_inverse_routing_max_absolute_loss_difference": 0.0010095834732055664,
+    "cross_study_caveat": "The earlier optimization pair restored checkpoint 129680; this same-code pair restored 129885. One pair cannot establish an equivalence margin or explain all earlier variation.",
+    "same_code_variation_observed": true,
+    "interpretation": "Same-code run variation exists in this measured pair; its cause and relation to the earlier treatment difference remain unresolved.",
+    "rank0_allocator_peak_gib": {
+      "control": 103.08816535770892,
+      "candidate": 103.08816535770892
+    },
+    "compiler_planned_default_plus_collective_gib": {
+      "control": 121.48658893723041,
+      "candidate": 121.48658893723041
+    },
+    "dense_kernel_comparison": {
+      "common_operation_groups": 59,
+      "changed_groups": [],
+      "control_only": [],
+      "candidate_only": [],
+      "scope": "GPU-0 dense nvjet matmul names/counts over two profiled updates; excludes other operations and ranks."
+    },
+    "timing_diagnostic": {
+      "step_ratio_percent": -0.5311157444185532,
+      "instrumented_iteration_ratio_percent": -0.6327611953283241,
+      "scope": "Same-code timing differences, not optimization gains. One pair has no between-run confidence interval."
+    },
+    "candidate_promoted": false,
+    "followup": "Prepare a separately frozen counterbalanced inverse-routing confirmation. Keep the candidate outside the accepted baseline and continue per-pair loss, input, memory, and kernel review.",
+    "router_shared_updates": {
+      "cross_entropy": {
+        "matched_updates": 64,
+        "missing_run_a": [],
+        "missing_run_b": [],
+        "max_absolute_difference": 0.0009570121765136719,
+        "mean_difference": 0.0004342403262853414
+      },
+      "entropy": {
+        "matched_updates": 58,
+        "missing_run_a": [
+          "129905",
+          "129909",
+          "129926",
+          "129928",
+          "129947"
+        ],
+        "missing_run_b": [
+          "129931"
+        ],
+        "max_absolute_difference": 0.0004329681396484375,
+        "mean_difference": 1.5143690438106141e-05
+      },
+      "overflow": {
+        "matched_updates": 58,
+        "missing_run_a": [
+          "129905",
+          "129909",
+          "129926",
+          "129928",
+          "129947"
+        ],
+        "missing_run_b": [
+          "129931"
+        ],
+        "max_absolute_difference": 0.00015398116374853998,
+        "mean_difference": -1.7295989452797022e-05
+      },
+      "padding": {
+        "matched_updates": 58,
+        "missing_run_a": [
+          "129905",
+          "129909",
+          "129926",
+          "129928",
+          "129947"
+        ],
+        "missing_run_b": [
+          "129931"
+        ],
+        "max_absolute_difference": 0.0,
+        "mean_difference": 0.0
+      },
+      "bias_min": {
+        "matched_updates": 58,
+        "missing_run_a": [
+          "129905",
+          "129909",
+          "129926",
+          "129928",
+          "129947"
+        ],
+        "missing_run_b": [
+          "129931"
+        ],
+        "max_absolute_difference": 0.7324743270874023,
+        "mean_difference": 0.22668198881478172
+      },
+      "bias_max": {
+        "matched_updates": 58,
+        "missing_run_a": [
+          "129905",
+          "129909",
+          "129926",
+          "129928",
+          "129947"
+        ],
+        "missing_run_b": [
+          "129931"
+        ],
+        "max_absolute_difference": 2.121230125427246,
+        "mean_difference": -0.03314602786097033
+      },
+      "router_z_loss": {
+        "matched_updates": 58,
+        "missing_run_a": [
+          "129905",
+          "129909",
+          "129926",
+          "129928",
+          "129947"
+        ],
+        "missing_run_b": [
+          "129931"
+        ],
+        "max_absolute_difference": 0.18686676025390625,
+        "mean_difference": -0.006168414806497324
+      }
+    },
+    "primary_metric_prefix_check": {
+      "primary_metric_rows": 260,
+      "all_selected_metric_rows_begin_with_rank0": true,
+      "wrong_prefix_count": 0
+    },
+    "reviewed_utc": "2026-09-20T14:10:45.958609+00:00",
+    "manual_assessment": {
+      "loss_plot_visually_reviewed": true,
+      "observation": "Losses first differ at update 1. The difference grows through the early updates and is mostly positive thereafter, reaching 0.000957 nats and ending at 0.000190 nats. All inputs match.",
+      "interpretation": "Identical accepted-baseline source and inputs can yield nonzero loss differences on the same physical allocation. This observation does not attribute the cause, establish long-term convergence, or demonstrate numerical equivalence for the inverse-routing candidate.",
+      "memory": "Rank-0 JAX lifetime peak and GPU-0 default-plus-collective allocation sizes match. Other allocators and ranks are outside the scope.",
+      "compiled_code": "Both profile HLO hashes differ; 59 compared dense-matmul operation groups have matching kernel names/counts. This is not proof of identical machine code or all floating-point operations.",
+      "router_coverage": "Run A has 59 and run B 63 router observations, with 58 shared updates. Missing observations are recorded. All 64 primary losses are present in both arms.",
+      "decision": "Same-code variation warrants independent counterbalanced timing confirmation of the candidate; no optimization is promoted by this study."
+    },
+    "metric_definition": {
+      "loss": "Token-weighted global mean of next-token cross-entropy plus 1e-4 times squared logsumexp of output logits; router z-loss is logged separately and excluded.",
+      "step_duration": "Starts before TRAIN_STEP_STARTED and the compiled training call; ends after reading state.step, blocking on train/loss, emitting TRAIN_STEP_FINISHED, and checking finite loss. No explicit all-state readiness barrier.",
+      "optimizer": "MuonH, AdamH, and Adam parameter groups; scheduled learning rates and fixed epsilon configured from production batch size and total update count; restored optimizer counters preserve schedule position."
+    }
+  },
+  "loss_trajectory": [
+    {
+      "relative_step": 0,
+      "control": 1.2629237174987793,
+      "candidate": 1.2629237174987793,
+      "difference": 0.0
+    },
+    {
+      "relative_step": 1,
+      "control": 1.2186318635940552,
+      "candidate": 1.218616008758545,
+      "difference": -1.5854835510253906e-05
+    },
+    {
+      "relative_step": 2,
+      "control": 1.2418283224105835,
+      "candidate": 1.2418047189712524,
+      "difference": -2.3603439331054688e-05
+    },
+    {
+      "relative_step": 3,
+      "control": 1.2275394201278689,
+      "candidate": 1.227522850036621,
+      "difference": -1.657009124778064e-05
+    },
+    {
+      "relative_step": 4,
+      "control": 1.2775859832763672,
+      "candidate": 1.2776055335998535,
+      "difference": 1.9550323486328125e-05
+    },
+    {
+      "relative_step": 5,
+      "control": 1.2392889261245728,
+      "candidate": 1.2393141984939575,
+      "difference": 2.5272369384765625e-05
+    },
+    {
+      "relative_step": 6,
+      "control": 1.2231510877609253,
+      "candidate": 1.223156452178955,
+      "difference": 5.364418029785156e-06
+    },
+    {
+      "relative_step": 7,
+      "control": 1.253378987312317,
+      "candidate": 1.2533891201019287,
+      "difference": 1.0132789611816406e-05
+    },
+    {
+      "relative_step": 8,
+      "control": 1.238967776298523,
+      "candidate": 1.2391674518585205,
+      "difference": 0.0001996755599975586
+    },
+    {
+      "relative_step": 9,
+      "control": 1.2530056238174438,
+      "candidate": 1.2531732320785522,
+      "difference": 0.00016760826110839844
+    },
+    {
+      "relative_step": 10,
+      "control": 1.2687625885009766,
+      "candidate": 1.269053936004639,
+      "difference": 0.0002913475036623314
+    },
+    {
+      "relative_step": 11,
+      "control": 1.2189247608184814,
+      "candidate": 1.2192457914352417,
+      "difference": 0.0003210306167602539
+    },
+    {
+      "relative_step": 12,
+      "control": 1.2094922065734863,
+      "candidate": 1.2098578214645386,
+      "difference": 0.0003656148910522461
+    },
+    {
+      "relative_step": 13,
+      "control": 1.219131350517273,
+      "candidate": 1.2195204496383667,
+      "difference": 0.00038909912109375
+    },
+    {
+      "relative_step": 14,
+      "control": 1.2193799018859863,
+      "candidate": 1.220057249069214,
+      "difference": 0.0006773471832277611
+    },
+    {
+      "relative_step": 15,
+      "control": 1.262606859207153,
+      "candidate": 1.2631345987319946,
+      "difference": 0.0005277395248415306
+    },
+    {
+      "relative_step": 16,
+      "control": 1.303447723388672,
+      "candidate": 1.3039867877960205,
+      "difference": 0.0005390644073484108
+    },
+    {
+      "relative_step": 17,
+      "control": 1.2559537887573242,
+      "candidate": 1.2566208839416504,
+      "difference": 0.0006670951843261719
+    },
+    {
+      "relative_step": 18,
+      "control": 1.2596884965896606,
+      "candidate": 1.260406494140625,
+      "difference": 0.0007179975509643555
+    },
+    {
+      "relative_step": 19,
+      "control": 1.2728654146194458,
+      "candidate": 1.2737057209014893,
+      "difference": 0.000840306282043457
+    },
+    {
+      "relative_step": 20,
+      "control": 1.2721925973892212,
+      "candidate": 1.2730021476745603,
+      "difference": 0.0008095502853391334
+    },
+    {
+      "relative_step": 21,
+      "control": 1.2723301649093628,
+      "candidate": 1.273279070854187,
+      "difference": 0.0009489059448242188
+    },
+    {
+      "relative_step": 22,
+      "control": 1.2446783781051636,
+      "candidate": 1.245480179786682,
+      "difference": 0.0008018016815183326
+    },
+    {
+      "relative_step": 23,
+      "control": 1.256575584411621,
+      "candidate": 1.2571183443069458,
+      "difference": 0.000542759895324707
+    },
+    {
+      "relative_step": 24,
+      "control": 1.2685168981552124,
+      "candidate": 1.269261598587036,
+      "difference": 0.0007447004318235084
+    },
+    {
+      "relative_step": 25,
+      "control": 1.2392802238464355,
+      "candidate": 1.2399126291275024,
+      "difference": 0.0006324052810668945
+    },
+    {
+      "relative_step": 26,
+      "control": 1.19816255569458,
+      "candidate": 1.1988061666488647,
+      "difference": 0.000643610954284668
+    },
+    {
+      "relative_step": 27,
+      "control": 1.2708802223205566,
+      "candidate": 1.2715802192687988,
+      "difference": 0.0006999969482421875
+    },
+    {
+      "relative_step": 28,
+      "control": 1.29277503490448,
+      "candidate": 1.293636679649353,
+      "difference": 0.0008616447448730469
+    },
+    {
+      "relative_step": 29,
+      "control": 1.2286443710327148,
+      "candidate": 1.229241967201233,
+      "difference": 0.0005975961685180664
+    },
+    {
+      "relative_step": 30,
+      "control": 1.294510006904602,
+      "candidate": 1.2950729131698608,
+      "difference": 0.0005629062652587891
+    },
+    {
+      "relative_step": 31,
+      "control": 1.2765730619430542,
+      "candidate": 1.277464509010315,
+      "difference": 0.0008914470672607422
+    },
+    {
+      "relative_step": 32,
+      "control": 1.281561017036438,
+      "candidate": 1.282372236251831,
+      "difference": 0.0008112192153930664
+    },
+    {
+      "relative_step": 33,
+      "control": 1.2696285247802734,
+      "candidate": 1.270190715789795,
+      "difference": 0.0005621910095214844
+    },
+    {
+      "relative_step": 34,
+      "control": 1.238572120666504,
+      "candidate": 1.2395291328430176,
+      "difference": 0.0009570121765136719
+    },
+    {
+      "relative_step": 35,
+      "control": 1.282786846160889,
+      "candidate": 1.2834036350250244,
+      "difference": 0.0006167888641355201
+    },
+    {
+      "relative_step": 36,
+      "control": 1.293086051940918,
+      "candidate": 1.2937549352645874,
+      "difference": 0.0006688833236694336
+    },
+    {
+      "relative_step": 37,
+      "control": 1.270514726638794,
+      "candidate": 1.271125555038452,
+      "difference": 0.0006108283996579811
+    },
+    {
+      "relative_step": 38,
+      "control": 1.231520652770996,
+      "candidate": 1.2321816682815552,
+      "difference": 0.000661015510559082
+    },
+    {
+      "relative_step": 39,
+      "control": 1.2467175722122192,
+      "candidate": 1.247455358505249,
+      "difference": 0.0007377862930297852
+    },
+    {
+      "relative_step": 40,
+      "control": 1.252724289894104,
+      "candidate": 1.2534149885177612,
+      "difference": 0.0006906986236572266
+    },
+    {
+      "relative_step": 41,
+      "control": 1.259806752204895,
+      "candidate": 1.260647177696228,
+      "difference": 0.0008404254913330078
+    },
+    {
+      "relative_step": 42,
+      "control": 1.2477456331253052,
+      "candidate": 1.2484875917434692,
+      "difference": 0.0007419586181640625
+    },
+    {
+      "relative_step": 43,
+      "control": 1.2300533056259155,
+      "candidate": 1.2305010557174685,
+      "difference": 0.0004477500915529564
+    },
+    {
+      "relative_step": 44,
+      "control": 1.3381088972091677,
+      "candidate": 1.3386385440826416,
+      "difference": 0.000529646873473899
+    },
+    {
+      "relative_step": 45,
+      "control": 1.2632465362548828,
+      "candidate": 1.263627290725708,
+      "difference": 0.0003807544708251953
+    },
+    {
+      "relative_step": 46,
+      "control": 1.2482651472091677,
+      "candidate": 1.2488216161727903,
+      "difference": 0.0005564689636226028
+    },
+    {
+      "relative_step": 47,
+      "control": 1.2714029550552368,
+      "candidate": 1.271695256233215,
+      "difference": 0.0002923011779782936
+    },
+    {
+      "relative_step": 48,
+      "control": 1.2724632024765017,
+      "candidate": 1.272490620613098,
+      "difference": 2.7418136596235598e-05
+    },
+    {
+      "relative_step": 49,
+      "control": 1.273776888847351,
+      "candidate": 1.273911952972412,
+      "difference": 0.00013506412506103516
+    },
+    {
+      "relative_step": 50,
+      "control": 1.2774221897125244,
+      "candidate": 1.2778873443603516,
+      "difference": 0.00046515464782714844
+    },
+    {
+      "relative_step": 51,
+      "control": 1.268112063407898,
+      "candidate": 1.268423080444336,
+      "difference": 0.0003110170364379883
+    },
+    {
+      "relative_step": 52,
+      "control": 1.2513350248336792,
+      "candidate": 1.2516895532608032,
+      "difference": 0.00035452842712402344
+    },
+    {
+      "relative_step": 53,
+      "control": 1.260794162750244,
+      "candidate": 1.2610331773757937,
+      "difference": 0.0002390146255497605
+    },
+    {
+      "relative_step": 54,
+      "control": 1.2605198621749878,
+      "candidate": 1.2607104778289795,
+      "difference": 0.00019061565399169922
+    },
+    {
+      "relative_step": 55,
+      "control": 1.289228081703186,
+      "candidate": 1.288990497589111,
+      "difference": -0.00023758411407492908
+    },
+    {
+      "relative_step": 56,
+      "control": 1.2956764698028564,
+      "candidate": 1.2959479093551636,
+      "difference": 0.0002714395523071289
+    },
+    {
+      "relative_step": 57,
+      "control": 1.266393780708313,
+      "candidate": 1.2666840553283691,
+      "difference": 0.00029027462005615234
+    },
+    {
+      "relative_step": 58,
+      "control": 1.2492172718048096,
+      "candidate": 1.249403476715088,
+      "difference": 0.0001862049102783203
+    },
+    {
+      "relative_step": 59,
+      "control": 1.255833864212036,
+      "candidate": 1.2561875581741333,
+      "difference": 0.00035369396209739
+    },
+    {
+      "relative_step": 60,
+      "control": 1.2719568014144895,
+      "candidate": 1.2721762657165527,
+      "difference": 0.00021946430206321033
+    },
+    {
+      "relative_step": 61,
+      "control": 1.256642460823059,
+      "candidate": 1.2567178010940552,
+      "difference": 7.534027099609375e-05
+    },
+    {
+      "relative_step": 62,
+      "control": 1.2641377449035645,
+      "candidate": 1.2643065452575684,
+      "difference": 0.00016880035400390625
+    },
+    {
+      "relative_step": 63,
+      "control": 1.2559120655059814,
+      "candidate": 1.2561017274856567,
+      "difference": 0.00018966197967529297
+    }
+  ],
+  "independently_recomputed_loss": {
+    "mean_difference": 0.0004342403262853414,
+    "max_absolute_difference": 0.0009570121765136719,
+    "first_step_difference": 0.0,
+    "last_step_difference": 0.00018966197967529297,
+    "last_seven_mean_difference": 0.000211920057024338
+  },
+  "primary_metric_prefix_check": {
+    "primary_metric_rows": 260,
+    "all_selected_metric_rows_begin_with_rank0": true,
+    "wrong_prefix_count": 0
+  },
+  "full_record": {
+    "file": "inverse_routing_repeatability_record.json.gz",
+    "sha256": "d01ab232e4c4f6b30e7fa7059b22e043bd1dffb58f2cb6f5b24aa211e4fd6b37",
+    "uncompressed_sha256": "da9dbd6cc743b214e741633e659fd1c00b89a2063d9dc738955ae8f697307e3b"
+  },
+  "publication_scope": "Derived benchmark/profile data, source hashes, protocol, and collection/benchmark source only. Production source overlays, raw profiles, checkpoint contents, and credentials are excluded. Both arms use the accepted baseline; this is not an optimization comparison."
+}
