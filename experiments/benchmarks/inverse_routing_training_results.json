@@ -1,0 +1,344 @@
+{
+  "study": "hero2-inverse-paired-20260920-1158",
+  "status": "exploratory; not adopted",
+  "control_mean_step_seconds": 15.023108004076805,
+  "candidate_mean_step_seconds": 14.786954415795792,
+  "throughput_percent": 1.5970400776291527,
+  "confidence_interval": null,
+  "uncertainty_reason": "One paired comparison cannot estimate between-run uncertainty; scored steps are not independent run replicates.",
+  "protocol": {
+    "checkpoint_policy": "Select latest complete hero checkpoint once at pair setup in-region; temporarily retain until both arms are terminal; require identical restored URI and step; restore original retention metadata.",
+    "rack_policy": "A pair holds one 16-host, 64-GB200 allocation through both arms. Require identical task/attempt, hostname, local GPU UUIDs, local device assignment and NVLink rack for both arms; no retries or migration.",
+    "checkpoint_roots": [
+      "s3://marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+      "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints",
+      "s3://hero-checkpoints/marin/grug/hero-nopdl-step108k/2026.08.19.2/checkpoints/step-121638"
+    ],
+    "priority": "production",
+    "gpu_count": 64,
+    "training_timeout_seconds": 3300,
+    "queue_included_in_training_timeout": false,
+    "packages": {
+      "jax": "0.11.1",
+      "jaxlib": "0.11.1",
+      "jax-cuda13-pjrt": "0.11.1+marin.708c3a4ec79c",
+      "jax-cuda13-plugin": "0.11.1",
+      "flash-attn-4": "4.0.0b28",
+      "nvidia-cutlass-dsl": "4.6.2",
+      "quack-kernels": "0.6.4",
+      "nvidia-cublas": "13.4.1.1",
+      "nvidia-cudnn-cu13": "9.19.0.56",
+      "nvidia-nccl-cu13": "2.31.2"
+    },
+    "training_batch_size": 1024,
+    "optimizer_schedule_batch_size": 11264,
+    "optimizer_schedule_steps": 390251,
+    "purpose": "Exploratory restored-training comparison of unique-index scatter against inverse-permutation sorting on the accepted baseline.",
+    "main": "1f9c387b6c452895ff58573c2b6117c5500303db",
+    "orders": [
+      [
+        "control",
+        "candidate"
+      ]
+    ],
+    "steps_per_arm": 64,
+    "score_relative_steps": [
+      8,
+      63
+    ],
+    "profile_relative_steps": [
+      5,
+      6
+    ],
+    "statistics": {
+      "primary": "One exploratory pair, all relative updates 8 through 63 scored. Report run-average duration ratio descriptively; do not form a between-run confidence interval or accept the optimization from this pair.",
+      "decision": "Verify expected lowering, input fingerprints, loss trajectory, peak memory and throughput before specifying any confirmatory study.",
+      "invalid_runs": "Retain failed or provenance-mismatched runs and investigate before any recovery."
+    },
+    "loss_policy": "Record all 64 matched finite losses and compare exact per-rank input-batch fingerprints collected before the step timer. Investigate unexpected drift before promotion. Component parity does not establish convergence.",
+    "baseline_policy": "Retain accepted native SM100 backward, segmented forward and ragged-all-to-all-only symmetric registration. Exclude routed masking, native forward and copy-engine candidates.",
+    "kernel_validation": "Both arms must execute segmented forward and native SM100 backward, with no tail-clear kernels. Regional saved-profile analysis must verify removal of the inverse-sort custom call in the candidate; expert-key sorts remain.",
+    "memory_policy": "Collect rank-0 allocator counters and compiler buffer assignments from regional profiles for both arms. Require no OOM, investigate unexpected peak or rematerialization changes, and report process-lifetime versus compiler-plan limits explicitly.",
+    "timeout_scope": "Aggregate 55-minute GPU-process deadline covers both arms, source preparation and validation; queue time is excluded. No simultaneous experiment job trees.",
+    "correctness_evidence": {
+      "gpu_gate": "/tmp/hero2-inverse-permutation-20260920-1113/validated-screen-summary.json",
+      "full_routing_screen": "/tmp/hero2-inverse-permutation-path-20260920-1134/validated-screen-summary.json"
+    },
+    "control": {
+      "commit": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+      "source_sha256": {
+        "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+        "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+        "experiments/grug/moe_hero_ep/hero_recipe.py": "047087f209842e3cfb0d055a5043e2bdafbdd4c1f2092475f5b31569f5a49957",
+        "experiments/grug/moe_hero_ep/heuristic.py": "057d52a4072c3246bd7ce1231b7f1736e6ca7811341459868976937faf15c742",
+        "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+        "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+        "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+        "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+        "lib/levanter/src/levanter/grug/_moe/common.py": "17499bc8712f00d475e98b67942adbc753713b5e274489b6467471c7ab3a7b4a",
+        "lib/levanter/src/levanter/grug/_moe/ep_common.py": "c9d6511f1cd5d69be168a701dc92742ccc26f09d69bbb144fc53d1c9ea934bbd",
+        "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "92a048e2bdd9094bd5b92c6b0dcf940f916c6b2564ae62f53ae32a2ea4b67dd6",
+        "lib/levanter/src/levanter/grug/_moe/quack_moe_cute.py": "26bb877c235138bf2db92fba001138d01459490bac8456d95d48cd6ce56b360a",
+        "lib/levanter/src/levanter/grug/_moe/sonic.py": "108dec26876094379f96042581ce0f615fc3ccb2f1e7ad558fa8a78bbb9335ed",
+        "lib/levanter/src/levanter/grug/_moe/sonic_cute.py": "46a1417e980bd2786aadfee8a2ba34d1f796114f75b546ca21efdb69286bc902",
+        "lib/levanter/src/levanter/grug/attention/_core.py": "8c6c417b5c82921bec4dab5be5d8e3d408dcd8d28b1be66b20e78ee892c79bf4",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+        "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+        "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+        "lib/levanter/tests/grug/test_grugformer_moe.py": "d6be66a5ea20e4cb351fe56b100379bfa58597837595da2720eafd97a0627353",
+        "lib/levanter/tests/kernels/test_quack_expert_mlp.py": "a6d704eb7fa8df129d819d0859a7b6d6625d00dc57db0ba145f2e4405f2e704d",
+        "lib/levanter/tests/kernels/test_quack_grouped_wgrad.py": "9a58ece24c1be3846256d450b10a01ad0a3dc310ca04a69a152583b9cea9f3d3",
+        "lib/marin/src/marin/profiling/xplane.py": "db9ce7f0417ab3deba96e3b86e41416da70f0517004abf6efd36169cfdc50dae",
+        "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+        "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+      },
+      "registration_scope": "raggedalltoall",
+      "nccl_cta_policy": "DEFAULT",
+      "intended_forward": "segmented",
+      "expected_profile_kernel_counts": {
+        "segmented_flash_attention_forward": 192,
+        "flashattentionbackwardsm100": 96
+      }
+    },
+    "candidate": {
+      "commit": "c2b3a4e8db9d64c7eda2ad36519c06a90f636598",
+      "source_sha256": {
+        "experiments/benchmarks/fa4/tile_sweep.py": "68407c4eba66be3bb0efb141a675ef73c3c51bf031a49c7b06d81a5a44dbd429",
+        "experiments/grug/moe/model.py": "0271c9904c413ee84fedce4a522c7851e318dd96af8524c209a07e3b12bb65f6",
+        "experiments/grug/moe_hero_ep/hero_recipe.py": "047087f209842e3cfb0d055a5043e2bdafbdd4c1f2092475f5b31569f5a49957",
+        "experiments/grug/moe_hero_ep/heuristic.py": "057d52a4072c3246bd7ce1231b7f1736e6ca7811341459868976937faf15c742",
+        "experiments/grug/moe_hero_ep/model.py": "ae040b5916c57a35a88bfaea5b48f04e44b84aaded56805c20193150d30a20f0",
+        "experiments/grug/moe_hero_ep/train.py": "1bd844e1ad1a4a1e2a8a6800615b137929c89f55124cc982f6a8ad70cc2554ee",
+        "lib/levanter/pyproject.toml": "c6b907ac4e304c72becd51a611cbe9e2f4c46a4654b16eb4d5a9c73a8c5b7d80",
+        "lib/levanter/src/levanter/cutlass_kernel_cache.py": "0c31d801f665edb2911e17a3a1fe7ada4882d794525d25d37878d2c2b2f8a27f",
+        "lib/levanter/src/levanter/grug/_moe/common.py": "20fa26a25de4ff934caf695a8d81e5e15c3a8634af5616ad777f6a247f665d89",
+        "lib/levanter/src/levanter/grug/_moe/ep_common.py": "d1ebfd879bbdd6fb3b18996cd0cd91cf4513fcfb8a0afda244b318854140fa03",
+        "lib/levanter/src/levanter/grug/_moe/ep_ragged_all_to_all.py": "c4f8cc767dc4e7a9ecbad66e4295d06206bda06992c3ca83c12a7d910c1a9638",
+        "lib/levanter/src/levanter/grug/_moe/quack_moe_cute.py": "26bb877c235138bf2db92fba001138d01459490bac8456d95d48cd6ce56b360a",
+        "lib/levanter/src/levanter/grug/_moe/sonic.py": "108dec26876094379f96042581ce0f615fc3ccb2f1e7ad558fa8a78bbb9335ed",
+        "lib/levanter/src/levanter/grug/_moe/sonic_cute.py": "46a1417e980bd2786aadfee8a2ba34d1f796114f75b546ca21efdb69286bc902",
+        "lib/levanter/src/levanter/grug/attention/_core.py": "8c6c417b5c82921bec4dab5be5d8e3d408dcd8d28b1be66b20e78ee892c79bf4",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute.py": "2d83bee7e9ca35be7ab3af2c5ea47041c7d52792c217069dc4dd04c13cd40127",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_backend.py": "f44f4861e5960701012bb7a9577f5ed675b227013eb5e1e27bb67b0dd1e10030",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_config.py": "1bda59f52989c307345277b6ea4895d60feee14e439d46ee334ca82bbe56deb3",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_kernels.py": "4fa2217feea822ab054b63f22fa72d22a76bf371618ffb8cdd8954aa417d2d88",
+        "lib/levanter/src/levanter/grug/attention/_fa4_cute_segmented_bwd.py": "418f82dcd1adef7ba251ff61921269006595af10362b0a91c481129609c982f4",
+        "lib/levanter/src/levanter/grug/grug_moe.py": "148ab2c8e0a6870c7d075ce17e160c9323b16d1d10f96273da48fa9396c066d4",
+        "lib/levanter/tests/grug/test_fa4_cute_attention.py": "7a10da1ba8e57641a8a38c14dc300a00d45c637959035bc8918c89a7fd3acf84",
+        "lib/levanter/tests/grug/test_grugformer_moe.py": "69c9a61f83ea5c09efe47c744d3e62f7c82be330349ab062d187ba93923f6820",
+        "lib/levanter/tests/kernels/test_quack_expert_mlp.py": "a6d704eb7fa8df129d819d0859a7b6d6625d00dc57db0ba145f2e4405f2e704d",
+        "lib/levanter/tests/kernels/test_quack_grouped_wgrad.py": "9a58ece24c1be3846256d450b10a01ad0a3dc310ca04a69a152583b9cea9f3d3",
+        "lib/marin/src/marin/profiling/xplane.py": "db9ce7f0417ab3deba96e3b86e41416da70f0517004abf6efd36169cfdc50dae",
+        "pyproject.toml": "66386241e65c4fab5275315176c75b2c3a2c8f42ffb52e9d22c8543ce31203ac",
+        "uv.lock": "17876e9852ed252a6e70bf1af91f20766e3eecf8671208fcf421aab2b778c01f"
+      },
+      "registration_scope": "raggedalltoall",
+      "nccl_cta_policy": "DEFAULT",
+      "intended_forward": "segmented",
+      "expected_profile_kernel_counts": {
+        "segmented_flash_attention_forward": 192,
+        "flashattentionbackwardsm100": 96
+      }
+    },
+    "input_fingerprints": {
+      "scope": "Every rank, every restored update: SHA-256 of each locally addressable input shard, shape, dtype, shard index, pytree structure, and non-array leaf values. Raw input values are not returned.",
+      "timing": "Fingerprinting runs in batch iteration before the scored step timer and synchronizes input readiness in both arms. Its CPU transfer and hashing time is excluded from scored throughput; total job runtime includes it.",
+      "validation": "Require all 64 relative updates on all 64 ranks in each arm and identical paired digests for every rank/update. A mismatch invalidates matched-input claims and stops further submission."
+    },
+    "harness_source_sha256": {
+      "experiments/benchmarks/hero_pair_arm.py": "8415be1097124ef35853ec6539e925d2ca8bbc87400281643eabe830291b13e0",
+      "experiments/benchmarks/hero_pair_process.py": "67e08eb87c3b690ca79c4d29cefed3c9c9dd1c4ef3d936a9ef295291e532f4a3",
+      "experiments/benchmarks/hero_pair_training.py": "29e0f223b6b5ae25f1afc7974b66ccc44f8c2185ff6f5984425a56e4e6d22194",
+      "experiments/benchmarks/hero_path_training.py": "f85a6251c21f3648cc2a1fb67db962cc36bf075abfea8731f342606d9ca01095",
+      "experiments/benchmarks/hero_profile.py": "2880787be909be729e7a839531e4374d0fa5270b7a484d45cb42b13326c5c3b5"
+    }
+  },
+  "harness_commit": "0ece13c0101efc20165561338eed82e0e23f7e48",
+  "training_job": "/mwittmann/hero2-inverse-paired-20260920-1158-p1",
+  "analysis_job": "/mwittmann/hero2-inverse-paired-20260920-1158-p1-analysis",
+  "checkpoint_retention": {
+    "1": {
+      "checkpoint": "s3://hero-checkpoints/tmp/ttl=14d/checkpoints-temp/marin-us-east-02a/marin/grug/hero-main-step121638/2026.08.19.2/checkpoints/step-129680",
+      "step": 129680,
+      "original_is_temporary": true,
+      "status": "released",
+      "journal": "s3://hero-checkpoints/tmp/ttl=30d/hero2-benchmark-pins/hero2-inverse-paired-20260920-1158/pair-1.json"
+    }
+  },
+  "manual_review": {
+    "study": "hero2-inverse-paired-20260920-1158",
+    "observed_utc": "2026-09-20T13:02:19.703025+00:00",
+    "status": "exploratory_result_not_adopted",
+    "timing": {
+      "control_mean_seconds": 15.023108004076805,
+      "candidate_mean_seconds": 14.786954415795792,
+      "throughput_percent": 1.5970400776291527,
+      "maximum_absolute_loss_difference": 0.0010095834732055664,
+      "loss_same_sign_scored_steps": false,
+      "confidence_interval": null,
+      "caveats": [
+        "One pair cannot estimate between-run uncertainty.",
+        "64 loss updates do not establish long-term convergence.",
+        "Profile timings cover two steps and may overlap; they are not additive wall-time savings.",
+        "Allocation totals are compiler-planned memory, not physical peak memory.",
+        "All-rank input fingerprints match; loss trajectory and allocator memory still require manual review before any further experiment."
+      ]
+    },
+    "instrumented_iteration_throughput_percent": 1.7917601773774328,
+    "memory": {
+      "rank0_allocator_peak_gib": {
+        "control": 103.08816535770892,
+        "candidate": 103.08816607296468
+      },
+      "candidate_minus_control_peak_bytes": 768.0000305175781,
+      "compiler_default_plus_collective_gib": {
+        "control": 121.48658893723041,
+        "candidate": 121.48658965993673
+      },
+      "scope": "Global rank 0 local GPU JAX allocator counters. Peak is process-lifetime high-water mark; it includes initialization and compilation. It is not total device memory across CUDA, NCCL and other allocators."
+    },
+    "loss": {
+      "mean_difference": -0.00039128959178924214,
+      "max_absolute_difference": 0.0010095834732055664,
+      "first_step_difference": 0.0,
+      "last_step_difference": 0.0005153417587280273,
+      "last_seven_mean_difference": 0.00010294573647638496,
+      "same_sign_scored_steps": false
+    },
+    "router_shared_updates": {
+      "cross_entropy": {
+        "matched_updates": 64,
+        "missing_control": [],
+        "missing_candidate": [],
+        "max_absolute_difference": 0.0010095834732055664,
+        "mean_difference": -0.00039128959178924214
+      },
+      "entropy": {
+        "matched_updates": 62,
+        "missing_control": [
+          "129719"
+        ],
+        "missing_candidate": [
+          "129725"
+        ],
+        "max_absolute_difference": 0.0004782676696777344,
+        "mean_difference": -8.54615242250504e-05
+      },
+      "overflow": {
+        "matched_updates": 62,
+        "missing_control": [
+          "129719"
+        ],
+        "missing_candidate": [
+          "129725"
+        ],
+        "max_absolute_difference": 0.00012830272316932678,
+        "mean_difference": 1.7636645943932835e-05
+      },
+      "padding": {
+        "matched_updates": 62,
+        "missing_control": [
+          "129719"
+        ],
+        "missing_candidate": [
+          "129725"
+        ],
+        "max_absolute_difference": 0.0,
+        "mean_difference": 0.0
+      },
+      "bias_min": {
+        "matched_updates": 62,
+        "missing_control": [
+          "129719"
+        ],
+        "missing_candidate": [
+          "129725"
+        ],
+        "max_absolute_difference": 4.074613571166992,
+        "mean_difference": 0.38160888610347626
+      },
+      "bias_max": {
+        "matched_updates": 62,
+        "missing_control": [
+          "129719"
+        ],
+        "missing_candidate": [
+          "129725"
+        ],
+        "max_absolute_difference": 0.6465153694152832,
+        "mean_difference": 0.04254614153215962
+      },
+      "router_z_loss": {
+        "matched_updates": 62,
+        "missing_control": [
+          "129719"
+        ],
+        "missing_candidate": [
+          "129725"
+        ],
+        "max_absolute_difference": 0.37604618072509766,
+        "mean_difference": -0.22777788100704086
+      }
+    },
+    "dense_kernel_comparison": {
+      "common_operation_groups": 59,
+      "changed_kernel_groups": [],
+      "control_only": [],
+      "candidate_only": [],
+      "scope": "GPU 0 dense nvjet matmul names and launch counts, grouped by source operation, operand/output dtype-shape and contracting dimensions, over two profiled updates; excludes other floating-point operations and other ranks."
+    },
+    "routing_profile": {
+      "control": {
+        "inverse_sort_custom_calls": 2,
+        "inverse_sort_gpu_event_count": 2304,
+        "inverse_sort_summed_gpu_seconds_over_two_profiled_updates": 0.213431812,
+        "scope": "GPU 0 kernel durations summed over two profiled updates. They may overlap other work and do not measure critical-path savings."
+      },
+      "candidate": {
+        "inverse_sort_custom_calls": 0,
+        "inverse_sort_gpu_event_count": 0,
+        "inverse_sort_summed_gpu_seconds_over_two_profiled_updates": 0,
+        "scope": "GPU 0 kernel durations summed over two profiled updates. They may overlap other work and do not measure critical-path savings."
+      }
+    },
+    "collection_recovery": {
+      "old_records": 8649,
+      "new_records": 8836,
+      "original_records_unchanged": true,
+      "added_fingerprints": 187,
+      "added_by_arm": {
+        "control": 96,
+        "candidate": 91
+      },
+      "input_equality": {
+        "ranks": 64,
+        "steps_per_rank": 64,
+        "digests_per_arm": 4096,
+        "matched_digests": 4096,
+        "mismatches": [],
+        "identical_inputs": true
+      }
+    },
+    "primary_metric_prefix_check": {
+      "primary_metric_rows": 260,
+      "all_selected_metric_rows_begin_with_rank0": true,
+      "wrong_prefix_count": 0
+    },
+    "decision": {
+      "accepted_into_baseline": false,
+      "reason": "One control-then-candidate pair does not establish between-run timing uncertainty. Identical inputs and unchanged profiled dense-kernel names do not establish the cause or acceptability of the loss differences.",
+      "next_action": "Preserve and publish this exploratory result. Before promotion, measure same-code loss repeatability with identical input fingerprints and collect independent counterbalanced control/candidate pairs. Freeze a new protocol before additional GPU work.",
+      "memory_assessment": "No material increase observed in the measured rank-0 JAX allocator peak or GPU-0 compiler plan; this does not cover all devices or non-JAX allocators."
+    }
+  },
+  "full_record": {
+    "file": "inverse_routing_training_record.json.gz",
+    "sha256": "408270ef670def7b4f350d8fa357473c7fe085e66c3fc4f7f7a817577ab3d56a",
+    "uncompressed_sha256": "c3f4119be960a301ccf3252f120b21317aab0986a5b4e336aa18f4c2af5fd706"
+  },
+  "publication_scope": "Derived benchmark/profile data and collection/benchmark source only. Production candidate implementation, source overlays, raw profiles, checkpoint contents and credentials are excluded. Candidate code remains local, so these artifacts are not a self-contained training rerun."
+}
