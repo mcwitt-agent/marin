@@ -1,0 +1,39 @@
+{
+  "study": "hero2-mask-paired-20260920-0621",
+  "recorded_utc": "2026-09-20T11:13:09.224028+00:00",
+  "decision": "hold_routed_mask_candidate_out_of_baseline",
+  "next_experiment_baseline": "9562c0779564f130c2b25d3d1bf3f9b49efdff89",
+  "main": "1f9c387b6c452895ff58573c2b6117c5500303db",
+  "candidate": "ee204a7569c200e2c0382e54c9d48fea7486b1d2",
+  "measurement_complete": true,
+  "throughput_criterion_passed": true,
+  "throughput_gain_percent": 1.6339739751009885,
+  "throughput_paired_fieller95_percent": [
+    0.22188990472875592,
+    3.0871687999696418
+  ],
+  "numerical_acceptance": false,
+  "memory_acceptance": false,
+  "candidate_minus_control_peak_gib": 12.449371814727797,
+  "rationale": "The four-pair timing interval supports a gain in the measured one-rack workload. Do not add the candidate to the next research baseline while pair 1's sustained late loss gap remains unexplained and the additional 12.449372 GiB rank-0 allocator peak has not been accepted for production. Exact component tests and short finite training trajectories do not establish convergence. Preserve the candidate and measurements for further investigation.",
+  "retained_optimizations": [
+    "native SM100 attention backward from PR #9228",
+    "ragged-all-to-all-only symmetric registration"
+  ],
+  "excluded_candidates": [
+    "native SM100 forward",
+    "NCCL copy-engine configuration",
+    "shared-MLP fusion",
+    "routed-expert mask removal and tail-only clearing"
+  ],
+  "next_action": "GPU correctness and component timing for the separately prepared inverse-routing candidate on the unchanged accepted baseline. No further unchanged routed-mask pairs are planned.",
+  "summary_sha256": "9e4a4536a8f9e622fa4f860053512bac2f93842f3eee20112b27508b85748424",
+  "pair_review_sha256": {
+    "1": "82d283a778f4520765dd5ce270ae7d4f9846367d70525dec7c110f1e37e98bdd",
+    "2": "2c63ee92b5263ae0d03c874a07c1fe4eb1871e787a31a1803283738e741f5781",
+    "3": "fcec60df952f7e4a86d2729620111ab445d692e28c22445e4ab9645c44456c68",
+    "4": "4742d86e5e99e2107a1140df5a0b6a0b5b053971bc7af8aca688dc4d4ae19c78"
+  },
+  "production_deployment": false,
+  "throughput_criterion": "The lower bound of the primary paired Fieller 95% throughput interval must exceed zero."
+}

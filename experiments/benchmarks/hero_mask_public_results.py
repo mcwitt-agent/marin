@@ -225,6 +225,8 @@ def build_export(state, count):
             (
                 "Four pairs were planned. The third-pair report is interim, with individual results "
                 "and no final confidence interval or early acceptance."
+                if count == 3
+                else "All four planned pairs are complete. Aggregate intervals do not establish numerical acceptance."
             ),
             (
                 "Pairs, not updates, are the statistical replicates. Final paired intervals assume "
