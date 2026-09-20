@@ -1,0 +1,58 @@
+{
+  "baseline": "1f9c387b6c452895ff58573c2b6117c5500303db",
+  "harness_commit": "f0e9a48b26e6b7aeea89a7ac7b0d5bd7fc2df03a",
+  "files": {
+    "experiments/benchmarks/hero_pair_arm.py": "8415be1097124ef35853ec6539e925d2ca8bbc87400281643eabe830291b13e0",
+    "experiments/benchmarks/hero_pair_process.py": "c70d0b45fa3d97c4900a1e146203dfda7adaf9fbfd442e52ca6c13c76a1f4acd",
+    "experiments/benchmarks/hero_pair_training.py": "29e0f223b6b5ae25f1afc7974b66ccc44f8c2185ff6f5984425a56e4e6d22194",
+    "experiments/benchmarks/hero_path_training.py": "450662157e9b494d5b2a3536b9c9a4d468f7b6d83a1f2e78adcfc196d48c28a1",
+    "experiments/benchmarks/hero_path_training_protocol.json": "d4794c29495d43007bb2a51d0c0e7c633ef0bf6a19859ada883300202507fffe",
+    "experiments/benchmarks/hero_profile.py": "2880787be909be729e7a839531e4374d0fa5270b7a484d45cb42b13326c5c3b5",
+    "tests/test_hero_pair_process.py": "53dcc46557255f7dc79fae8607a81d9bb0082d6ab755cb0874136ba5fd85d1e4"
+  },
+  "production_candidate_included": false,
+  "published_files": {
+    "experiments/benchmarks/hero_pair_arm.py": {
+      "measured_sha256": "8415be1097124ef35853ec6539e925d2ca8bbc87400281643eabe830291b13e0",
+      "publication_sha256": "8415be1097124ef35853ec6539e925d2ca8bbc87400281643eabe830291b13e0",
+      "exact_bytes": true,
+      "equivalent_python_ast": true
+    },
+    "experiments/benchmarks/hero_pair_process.py": {
+      "measured_sha256": "c70d0b45fa3d97c4900a1e146203dfda7adaf9fbfd442e52ca6c13c76a1f4acd",
+      "publication_sha256": "67e08eb87c3b690ca79c4d29cefed3c9c9dd1c4ef3d936a9ef295291e532f4a3",
+      "exact_bytes": false,
+      "equivalent_python_ast": true
+    },
+    "experiments/benchmarks/hero_pair_training.py": {
+      "measured_sha256": "29e0f223b6b5ae25f1afc7974b66ccc44f8c2185ff6f5984425a56e4e6d22194",
+      "publication_sha256": "29e0f223b6b5ae25f1afc7974b66ccc44f8c2185ff6f5984425a56e4e6d22194",
+      "exact_bytes": true,
+      "equivalent_python_ast": true
+    },
+    "experiments/benchmarks/hero_path_training.py": {
+      "measured_sha256": "450662157e9b494d5b2a3536b9c9a4d468f7b6d83a1f2e78adcfc196d48c28a1",
+      "publication_sha256": "450662157e9b494d5b2a3536b9c9a4d468f7b6d83a1f2e78adcfc196d48c28a1",
+      "exact_bytes": true,
+      "equivalent_python_ast": true
+    },
+    "experiments/benchmarks/hero_path_training_protocol.json": {
+      "measured_sha256": "d4794c29495d43007bb2a51d0c0e7c633ef0bf6a19859ada883300202507fffe",
+      "publication_sha256": "d4794c29495d43007bb2a51d0c0e7c633ef0bf6a19859ada883300202507fffe",
+      "exact_bytes": true,
+      "equivalent_python_ast": false
+    },
+    "experiments/benchmarks/hero_profile.py": {
+      "measured_sha256": "2880787be909be729e7a839531e4374d0fa5270b7a484d45cb42b13326c5c3b5",
+      "publication_sha256": "2880787be909be729e7a839531e4374d0fa5270b7a484d45cb42b13326c5c3b5",
+      "exact_bytes": true,
+      "equivalent_python_ast": true
+    },
+    "tests/test_hero_pair_process.py": {
+      "measured_sha256": "53dcc46557255f7dc79fae8607a81d9bb0082d6ab755cb0874136ba5fd85d1e4",
+      "publication_sha256": "53dcc46557255f7dc79fae8607a81d9bb0082d6ab755cb0874136ba5fd85d1e4",
+      "exact_bytes": true,
+      "equivalent_python_ast": true
+    }
+  }
+}
